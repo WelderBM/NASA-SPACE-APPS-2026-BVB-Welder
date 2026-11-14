@@ -182,6 +182,28 @@ Nenhum destes pontos deve ir para slide ou código sem checagem na fonte origina
 - [ ] Espécies e cultivares recomendadas: validar com a Embrapa Roraima ou um técnico local
 - [ ] Regra sobre código pré-existente: não há texto explícito nos guias; confirmar com o líder local
 
+## Persona do WhatsApp: dados do interior de Roraima (pesquisa de 14/11/2026)
+
+Dados gerais e de órgãos públicos. Nenhum deles mede o uso de WhatsApp ou de áudio pelo produtor do interior; isso ainda depende da pesquisa de campo.
+
+- Produtores atendidos: o IATER acompanha 50.192 produtores, sendo 43.192 agricultores familiares e cerca de 7 mil indígenas. A regional de Alto Alegre, Amajari e Boa Vista concentra 23.455 familiares ([Assembleia Legislativa de Roraima, set/2026](https://al.rr.leg.br/2026/09/21/economia-e-desenvolvimento/)).
+- Assistência técnica: num documento de convênio de março de 2024, o IATER registra 16.850 estabelecimentos, e 87% deles não recebiam assistência técnica ([IATER, proposta de convênio](https://prda.sudam.gov.br/pdf/80bff30c20fcfd50e68aaebbd52cdf26.pdf)).
+- Produção: leite, milho, cacau, café, mandioca e feijão são os principais produtos ([Assembleia Legislativa de Roraima](https://al.rr.leg.br/2026/09/21/economia-e-desenvolvimento/)). Em Cantá e Iracema, a farinha de mandioca tem a maior saída ([Folha BV](https://www.folhabv.com.br/?p=24419)).
+- Cacau: o primeiro polo de Roraima começou em Caroebe, com 500 agricultores familiares, e deve se estender a São João da Baliza, Rorainópolis e Caracaraí ([Folha BV](https://www.folhabv.com.br/?p=43195)).
+- Celular e internet: em 2015, mais de 98% do acesso à internet em Roraima era feito pelo celular, mas só 6,1% dos moradores rurais usaram internet nos três meses anteriores à pesquisa. É um dado antigo ([Folha BV](https://www.folhabv.com.br/?p=23793); [UERR](https://periodicos.uerr.edu.br/index.php/ambiente/article/download/866/560/2838)).
+- Cobertura: oito localidades rurais de Roraima ganharam sinal 4G nos últimos três anos ([Brasil 61](https://brasil61.com/n/expansao-do-4g-no-campo-roraima-soma-mais-oito-localidades-conectadas-mcom260414)). A Anatel aponta qualidade abaixo do mínimo em Alto Alegre, Caracaraí e Pacaraima ([Folha BV](https://www.folhabv.com.br/?p=93188)), e a fibra ainda não chega a alguns municípios do interior ([Folha BV](https://www.folhabv.com.br/?p=94305)).
+- Pontos de acesso: há internet pública do programa Gesac em escolas, unidades de saúde e praças de quatro municípios do interior ([Folha BV](https://www.folhabv.com.br/?p=76731)). Houve anúncio de internet nas Casas do Produtor Rural em Rorainópolis, mas a data é antiga ([Folha BV](https://www.folhabv.com.br/?p=25596)).
+- WhatsApp: em pesquisa nacional, 96% dos produtores usam o WhatsApp para consultar decisões de negócio ([Canal Rural](https://www.canalrural.com.br/agricultura/quase-100-das-propriedades-rurais-conta-com-internet-mostra-pesquisa/)). Na pesquisa ABMRA 2025, 61% usam o YouTube para orientação técnica ([Forbes Agro](https://forbes.com.br/forbesagro/2025/09/internet-atinge-98-das-propriedades-e-whatsapp-vira-principal-canal-do-agro-diz-nova-pesquisa-abmra/)).
+- Áudio no Brasil (não é dado de Roraima): em 2024, 80% dos usuários mensais trocavam áudio, contra 86% que trocavam texto ([Voxbooster, com dados do Panorama Mobile Time/Opinion Box](https://voxbooster.com/pt-BR/blog/voice-message-vs-text-preference-country-statistics-2026/)). Em outra pesquisa, 56% disseram gostar e preferir enviar áudio ([Mobile Time, com dados Exame/MindMiners](https://www.mobiletime.com.br/?p=695702)).
+- Precedente: um livro de 2025 sobre extensão rural propõe um método para produzir e enviar áudios de WhatsApp a produtores ([Zenodo](https://zenodo.org/records/14995584)).
+- Canal de apoio técnico já existente: o RAImundo, da Embrapa, oferece orientação por WhatsApp a pequenos e médios produtores, inclusive com baixa conectividade ([LexLegal](https://lexlegal.com.br/?p=28389)).
+
+Ainda sem dado:
+
+- Número de estabelecimentos de agricultura familiar por município do interior (tabela 6778 do SIDRA, ou Censo 2017).
+- Uso de WhatsApp e de áudio pelo produtor do interior de Roraima.
+- Perfil do pecuarista familiar de Roraima.
+
 ## Fontes
 
 Páginas abertas e lidas em 14/11/2026.
