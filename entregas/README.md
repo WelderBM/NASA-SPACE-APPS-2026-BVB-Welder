@@ -11,7 +11,7 @@
 | --- | --- | --- |
 | `slides-en/` | Os 7 slides em inglês, a versão que vai para o campo Project Demo. Arquivos-fonte do deck (deck.json, deck.css, um HTML por slide, roteiro de fala no `<aside>`) | https://claude.ai/artifact/8vgM1J3M8Jqo4XzjMNhPzV |
 | `slides-pt/` | Os mesmos 7 slides em português, só para treino | https://claude.ai/artifact/B5c7gXQRWfndrpbuSnDDt2 |
-| `pdf/` | **Os 7 slides exportados em PDF** (EN para o Project Demo, PT só treino), fontes embutidas, sem as notas de fala. Exportados em 15/11, 15h50, depois de rodar o motor de novo (commit d9e6e93) | EN público: https://drive.google.com/file/d/1mKxyajaC_qmSOTCPDL8D4QHTuizu3hN6/view |
+| `pdf/` | **Os 7 slides exportados em PDF** (EN para o Project Demo, PT só treino), fontes embutidas, sem as notas de fala. Reexportados em 15/11, 16h26, com as fontes do slide 3 corrigidas (Folha BV no lugar do Diário RR; 87% como dado do IBGE de 2017 citado pelo IATER). O PDF anterior ficou no Drive renomeado como ANTIGO | EN público: https://drive.google.com/file/d/1mXxqji7_W0kXJdyb5uGGjR-FCtwWLdYl/view |
 | `video-pitch-3min/` | **Vídeo-pitch de 2min49s**, mais denso: problema medido, pessoas, o que existe, demo com a janela do ZARC, como funciona, mesmo código em dois lugares, limites. Só para apresentação local ou apoio, nunca no campo de demo | — |
 | `video-pitch/` | **Vídeo-pitch de 29,9 s com história, narração e legenda em inglês.** Roteiro, fontes de cada afirmação e como foi feito no README da pasta | — |
 | `animacao/` | (Substituída pelo `video-pitch/`.) Animação de 29,5 s em inglês, com marca d'água de IA (`field-shift-roraima-30s.mp4`) e o script que a gera (`make.py`, Python + PIL + ffmpeg) | — |
