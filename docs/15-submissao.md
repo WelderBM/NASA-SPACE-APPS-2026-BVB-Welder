@@ -1,6 +1,6 @@
 # 15 — Os campos da submissão, rascunho em inglês
 
-> 15/11/2026, 13h30. Rascunho dos campos listados no doc 09, escrito a partir
+> 15/11/2026, 13h30, revisto às 14h45 (pesquisa: 5 de 8, conferido na planilha segundo `entregas/README.md`; frase do decaimento do El Niño cortada porque a lista de anos foi escrita de memória e não foi conferida no ONI). Rascunho dos campos listados no doc 09, escrito a partir
 > do `main` no commit `677c22b`. Os textos de cada campo estão em texto puro,
 > sem markdown e sem travessão, prontos para colar. **Tudo o que está entre
 > colchetes é pendência para o Welder.**
@@ -15,7 +15,7 @@
 - Nada de "nenhuma ferramenta faz isso" sobre o que o ZARC e o RAImundo fazem (doc 12).
 - O que não fazemos está escrito: previsão de chuva, preço, mão de obra, cobertura de culturas.
 - Sem o nome AgroDeal, que não foi checado.
-- O estado da tabela de culturas é o do `main`: 14 culturas, 3 marcadas como dado bom, 4 parcial, 7 falta; 10 das 14 sem ciclo. Se o branch `ecocrop-ciclo-15-11` entrar, atualizar a frase do campo 5.
+- O estado da tabela de culturas é o do `main`: 14 culturas, 3 marcadas como dado bom, 4 parcial, 7 falta; 10 das 14 sem ciclo. Se o ciclo pelo ECOCROP entrar, atualizar a frase do campo 5.
 
 ---
 
@@ -52,9 +52,9 @@ https://welderbm.github.io/NASA-SPACE-APPS-2026-BVB-Welder/
 ## 5. Detailed Project Description
 
 ```
-The problem. The 2026 El Niño hit Roraima hard. At our reference point in Cantá (lat 2.61, lon -60.60), NASA POWER shows 330 mm of rain from June to September 2026 against an 859 mm average, minus 62% and the worst of the 45 year series. The longest dry spell inside the rainy season was 24 days, against a 9 day average. In September, root zone soil moisture was 0.51 against a normal of 0.76, a level that place usually only reaches in January. We do not claim 2027 will repeat this: in the same series, El Niño decay years, which is where 2027 falls, averaged only 2% below normal.
+The problem. The 2026 El Niño hit Roraima hard. At our reference point in Cantá (lat 2.61, lon -60.60), NASA POWER shows 330 mm of rain from June to September 2026 against an 859 mm average, minus 62% and the worst of the 45 year series. The longest dry spell inside the rainy season was 24 days, against a 9 day average. In September, root zone soil moisture was 0.51 against a normal of 0.76, a level that place usually only reaches in January. We do not claim 2027 will repeat this.
 
-The decision. Six of the eight answers to our farmer survey said that after a harvest they plant something else right away. That is the decision we support: one crop cycle ahead, starting from what was just harvested.
+The decision. In our farmer survey, 5 of 8 answers (4 of 7 people) said that after a harvest they plant something else right away. That is the decision we support: one crop cycle ahead, starting from what was just harvested.
 
 How it works. A deterministic engine takes the farmer's harvest, priority, place and month, and returns structured facts. Three numbers stay separate:
 Risk uses NASA data. Rain expected in the crop's growing window is the NASA POWER long-term climatology adjusted by how the last three months compared to normal, divided by the crop's minimum water need. It also reports the longest typical dry spell in the window and whether root zone soil moisture is above or below normal for the month.
@@ -134,7 +134,7 @@ Duas caixas para marcar na página. A do guia de julgamento:
 
 - [ ] Abrir os dois links em aba anônima: nada pode pedir login
 - [ ] Confirmar que a frase sobre a tabela de culturas bate com o que está no `main` na hora do envio
-- [ ] Se o defeito 4.1 do doc 14 (no branch `ecocrop-ciclo-15-11`) não for corrigido, a demo afirma que a chuva atende a mandioca sem ter dado de água: **ou corrigir, ou não mostrar o "e se" da mandioca no palco**
+- [x] O "e se" que afirmava chuva suficiente sem dado de água foi corrigido no `368f190`, e o ranking passou a usar a confiança como porteira
 
 ## Fontes deste documento
 
