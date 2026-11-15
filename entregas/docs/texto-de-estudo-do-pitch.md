@@ -1,0 +1,72 @@
+# **Space Apps 2026 — Texto de estudo do pitch**
+
+*15/11/2026, tarde. Versão longa, em português, para ler antes de apresentar. Segue a ordem dos 7 slides e acrescenta o que não cabe neles: os números por trás de cada frase, as perguntas que a banca pode fazer e as respostas. Base: repositório (docs 10 a 12\) e o benchmark. Se este texto discordar do repositório, vale o repositório.*
+
+## **1\. A pergunta (slide 1\)**
+
+Depois de toda colheita, o pequeno produtor do interior de Roraima faz a mesma pergunta: o que eu planto agora? Ninguém pergunta "qual rotação recupera meu solo". A pergunta é concreta, nasce num momento real e se repete todo ano, com seca ou sem seca. Por isso a ferramenta foi desenhada em volta dela, e não de uma previsão.  
+A frase de abertura é um dado, não um adjetivo: em setembro de 2026, a umidade do solo na zona de raiz no Cantá estava em 0,51, contra 0,76 do normal. Esse nível só aparece ali em janeiro. A terra entrou na seca cinco meses antes do normal, e o próximo plantio começa em abril.
+
+## **2\. O que os dados mostram (slide 2\)**
+
+Tudo vem do NASA POWER, ponto do Cantá (lat 2,61, lon −60,60), série de 1981 a 2026\. A chuva de junho a setembro de 2026 foi de 330 mm, contra 859 mm de média: −62%, o pior ano da série. O maior veranico dentro da estação chuvosa foi de 24 dias, contra 9 de média. De abril a setembro foram 92 dias com chuva, contra 142\.  
+Tão importante quanto o que se confirmou é o que não se confirmou. "Ano de El Niño é ano seco" não se sustenta como regra: a média desses anos no Cantá fica só 10% abaixo do normal, e o déficit aparece nos eventos fortes. 2027 cai num ano de decaimento, que dá média de −2%. Então não há base para prever que 2027 repete 2026, e a ferramenta não tenta. Também não houve chuva mais forte em 2026: o maior dia foi 35,5 mm, abaixo da média de 44,4 mm. O que houve foi menos dias de chuva e um veranico longo.  
+Cuidado de método que vale saber de cor: nos três endpoints do POWER (climatologia, mensal e diário), a chuva PRECTOTCORR vem em mm por dia. Para mm do mês, multiplica pelos dias. A gente já errou isso uma vez e corrigiu.
+
+## **3\. Quem decide, e por que agora (slide 3\)**
+
+A decisão não é inventada pelo projeto. O IATER está organizando ação contra os efeitos do El Niño 2026/27 e orientando a agricultura familiar para a estiagem, e uma das orientações é a escolha de culturas mais adaptadas ao período seco (Diário RR, out/2026). É o nosso produto, entregue hoje por extensionista humano. Não é concorrência: é prova de que a decisão existe, é oficial e é deste momento. O limite é de alcance, porque só chega a quem o extensionista chega.  
+O 87% precisa ser dito do jeito certo: dos 16.850 estabelecimentos agropecuários de Roraima no Censo Agropecuário do IBGE de 2017, 87% não recebiam assistência técnica. Não é "87% dos agricultores familiares de hoje". O IATER foi criado em 2022 e expandiu desde então, por isso o ano vai junto.  
+A pesquisa do time teve 8 respostas de 7 pessoas, em 14/11, em Caracaraí, Boa Vista, Rorainópolis e Cantá. Seca foi a perda mais citada (5 de 7). 4 de 7 plantam outra coisa logo depois da colheita, e 2 deixam a área parada até a próxima chuva. 4 de 7 preferem receber aviso por WhatsApp escrito. 3 de 7 só confiariam numa recomendação por satélite se um técnico confirmasse, e é por isso que toda resposta termina com o que conferir com o técnico. É uma amostra pequena, de quem preencheu um formulário online, e deve ser apresentada assim.  
+A entrevista com o produtor de Goiás (n=1, via Giuliano) trouxe o achado comportamental: muita gente ficou com medo de investir por causa do El Niño. O prejuízo de um ano ruim não é só a safra perdida, é a paralisia. Uma ferramenta que não prevê nada ainda ajuda se mostra o que continua razoável fazer.
+
+## **4\. A posição (slide 4\)**
+
+A revisão de Schöning e colegas (Smart Agricultural Technology, 2023\) comparou as ferramentas de rotação de culturas e chegou a duas conclusões. Quase todas otimizam só o lucro da atividade. E todas ignoram propriedades com poucas centenas de metros quadrados de área de cultivo.  
+O esquema de prioridades do projeto serve quatro objetivos: a terra melhorar, arriscar pouco, comida em casa e pasto. O único que ele não serve é renda, e a ferramenta diz isso na cara, porque não temos preço nem comprador por município. Isso parecia o buraco embaraçoso do projeto. Na verdade é a posição: as ferramentas que existem otimizam lucro, para propriedades grandes, e esta deixa o pequeno produtor escolher o que otimizar.  
+Na demo, a mesma colheita no mesmo lugar dá motivos diferentes conforme a prioridade. Colheu mandioca no Cantá e escolheu arriscar pouco: "Feijão-caupi. É rápida, sai da terra em 60 dias." Escolheu a terra melhorar: "Depois da mandioca, eu iria de feijão-caupi. Deixa a terra mais forte pro que vem depois." A cultura é a mesma; o motivo muda para o que ele quer proteger. Trocar o lugar no mesmo fluxo mostra o mesmo código dando veredito oposto. Esse é o "explore" do enunciado: quem dirige é o produtor.  
+A linguagem é decisão de design. Rotação, sucessão e consórcio ficam no motor e na submissão. Na conversa só existe "o que plantar agora", "o que dá para plantar junto" e "o que deixar cobrindo a terra". A banca pode ter agrônomo, então vale dizer de propósito que o jargão foi escondido do produtor e o rigor ficou embaixo.
+
+## **5\. Como funciona (slide 5\)**
+
+Cinco camadas: a observação da NASA, que só depende da coordenada e por isso é universal; a tabela global de características das culturas (família, ciclo, água, fixação de nitrogênio, palhada, tolerância à seca, fase crítica); a camada local, que diz quais culturas existem no lugar; a prioridade do produtor, que vira peso; e o canal, um adaptador fino que só traduz. O motor devolve estrutura, não texto. O texto vive no adaptador, em frases de molde fixo preenchidas com os números do motor.  
+Cada opção volta com três números que não se somam. Risco: dá para plantar isso aqui, agora? Usa a chuva climatológica da janela vezes o fator do ano (chuva observada nos 3 meses antes do plantio dividida pelo normal desses meses), dividida pela exigência mínima da cultura. Razão de 1,2 para cima é risco baixo, de 0,9 a 1,2 médio, abaixo de 0,9 alto. Encaixe: serve para o que eu quero? É um mapa direto das características pelas prioridades, sem NASA, de propósito. Confiança: quanto dos critérios deu para medir.  
+Exemplo real do motor, Cantá, plantio em abril, depois da mandioca: o feijão-caupi sai com chuva normal de 424 mm na janela, 331 mm ajustados pelo ano (o Cantá chegou em abril com 78% da chuva normal de janeiro a março), exigência de 300 mm, razão 1,1, risco de água médio. Encaixe 0,88, confiança 0,8. E a resposta declara o que não sabe: a fase crítica dessa cultura, então usou o ciclo inteiro. E manda conferir com o técnico a janela oficial do ZARC para o município.  
+Por que três números e não uma nota: o primeiro motor dava nota única, e a braquiária ganhou com nota 1,00 usando só 27% dos critérios. Quanto menos dado, melhor o ranking. Era bug, e era bug que apareceria no palco. A nota única também apagava o sinal do lugar: milho no Cantá e em Rio Verde saía quase igual, quando a água nos dois lugares é oposta.  
+A IA entra como roteador, não como autor. Ela entende o que foi dito e escolhe a intenção. A resposta é conta sobre dado nomeado, em frase fixa. O motor roda dentro do navegador (motor/cerne.js), para qualquer combinação, e um teste de conformidade exige que as versões em Python e JavaScript respondam igual. A segunda IA, a redatora, foi adotada no desenho (doc 13\) mas hoje entra congelada: as redações foram escritas antes e o motor só preenche.
+
+## **6\. Validade e onde nos posicionamos (slides 5 e 6\)**
+
+A prova de que o cerne é genérico: mesmo milho, mesma exigência de 500 mm, mesmo código, coordenada diferente. Cantá, plantio em abril: 796 mm normais na janela, 621 ajustados pelo ano, razão 1,24, risco baixo. Rio Verde, plantio em setembro: 392 mm normais, 331 ajustados, razão 0,66, risco alto. As estações são invertidas: a chuvosa do Cantá é a seca de Rio Verde.  
+E o contraste mais forte: de abril a setembro de 2026, os dois lugares perderam quase a mesma fração de chuva (54% e 53% do normal). No Cantá o veranico foi 24 dias contra 9 normais, 2,6 vezes. Em Rio Verde foi 62 contra 64, nada mudou. A mesma anomalia é desastre num lugar e rotina no outro. Por isso não dá para ter limiar fixo no código, e o dado tem que ser por coordenada.  
+Contra quem existe: o Zarc Plantio Certo, da Embrapa, mostra as melhores datas de plantio de 43 culturas por município, solo e ciclo, com risco de 20, 30 ou 40%, e tem monitoramento por fase da cultura (água no solo, chuva acumulada, dias sem chuva, temperatura). Ele parte da cultura e responde quando plantar. O RAImundo, da Embrapa com MAPA, MDA e AZap.AI, é assistente de IA no WhatsApp para agricultura familiar, em texto livre, pensado para baixa conectividade. O JoIA, da CNA e do Senar, também está no WhatsApp, por texto, áudio ou foto. Ou seja: o canal não é diferencial, e cruzar falta de chuva com fase crítica é o coração do ZARC. O que nenhum deles faz é partir da colheita e deixar o produtor escolher o objetivo entre opções explícitas, mostrando com número quanto da resposta foi medido.  
+As duas desvantagens vão ditas, não escondidas: não temos previsão de chuva, e cobrimos 14 culturas (3 com dado bom, 4 parcial, 7 faltando; 10 sem ciclo), contra as 43 do Plantio Certo. A frase que o motor dá hoje quando perguntam da chuva, no Cantá em abril: "Prever chuva eu não sei, não tenho isso. O que eu sei é que abril costuma dar chuva mediana, a maior estiagem do mês costuma ser de 8 dias, e a terra está na média pra época." O projeto foi feito para andar ao lado do ZARC; ele ainda não consome as janelas do ZARC.
+
+## **7\. Perguntas difíceis e respostas curtas**
+
+**"O Plantio Certo já faz isso, com selo do governo."** Ele responde quando plantar a cultura que você escolheu. A gente responde qual cultura vem depois da que você colheu, segundo o que você quer proteger. É complemento, e o próximo passo é usar a janela dele como filtro.  
+**"O produtor quer é dinheiro."** Arriscar pouco é não perder o que investiu. Comida em casa é não precisar comprar. As quatro prioridades protegem o bolso por outro caminho, sem fingir que sabem o preço. Renda a gente declara que não sabe, porque não tem dado de preço e comprador por município.  
+**"Por que não prevê chuva, se é o que eles mais querem saber?"** Porque testamos e não há base honesta: nem o El Niño serve de regra simples em Roraima. A ferramenta diz o que observou, quanto costuma chover na época, como está a terra, e manda para a previsão oficial. Um assistente que admite o limite é mais confiável que um que adivinha.  
+**"14 culturas é pouco."** É, e está dito no slide. O caminho é a FAO ECOCROP, com 2.568 espécies em acesso aberto. O gargalo não é código, é preencher a tabela. E com dado incompleto a ferramenta responde "ainda não sei" com o número da confiança, em vez de inventar.  
+**"Voz? A sua pesquisa diz que preferem texto."** A demo aceita os dois, e o falar não pede permissão; só o escutar pede. O canal não é o valor, é o caminho até onde o produtor já está.  
+**"Uma pesquisa com 7 pessoas não prova nada."** Não prova, e não é apresentada como prova. Serve para mostrar que a decisão depois da colheita existe e que o técnico precisa estar no fluxo. A prova de que a decisão é real é a ação do IATER desta safra.
+
+## **8\. Próximos passos (slide 7\)**
+
+Carregar as janelas oficiais do ZARC, município por município, como filtro duro. Completar a tabela de culturas com a FAO ECOCROP. Textura do solo com o SoilGrids (a API REST está pausada pelo ISRIC; usar WCS ou GeoTIFF). Focos de fogo com o NASA FIRMS. Adaptadores de WhatsApp e Telegram no mesmo motor. E teste de campo com produtores de Roraima e extensionistas do IATER, que talvez sejam o primeiro usuário de verdade.  
+A frase de fechamento: ela não diz ao produtor o que fazer. Mostra o que cada escolha faz com a terra, neste ano.
+
+## **9\. Sobre a animação de 30 segundos**
+
+O guia de submissão aceita vídeo de até 30 segundos **ou** deck de até 7 slides no campo Project Demo, e projetos que passam do limite ficam fora do julgamento global. O demo continua sendo os 7 slides. A animação entra como material de apoio, com link público na Detailed Project Description, como o guia permite para outros recursos visuais. Ela já tem a marca d'água visível de IA que o guia exige para vídeo gerado por IA, e o texto em tela está em inglês.
+
+## **Fontes**
+
+> * NASA POWER, ponto do Cantá e de Rio Verde, lido em 14 e 15/11/2026 (repositório, dados/nasa-power.json)  
+> * Schöning, Wachter e Trautz, "Crop rotation and management tools for every farmer?", Smart Agricultural Technology, 2023: [DOAJ](https://doaj.org/article/ac7cad55d97344d0826ef322e929cc11)  
+> * Zarc Plantio Certo: [Notícias Agrícolas](https://www.noticiasagricolas.com.br/noticias/agronegocio/269653-aplicativo-zarc-plantio-certo-esta-disponivel-para-sistema-ios.html), [Canal Rural](https://www.canalrural.com.br/agricultura/ferramenta-gratuita-da-embrapa-indica-melhor-epoca-de-plantio-de-cada-cultura/)  
+> * RAImundo: [Agrolink](https://www.agrolink.com.br/noticias/ia-com-sotaque-do-campo-conecta-pequenos-produtores_504336.html)  
+> * JoIA: [CNA](https://cnabrasil.org.br/noticias/joia-sistema-cna-senar-leva-inovacao-para-ajudar-produtor-a-tomar-decisoes)  
+> * Guia de submissão do Space Apps: [spaceappschallenge.org](https://www.spaceappschallenge.org/resources/project-submission-guide/)  
+> * IATER e El Niño 2026/27: Diário RR, out/2026 (conforme doc 12 do repositório)  
+> * Censo Agropecuário 2017 (IBGE), via documento do IATER citado no doc 03 do repositório
