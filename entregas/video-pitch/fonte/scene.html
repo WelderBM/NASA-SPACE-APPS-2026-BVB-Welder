@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+html,body{margin:0;padding:0;background:#000;overflow:hidden}
+svg{display:block}
+text{font-family:'Inter','Inter Display',Arial,sans-serif}
+</style></head>
+<body>
+<svg id="v" width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="skyDry" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2A65A"/><stop offset="1" stop-color="#F7D9A4"/></linearGradient>
+  <linearGradient id="skyWet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FB7C9"/><stop offset="1" stop-color="#D8EDD9"/></linearGradient>
+  <linearGradient id="night" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E1A2B"/><stop offset="1" stop-color="#1F3A4D"/></linearGradient>
+  <radialGradient id="sunG"><stop offset="0" stop-color="#FFF3C4"/><stop offset=".6" stop-color="#FFD36B"/><stop offset="1" stop-color="#FFB547" stop-opacity="0"/></radialGradient>
+  <linearGradient id="groundDry" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C98B4E"/><stop offset="1" stop-color="#9C6534"/></linearGradient>
+  <linearGradient id="groundWet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7A5230"/><stop offset="1" stop-color="#5A3A20"/></linearGradient>
+  <linearGradient id="endG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1C3A2B"/><stop offset="1" stop-color="#0F2219"/></linearGradient>
+  <clipPath id="phoneClip"><rect x="-150" y="-280" width="300" height="560" rx="34"/></clipPath>
+  <g id="buriti">
+    <rect x="-7" y="-260" width="14" height="260" fill="#6B4A2E"/>
+    <g fill="#3E7A3A">
+      <path d="M0,-260 C-60,-300 -140,-290 -170,-250 C-120,-270 -60,-265 0,-255Z"/>
+      <path d="M0,-260 C60,-300 140,-290 170,-250 C120,-270 60,-265 0,-255Z"/>
+      <path d="M0,-262 C-30,-330 -90,-360 -130,-350 C-80,-330 -40,-300 0,-258Z"/>
+      <path d="M0,-262 C30,-330 90,-360 130,-350 C80,-330 40,-300 0,-258Z"/>
+      <path d="M0,-262 C-10,-320 0,-370 10,-390 C15,-340 10,-300 2,-258Z"/>
+      <path d="M0,-258 C-50,-240 -110,-200 -140,-160 C-90,-200 -50,-225 0,-250Z"/>
+      <path d="M0,-258 C50,-240 110,-200 140,-160 C90,-200 50,-225 0,-250Z"/>
+    </g>
+  </g>
+  <g id="sprout">
+    <path d="M0,0 C0,-20 0,-40 0,-55" stroke="#3F8A3A" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M0,-40 C-25,-55 -40,-45 -42,-35 C-28,-30 -12,-32 0,-40Z" fill="#5DAE4B"/>
+    <path d="M0,-50 C25,-65 40,-55 42,-45 C28,-40 12,-42 0,-50Z" fill="#4E9C40"/>
+  </g>
+  <g id="cassava">
+    <path d="M0,0 C30,-10 70,-4 95,10 C70,16 30,14 0,0Z" fill="#8A5A34"/>
+    <path d="M90,8 l14,4" stroke="#6E4527" stroke-width="3"/>
+  </g>
+</defs>
+
+<!-- ============ WORLD (scenes 1-4) ============ -->
+<g id="world">
+  <rect id="skyD" width="1920" height="1080" fill="url(#skyDry)"/>
+  <rect id="skyW" width="1920" height="1080" fill="url(#skyWet)" opacity="0"/>
+  <circle id="sun" cx="1480" cy="230" r="230" fill="url(#sunG)"/>
+  <!-- heat lines -->
+  <g id="heat" stroke="#FFF1D0" stroke-width="4" fill="none" stroke-linecap="round" opacity=".55">
+    <path d="M300,520 q20,-15 40,0 t40,0 t40,0"/>
+    <path d="M820,470 q20,-15 40,0 t40,0 t40,0"/>
+    <path d="M1300,540 q20,-15 40,0 t40,0 t40,0"/>
+  </g>
+  <!-- satellite -->
+  <g id="sat" opacity="0">
+    <g id="satBody">
+      <rect x="-110" y="-16" width="80" height="32" fill="#2F5D8A" stroke="#D8E6F2" stroke-width="3"/>
+      <line x1="-95" y1="-16" x2="-95" y2="16" stroke="#D8E6F2" stroke-width="2"/><line x1="-75" y1="-16" x2="-75" y2="16" stroke="#D8E6F2" stroke-width="2"/><line x1="-55" y1="-16" x2="-55" y2="16" stroke="#D8E6F2" stroke-width="2"/>
+      <rect x="30" y="-16" width="80" height="32" fill="#2F5D8A" stroke="#D8E6F2" stroke-width="3"/>
+      <line x1="45" y1="-16" x2="45" y2="16" stroke="#D8E6F2" stroke-width="2"/><line x1="65" y1="-16" x2="65" y2="16" stroke="#D8E6F2" stroke-width="2"/><line x1="85" y1="-16" x2="85" y2="16" stroke="#D8E6F2" stroke-width="2"/>
+      <rect x="-30" y="-30" width="60" height="60" rx="8" fill="#E8EDF2" stroke="#9AA9B6" stroke-width="3"/>
+      <circle cx="0" cy="38" r="12" fill="#9AA9B6"/>
+    </g>
+  </g>
+  <g id="beams" opacity="0" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="14 14" fill="none">
+    <line id="beam1" x1="0" y1="0" x2="0" y2="0"/>
+    <line id="beam2" x1="0" y1="0" x2="0" y2="0"/>
+  </g>
+  <!-- far hills -->
+  <path d="M0,640 C250,590 520,610 760,630 C1000,650 1250,600 1500,615 C1700,628 1820,620 1920,610 L1920,1080 L0,1080Z" fill="#B98A57" id="hills"/>
+  <g transform="translate(220,700) scale(.75)"><use href="#buriti"/></g>
+  <g transform="translate(420,690) scale(.55)"><use href="#buriti"/></g>
+  <g transform="translate(1650,705) scale(.8)"><use href="#buriti"/></g>
+  <g transform="translate(1820,690) scale(.55)"><use href="#buriti"/></g>
+  <!-- little house -->
+  <g transform="translate(1320,640)">
+    <rect x="0" y="0" width="150" height="90" fill="#E9D6B3"/>
+    <path d="M-15,5 L75,-55 L165,5Z" fill="#8C4A2F"/>
+    <rect x="58" y="35" width="34" height="55" fill="#6B4A2E"/>
+  </g>
+  <!-- ground -->
+  <rect id="gD" x="0" y="720" width="1920" height="360" fill="url(#groundDry)"/>
+  <rect id="gW" x="0" y="720" width="1920" height="360" fill="url(#groundWet)" opacity="0"/>
+  <g id="cracks" stroke="#7E4F27" stroke-width="4" fill="none" opacity=".8">
+    <path d="M120,800 l60,30 l-20,40 l70,25"/><path d="M520,860 l50,-20 l40,35 l60,-10"/>
+    <path d="M980,790 l-40,40 l50,30"/><path d="M1300,880 l70,-25 l30,40 l60,5"/>
+    <path d="M1650,800 l-30,45 l60,20"/><path d="M760,960 l55,25 l-15,40"/>
+  </g>
+  <!-- rows + sprouts -->
+  <g id="rows" opacity="0">
+    <g fill="#4A2F18" opacity=".55">
+      <rect x="60" y="800" width="1100" height="14" rx="7"/><rect x="40" y="880" width="1140" height="14" rx="7"/><rect x="20" y="960" width="1180" height="14" rx="7"/>
+    </g>
+  </g>
+  <g id="sprouts"></g>
+  <!-- Rosa -->
+  <g id="rosa" transform="translate(1180,760)">
+    <ellipse cx="0" cy="240" rx="120" ry="18" fill="#000" opacity=".15"/>
+    <!-- legs -->
+    <rect x="-40" y="150" width="30" height="90" rx="12" fill="#5A3A24"/>
+    <rect x="10" y="150" width="30" height="90" rx="12" fill="#5A3A24"/>
+    <ellipse cx="-27" cy="240" rx="26" ry="11" fill="#2B2B2B"/><ellipse cx="27" cy="240" rx="26" ry="11" fill="#2B2B2B"/>
+    <!-- dress -->
+    <path d="M-70,-20 C-75,60 -95,140 -100,170 L100,170 C95,140 75,60 70,-20 C40,-40 -40,-40 -70,-20Z" fill="#E0743A"/>
+    <path d="M-95,150 L95,150 L100,170 L-100,170Z" fill="#C85F2A"/>
+    <!-- back arm (holds basket / phone) -->
+    <g id="armL" transform="translate(-62,-10)">
+      <path d="M0,0 C-20,40 -30,80 -20,120" stroke="#8A5A3A" stroke-width="26" fill="none" stroke-linecap="round"/>
+      <circle cx="-20" cy="124" r="16" fill="#8A5A3A"/>
+    </g>
+    <!-- basket -->
+    <g id="basket" transform="translate(-95,95)">
+      <path d="M-70,0 L70,0 L55,70 L-55,70Z" fill="#C9A066"/>
+      <path d="M-70,0 L70,0" stroke="#A47E45" stroke-width="8"/>
+      <path d="M-62,25 L62,25 M-58,48 L58,48" stroke="#A47E45" stroke-width="5"/>
+      <g transform="translate(-60,-8) rotate(-12)"><use href="#cassava"/></g>
+      <g transform="translate(-30,-16) rotate(-4)"><use href="#cassava"/></g>
+      <g transform="translate(-45,-2) rotate(6)"><use href="#cassava"/></g>
+    </g>
+    <!-- phone in hand -->
+    <g id="phoneHand" opacity="0" transform="translate(95,10)">
+      <rect x="-24" y="-44" width="48" height="88" rx="9" fill="#1E2A30"/>
+      <rect x="-19" y="-36" width="38" height="70" rx="5" fill="#9BE3B8"/>
+    </g>
+    <!-- front arm -->
+    <g id="armR" transform="translate(62,-10)">
+      <path d="M0,0 C20,40 30,80 20,120" stroke="#8A5A3A" stroke-width="26" fill="none" stroke-linecap="round"/>
+      <circle cx="20" cy="124" r="16" fill="#8A5A3A"/>
+    </g>
+    <!-- neck/head -->
+    <rect x="-16" y="-62" width="32" height="30" fill="#8A5A3A"/>
+    <g id="head" transform="translate(0,-110)">
+      <path d="M-62,10 C-70,-40 -40,-75 0,-75 C40,-75 70,-40 62,10 C60,40 40,62 0,62 C-40,62 -60,40 -62,10Z" fill="#9A6644"/>
+      <path d="M-64,0 C-70,-30 -55,-62 -20,-70 C-50,-40 -50,-10 -58,30Z" fill="#2A1A12"/>
+      <path d="M64,0 C70,-30 55,-62 20,-70 C50,-40 50,-10 58,30Z" fill="#2A1A12"/>
+      <g id="eyes">
+        <ellipse id="eyeL" cx="-22" cy="0" rx="7" ry="9" fill="#2A1A12"/>
+        <ellipse id="eyeR" cx="22" cy="0" rx="7" ry="9" fill="#2A1A12"/>
+      </g>
+      <path id="brows" d="M-34,-18 l22,-3 M12,-21 l22,3" stroke="#2A1A12" stroke-width="5" stroke-linecap="round"/>
+      <path id="mouth" d="M-16,30 Q0,40 16,30" stroke="#5A2E1E" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="-38" cy="20" rx="10" ry="6" fill="#C9705A" opacity=".5"/><ellipse cx="38" cy="20" rx="10" ry="6" fill="#C9705A" opacity=".5"/>
+      <!-- straw hat -->
+      <ellipse cx="0" cy="-48" rx="118" ry="24" fill="#E7C47A"/>
+      <path d="M-62,-50 C-60,-110 60,-110 62,-50Z" fill="#EFD08C"/>
+      <path d="M-62,-56 C-20,-46 20,-46 62,-56 L62,-48 C20,-38 -20,-38 -62,-48Z" fill="#B5442E"/>
+    </g>
+  </g>
+  <!-- speech waves from mouth to phone -->
+  <g id="voice" opacity="0" stroke="#FFFFFF" stroke-width="6" fill="none" stroke-linecap="round">
+    <path id="w1" d="M1240,640 q14,16 0,32"/><path id="w2" d="M1262,626 q24,30 0,60"/><path id="w3" d="M1284,612 q34,44 0,88"/>
+  </g>
+  <!-- thought bubble -->
+  <g id="thought" opacity="0" transform="translate(860,450)">
+    <circle cx="210" cy="250" r="16" fill="#FFFDF6"/><circle cx="180" cy="200" r="24" fill="#FFFDF6"/>
+    <path d="M-260,40 C-300,-60 -160,-150 -40,-120 C40,-190 220,-160 230,-60 C330,-30 300,110 190,110 C150,170 -40,170 -80,120 C-220,160 -320,110 -260,40Z" fill="#FFFDF6"/>
+    <g id="qcrops">
+      <g transform="translate(-170,40)"><circle r="44" fill="#F3E3B5"/><text text-anchor="middle" y="16" font-size="46" font-weight="700" fill="#B58A2A">?</text></g>
+      <g transform="translate(-40,10)"><circle r="44" fill="#DDEFD2"/><use href="#sprout" transform="translate(0,28) scale(.9)"/></g>
+      <g transform="translate(90,40)"><circle r="44" fill="#F6D9C4"/><use href="#cassava" transform="translate(-45,4) scale(.9)"/></g>
+    </g>
+    <text id="qmark" x="10" y="-40" text-anchor="middle" font-size="120" font-weight="800" fill="#D9902F">?</text>
+  </g>
+  <!-- data icons -->
+  <g id="data" opacity="0">
+    <g id="dRain" transform="translate(470,330)">
+      <rect x="-130" y="-70" width="300" height="140" rx="26" fill="#FFFDF6" opacity=".95"/>
+      <path d="M-60,-30 C-60,-30 -85,5 -85,20 a25,25 0 0,0 50,0 C-35,5 -60,-30 -60,-30Z" fill="#3A8DC1"/>
+      <text x="10" y="-5" font-size="34" font-weight="700" fill="#1C2620">Rain</text>
+      <text x="10" y="32" font-size="24" fill="#4A5148">NASA POWER</text>
+    </g>
+    <g id="dSoil" transform="translate(470,520)">
+      <rect x="-130" y="-70" width="300" height="140" rx="26" fill="#FFFDF6" opacity=".95"/>
+      <rect x="-95" y="-35" width="60" height="20" fill="#C98B4E"/><rect x="-95" y="-12" width="60" height="20" fill="#9C6534"/><rect x="-95" y="11" width="60" height="20" fill="#6E4527"/>
+      <text x="-20" y="-5" font-size="34" font-weight="700" fill="#1C2620">Soil</text>
+      <text x="-20" y="32" font-size="24" fill="#4A5148">moisture</text>
+    </g>
+  </g>
+</g>
+
+<!-- ============ PHONE UI (scene 4) ============ -->
+<g id="phone" opacity="0" transform="translate(560,520)">
+  <rect x="-170" y="-310" width="340" height="620" rx="46" fill="#1E2A30"/>
+  <g clip-path="url(#phoneClip)">
+    <rect x="-150" y="-280" width="300" height="560" fill="#F5F0E6"/>
+    <rect x="-150" y="-280" width="300" height="70" fill="#2E6A4C"/>
+    <text x="0" y="-235" text-anchor="middle" font-size="24" font-weight="700" fill="#F5F0E6">What matters now?</text>
+    <g id="chips" font-size="22" font-weight="600">
+      <g id="c1" transform="translate(0,-170)"><rect x="-130" y="-26" width="260" height="52" rx="26" fill="#FFFFFF" stroke="#4A5148" stroke-width="2"/><text text-anchor="middle" y="8" fill="#4A5148">Low risk</text></g>
+      <g id="c2" transform="translate(0,-105)"><rect id="c2bg" x="-130" y="-26" width="260" height="52" rx="26" fill="#FFFFFF" stroke="#4A5148" stroke-width="2"/><text id="c2t" text-anchor="middle" y="8" fill="#4A5148">Better soil</text></g>
+      <g id="c3" transform="translate(0,-40)"><rect x="-130" y="-26" width="260" height="52" rx="26" fill="#FFFFFF" stroke="#4A5148" stroke-width="2"/><text text-anchor="middle" y="8" fill="#4A5148">Food at home</text></g>
+      <g id="c4" transform="translate(0,25)"><rect x="-130" y="-26" width="260" height="52" rx="26" fill="#FFFFFF" stroke="#4A5148" stroke-width="2"/><text text-anchor="middle" y="8" fill="#4A5148">Pasture</text></g>
+    </g>
+    <g id="reply" opacity="0" transform="translate(0,160)">
+      <rect x="-135" y="-85" width="270" height="170" rx="20" fill="#1C2620"/>
+      <text x="-115" y="-45" font-size="22" fill="#E9B66A" font-weight="700">Cowpea</text>
+      <text x="-115" y="-10" font-size="20" fill="#F5F0E6">Leaves the ground</text>
+      <text x="-115" y="18" font-size="20" fill="#F5F0E6">stronger for what</text>
+      <text x="-115" y="46" font-size="20" fill="#F5F0E6">comes next.</text>
+    </g>
+  </g>
+  <g id="finger" opacity="0" transform="translate(180,40)">
+    <path d="M0,0 C-10,-6 -24,-2 -26,10 L-30,70 C-30,90 -10,100 10,96 L40,90 C60,86 66,66 60,50 L50,20 C46,10 34,10 30,20 L30,0 C30,-12 14,-14 10,-2 Z" fill="#9A6644" stroke="#6E4527" stroke-width="3"/>
+  </g>
+  <circle id="tapRing" cx="0" cy="-105" r="10" fill="none" stroke="#2E6A4C" stroke-width="6" opacity="0"/>
+</g>
+
+<!-- ============ SCENE 5: big vs small ============ -->
+<g id="s5" opacity="0">
+  <rect x="0" y="0" width="960" height="1080" fill="#C9CDD1"/>
+  <rect x="960" y="0" width="960" height="1080" fill="#DCEFD7"/>
+  <!-- big farm -->
+  <g id="big">
+    <rect x="0" y="640" width="960" height="440" fill="#A7A08C"/>
+    <g stroke="#8E8772" stroke-width="10"><line x1="0" y1="700" x2="960" y2="680"/><line x1="0" y1="780" x2="960" y2="750"/><line x1="0" y1="880" x2="960" y2="840"/><line x1="0" y1="1000" x2="960" y2="950"/></g>
+    <g id="tractor" transform="translate(470,640)">
+      <rect x="-170" y="-150" width="250" height="110" rx="10" fill="#4C6B8A"/>
+      <rect x="20" y="-250" width="120" height="120" rx="8" fill="#5F7F9F"/><rect x="38" y="-232" width="84" height="64" fill="#CFE3F2"/>
+      <rect x="-200" y="-60" width="380" height="30" fill="#3A536B"/>
+      <circle cx="-120" cy="0" r="70" fill="#2B2B2B"/><circle cx="-120" cy="0" r="30" fill="#8A8A8A"/>
+      <circle cx="110" cy="10" r="58" fill="#2B2B2B"/><circle cx="110" cy="10" r="24" fill="#8A8A8A"/>
+    </g>
+    <g id="dollar" transform="translate(170,380)">
+      <circle r="90" fill="#7A8D3A"/><text text-anchor="middle" y="38" font-size="120" font-weight="800" fill="#F1F4E2">$</text>
+    </g>
+    <text x="480" y="140" text-anchor="middle" font-size="46" font-weight="700" fill="#2B333B">Most tools: profit,</text>
+    <text x="480" y="196" text-anchor="middle" font-size="46" font-weight="700" fill="#2B333B">for big farms</text>
+  </g>
+  <!-- small farm -->
+  <g id="small" opacity="0">
+    <rect x="960" y="700" width="960" height="380" fill="#6E4A2A"/>
+    <g id="s5sprouts"></g>
+    <g transform="translate(1440,600) scale(.7)" id="rosa2holder"></g>
+    <text x="1440" y="140" text-anchor="middle" font-size="46" font-weight="700" fill="#1C3A2B">Ours: the farmer</text>
+    <text x="1440" y="196" text-anchor="middle" font-size="46" font-weight="700" fill="#1C3A2B">chooses</text>
+    <g id="fchips" font-size="26" font-weight="700">
+      <g id="f1"><rect x="-95" y="-28" width="190" height="56" rx="28" fill="#2E6A4C"/><text text-anchor="middle" y="9" fill="#F5F0E6">Soil</text></g>
+      <g id="f2"><rect x="-95" y="-28" width="190" height="56" rx="28" fill="#D9902F"/><text text-anchor="middle" y="9" fill="#1C2620">Low risk</text></g>
+      <g id="f3"><rect x="-95" y="-28" width="190" height="56" rx="28" fill="#3A8DC1"/><text text-anchor="middle" y="9" fill="#F5F0E6">Food</text></g>
+      <g id="f4"><rect x="-95" y="-28" width="190" height="56" rx="28" fill="#8C4A2F"/><text text-anchor="middle" y="9" fill="#F5F0E6">Pasture</text></g>
+    </g>
+    <g id="honest" opacity="0" transform="translate(1440,330)">
+      <rect x="-250" y="-44" width="500" height="88" rx="44" fill="#FFFDF6" stroke="#1C3A2B" stroke-width="4"/>
+      <text text-anchor="middle" y="12" font-size="32" font-weight="700" fill="#1C3A2B">“This, I don’t know.”</text>
+    </g>
+  </g>
+  <rect x="954" y="0" width="12" height="1080" fill="#F5F0E6"/>
+</g>
+
+<!-- ============ END CARD ============ -->
+<g id="end" opacity="0">
+  <rect width="1920" height="1080" fill="url(#endG)"/>
+  <g id="endSprout" transform="translate(960,420) scale(3.2)"><use href="#sprout"/></g>
+  <text id="e1" x="960" y="560" text-anchor="middle" font-size="96" font-weight="800" fill="#F5F0E6">What to plant next.</text>
+  <text id="e2" x="960" y="660" text-anchor="middle" font-size="64" font-weight="700" fill="#E9B66A">For every small farm.</text>
+  <text id="e3" x="960" y="770" text-anchor="middle" font-size="30" fill="#C9D3C6">NASA Space Apps 2026 · Field Shift: Adapting Farms with NASA Data</text>
+  <text id="e4" x="960" y="815" text-anchor="middle" font-size="28" fill="#C9D3C6">Welder Barroso · Boa Vista, Roraima, Brazil · github.com/WelderBM/NASA-SPACE-APPS-2026-BVB-Welder</text>
+</g>
+
+<!-- ============ OVERLAYS ============ -->
+<g id="tag" opacity="0" transform="translate(110,110)">
+  <rect x="0" y="0" width="520" height="70" rx="35" fill="#1C2620" opacity=".85"/>
+  <text x="34" y="46" font-size="32" font-weight="700" fill="#F5F0E6">Cantá, Roraima · Brazil</text>
+</g>
+<g id="fact" opacity="0" transform="translate(110,200)">
+  <rect x="0" y="0" width="620" height="120" rx="24" fill="#FFFDF6" opacity=".95"/>
+  <text x="30" y="62" font-size="54" font-weight="800" fill="#B5442E">−62% rain</text>
+  <text x="300" y="50" font-size="24" fill="#4A5148">Jun–Sep 2026, worst</text>
+  <text x="300" y="82" font-size="24" fill="#4A5148">in 45 years · NASA POWER</text>
+</g>
+<g id="subBox" opacity="0">
+  <rect id="subBg" x="460" y="966" width="1000" height="80" rx="20" fill="#0E1512" opacity=".78"/>
+  <text id="sub" x="960" y="1020" text-anchor="middle" font-size="44" font-weight="600" fill="#FFFFFF"></text>
+</g>
+<text x="1880" y="52" text-anchor="end" font-size="22" font-weight="600" fill="#FFFFFF" opacity=".85" id="wm" style="paint-order:stroke" stroke="#000" stroke-opacity=".35" stroke-width="3">AI-generated: animation by Claude · voice by Kokoro TTS</text>
+</svg>
+
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const ease=x=>{x=cl(x);return 1-Math.pow(1-x,3)};
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const fin=(t,a,d=.5)=>ease((t-a)/d);
+const fio=(t,a,b,d=.4)=>Math.min(fin(t,a,d),ease((b-t)/d));
+const lerp=(a,b,x)=>a+(b-a)*x;
+const NS='http://www.w3.org/2000/svg';
+let SUBS=[], T={};
+// sprouts for scene 3-4 rows
+const sp=$('sprouts'); const SP=[];
+[[800,60,1160],[880,40,1180],[960,20,1200]].forEach(([y,x0,x1],r)=>{for(let x=x0+40;x<x1;x+=90){const u=document.createElementNS(NS,'use');u.setAttribute('href','#sprout');sp.appendChild(u);SP.push([u,x,y+6,(x-x0)/(x1-x0)*0.6+r*0.12]);}});
+const sp5=$('s5sprouts'); const SP5=[];
+[[790,1000,1880],[880,990,1890],[970,980,1900]].forEach(([y,x0,x1],r)=>{for(let x=x0+30;x<x1;x+=80){const u=document.createElementNS(NS,'use');u.setAttribute('href','#sprout');sp5.appendChild(u);SP5.push([u,x,y]);}});
+// clone rosa for scene 5
+const r2=$('rosa').cloneNode(true); r2.removeAttribute('id'); r2.setAttribute('transform','');
+r2.querySelectorAll('[id]').forEach(e=>e.setAttribute('id','r2_'+e.id)); $('rosa2holder').appendChild(r2);
+function setSubs(s,timing){SUBS=s;T=timing;}
+function sub(t){
+  let cur=null;
+  for(const [txt,a,b] of SUBS){ if(t>=a-0.08 && t<b+0.25){cur=txt;} }
+  const box=$('subBox');
+  if(t>=T.lines[5][0]-0.1) cur=null;
+  if(!cur){box.setAttribute('opacity',0);return;}
+  const el=$('sub'); el.textContent=cur.replace(/\.\.\.$/,'…');
+  const w=Math.min(1800,el.getComputedTextLength()+80);
+  $('subBg').setAttribute('x',960-w/2); $('subBg').setAttribute('width',w);
+  box.setAttribute('opacity',1);
+}
+function render(t){
+  const L=T.lines; // [[s,e],...]
+  const s2=L[1][0], s3=L[2][0], s4=L[3][0], s5=L[4][0], s6=L[5][0];
+  // world visibility
+  const worldOn = t < s5+0.3 ? 1 : 0;
+  $('world').setAttribute('opacity', t<s5 ? 1 : 1-fin(t,s5,0.35));
+  // camera
+  let cam;
+  if(t<s2){ const k=eio(t/s2); cam=[lerp(1,1.12,k), lerp(0,-160,k), lerp(0,-40,k)]; }
+  else if(t<s3){ const k=eio((t-s2)/0.8); cam=[lerp(1.12,1.45,k), lerp(-160,-640,k), lerp(-40,-260,k)]; }
+  else if(t<s4){ const k=eio((t-s3)/1.0); cam=[lerp(1.45,1.0,k), lerp(-640,0,k), lerp(-260,0,k)]; }
+  else { cam=[1,0,0]; }
+  $('world').setAttribute('transform',`translate(${cam[1]},${cam[2]}) scale(${cam[0]})`);
+  // sky / ground drying -> wet in scene 4
+  const wet=fin(t,s4+2.4,1.6);
+  $('skyW').setAttribute('opacity',wet); $('gW').setAttribute('opacity',wet);
+  $('cracks').setAttribute('opacity',.8*(1-wet)); $('heat').setAttribute('opacity',.55*(1-fin(t,s3,1)));
+  $('heat').setAttribute('transform',`translate(0,${-10*Math.sin(t*3)})`);
+  $('sun').setAttribute('r', 230+8*Math.sin(t*2)); $('sun').setAttribute('opacity',1-0.7*wet);
+  $('rows').setAttribute('opacity',fin(t,s4+1.8,0.8));
+  for(const [u,x,y,d] of SP){ const g=fin(t,s4+2.0+d*2.2,0.6); u.setAttribute('transform',`translate(${x},${y}) scale(${g*1.1})`); u.setAttribute('opacity',g>0.01?1:0);}
+  // Rosa idle + blink
+  const bob=3*Math.sin(t*2.2);
+  const rosaX = t<s4 ? 1180 : lerp(1180,1500,eio((t-s4)/0.8));
+  $('rosa').setAttribute('transform',`translate(${rosaX},${715+bob})`);
+  const blink = ((t%3.1)<0.12)?0.15:1;
+  $('eyeL').setAttribute('ry',9*blink); $('eyeR').setAttribute('ry',9*blink);
+  // worried brows in scene 2
+  const worry=fio(t,s2-0.2,s3,0.3);
+  $('brows').setAttribute('d',`M-34,${-18+worry*-4} l22,${-3+worry*8} M12,${-21+worry*4} l22,${3-worry*8}`);
+  const smile = t>s4+2.5 ? 1 : 0;
+  $('mouth').setAttribute('d', worry>0.5?'M-14,34 Q0,26 14,34':(smile?'M-20,26 Q0,48 20,26':'M-16,30 Q0,40 16,30'));
+  // arms: scratch head in scene 2, raise phone in scene 3
+  let armR=0, armL=0;
+  if(t>=s2 && t<s3){ armR = -150*fio(t,s2+0.2,s3-0.1,0.4) + 8*Math.sin(t*14)*fio(t,s2+0.6,s3-0.3,0.2); }
+  if(t>=s3-0.1 && t<s4+0.2){ armR = -70*fio(t,s3,s4+0.2,0.5); }
+  $('armR').setAttribute('transform',`translate(62,-10) rotate(${armR})`);
+  const hasPhone = (t>=s3 && t<s4+0.2)?fio(t,s3+0.1,s4+0.2,0.3):0;
+  $('phoneHand').setAttribute('opacity',hasPhone);
+  const ph=armR*Math.PI/180; $('phoneHand').setAttribute('transform',`translate(${62+ -Math.sin(ph)*124+20*Math.cos(ph)},${-10+Math.cos(ph)*124+20*Math.sin(ph)}) rotate(${armR/3})`);
+  $('basket').setAttribute('opacity', t<s3 ? 1 : 1-fin(t,s3,0.3));
+  // thought bubble
+  $('thought').setAttribute('opacity',fio(t,s2+0.15,s3-0.05,0.35));
+  $('thought').setAttribute('transform',`translate(${860+(1-fin(t,s2+0.15,0.5))*40},${450+(1-fin(t,s2+0.15,0.5))*40}) scale(${0.85+0.15*fin(t,s2+0.15,0.5)})`);
+  $('qmark').setAttribute('transform',`translate(0,${6*Math.sin(t*6)})`);
+  // voice waves (she asks)
+  const ask=fio(t,s3+0.05,s3+1.2,0.15);
+  $('voice').setAttribute('opacity',ask);
+  ['w1','w2','w3'].forEach((w,i)=>$(w).setAttribute('opacity', (Math.sin(t*12-i*1.2)+1)/2));
+  // satellite
+  const satIn=fin(t,s3+0.7,1.0);
+  const satOut= t>s4 ? fin(t,s4,0.5):0;
+  const sx=lerp(-200,820,satIn), sy=lerp(80,150,satIn)+10*Math.sin(t*1.5);
+  $('sat').setAttribute('opacity',satIn*(1-satOut));
+  $('sat').setAttribute('transform',`translate(${sx},${sy}) rotate(${-12+4*Math.sin(t)})`);
+  const beam=fio(t,s3+1.6,s4,0.3);
+  $('beams').setAttribute('opacity',beam);
+  $('beams').setAttribute('stroke-dashoffset', -t*60);
+  $('beam1').setAttribute('x1',sx);$('beam1').setAttribute('y1',sy+40);$('beam1').setAttribute('x2',600);$('beam1').setAttribute('y2',860);
+  $('beam2').setAttribute('x1',sx);$('beam2').setAttribute('y1',sy+40);$('beam2').setAttribute('x2',1100);$('beam2').setAttribute('y2',880);
+  $('data').setAttribute('opacity',fio(t,s3+3.6,s4,0.3));
+  $('dRain').setAttribute('transform',`translate(470,${330+ (1-fin(t,s3+3.6,0.5))*30})`);
+  $('dSoil').setAttribute('transform',`translate(470,${520+ (1-fin(t,s3+4.2,0.5))*30})`);
+  $('dSoil').setAttribute('opacity',fin(t,s3+4.2,0.4));
+  // phone UI
+  const pin=fio(t,s4+0.1,s5,0.4);
+  $('phone').setAttribute('opacity',pin);
+  $('phone').setAttribute('transform',`translate(560,${520+(1-fin(t,s4+0.1,0.5))*80})`);
+  const tapT=s4+1.4;
+  $('finger').setAttribute('opacity',fio(t,s4+0.6,s4+2.6,0.3));
+  const fk=eio((t-(s4+0.6))/0.8);
+  $('finger').setAttribute('transform',`translate(${lerp(200,20,fk)},${lerp(60,-95,fk)})`);
+  const tapped=t>=tapT;
+  $('c2bg').setAttribute('fill',tapped?'#2E6A4C':'#FFFFFF'); $('c2t').setAttribute('fill',tapped?'#F5F0E6':'#4A5148');
+  $('c2').setAttribute('transform',`translate(0,-105) scale(${tapped?1+0.08*Math.max(0,1-(t-tapT)/0.3):1})`);
+  $('tapRing').setAttribute('opacity',tapped?Math.max(0,1-(t-tapT)/0.5):0);
+  $('tapRing').setAttribute('r',10+80*cl((t-tapT)/0.5));
+  $('reply').setAttribute('opacity',fin(t,s4+2.4,0.4));
+  $('reply').setAttribute('transform',`translate(0,${160+(1-fin(t,s4+2.4,0.4))*30})`);
+  // scene 5
+  const s5on=fio(t,s5,s6,0.35);
+  $('s5').setAttribute('opacity',s5on);
+  $('tractor').setAttribute('transform',`translate(${470+lerp(-80,40,cl((t-s5)/2.4))},${640+3*Math.sin(t*20)})`);
+  $('dollar').setAttribute('transform',`translate(170,${380+10*Math.sin(t*3)}) scale(${0.6+0.4*fin(t,s5+0.4,0.5)})`);
+  const smallIn=fin(t,s5+2.6,0.5);
+  $('small').setAttribute('opacity',smallIn);
+  $('big').setAttribute('opacity',1-0.55*smallIn);
+  SP5.forEach(([u,x,y],i)=>{const g=fin(t,s5+2.7+i*0.02,0.5);u.setAttribute('transform',`translate(${x},${y}) scale(${g})`);});
+  const ang=t*0.9;
+  [['f1',0],['f2',1],['f3',2],['f4',3]].forEach(([id,i])=>{
+    const a=ang+i*Math.PI/2; const k=fin(t,s5+3.0+i*0.15,0.4);
+    $(id).setAttribute('transform',`translate(${1440+320*Math.cos(a)},${560+110*Math.sin(a)}) scale(${k})`);
+  });
+  $('honest').setAttribute('opacity',fin(t,s5+4.5,0.4));
+  $('honest').setAttribute('transform',`translate(1440,${290-(1-fin(t,s5+4.5,0.4))*20})`);
+  // end card
+  const en=fin(t,s6-0.15,0.45);
+  $('end').setAttribute('opacity',en);
+  $('endSprout').setAttribute('transform',`translate(960,430) scale(${3.2*fin(t,s6,0.6)})`);
+  $('e1').setAttribute('opacity',fin(t,s6+0.1,0.4)); $('e2').setAttribute('opacity',fin(t,s6+1.3,0.4));
+  $('e3').setAttribute('opacity',fin(t,s6+1.8,0.4)); $('e4').setAttribute('opacity',fin(t,s6+1.8,0.4));
+  // overlays
+  $('tag').setAttribute('opacity',fio(t,0.2,s2-0.2,0.4));
+  $('fact').setAttribute('opacity',fio(t,4.1,s2-0.2,0.4));
+  $('fact').setAttribute('transform',`translate(${110-(1-fin(t,4.1,0.4))*40},200)`);
+  sub(t);
+}
+window.render=render; window.setSubs=setSubs;
+</script>
+</body></html>
