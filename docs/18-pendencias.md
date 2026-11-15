@@ -107,7 +107,6 @@ Conferido contra o `main` em `2bbd12b`. Só o que não estava acima.
 | "O pior em 45 anos" com rodapé "1981 a 2026": a base é de 45 anos, e com 2026 a série tem 46 | slides EN e PT | "o pior desde 1981" |
 | Pesquisa: 5 de 8 plantam outra coisa em seguida, contagem conferida na planilha (`entregas/README.md`); ainda diz **6 de 8** | doc 11, `local-roraima.json` linha 70 | corrigir para 5 de 8 (4 de 7 pessoas). Doc 15 já corrigido |
 | "14 culturas, 4 com dado bom": o arquivo tem **3** marcadas como boa | doc 12, tabela comparativa | 3 boa, 4 parcial, 7 falta |
-
 | **Slide 4 desatualizado pelo `2bbd12b`:** a bolha diz "out of the ground in **60 days**"; a demo agora diz **70 dias** (caupi corrigido para 70 a 75 pela Embrapa). O jurado que repetir a conversa vê outro número | `slides-en/solution.html`, `slides-pt/solution.html`, `texto-de-estudo-do-pitch.md` linha 27; também docs 11 e 12 como exemplo | trocar 60 por 70 nos dois decks e no texto de estudo |
 | Linha do milho no doc 05: o título diz "ciclo corrigido para 110–145", a coluna ainda diz **100 a 140** | `docs/05`, linha 102 | trocar a coluna |
 
