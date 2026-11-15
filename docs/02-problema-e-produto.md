@@ -22,7 +22,7 @@ Essa formulação é do Welder e substitui as anteriores. Por que ela é melhor:
 
 1. "Como ajudar uma família produtora de Roraima a escolher a próxima cultura da rotação antes da seca, com uma informação que chegue até ela?"
 2. "...escolher qual rotação protege o solo e aguenta a seca, segundo as prioridades da família..." (sugestão aceita no doc em 14/11)
-3. "Qual rotação recupera um solo que começa seco e aguenta um início ruim?" (proposta do Claude, descartada por embutir premissa de 2026)
+3. "Qual rotação recupera um solo que começa seco e aguenta um início ruim?" — **descartada por embutir a premissa de que 2027 repete 2026**, que os dados não sustentam
 
 ## Decisão de horizonte: um ciclo à frente
 

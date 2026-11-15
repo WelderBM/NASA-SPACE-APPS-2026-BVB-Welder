@@ -115,8 +115,16 @@ Todas as páginas foram abertas e lidas em 14/11/2026.
 - [IBGE: Censo Agropecuário 2017, agricultura familiar](https://biblioteca.ibge.gov.br/visualizacao/periodicos/3096/agro_2017_agricultura_familiar.pdf)
 - [FNPETI, com dados do IBGE: relatório Roraima](https://fnpeti.org.br/media/foruns/relatorios/censo/Relat%C3%B3rio_Roraima.pdf)
 
-## Do time
+## Material interno, fora deste repositório
 
-- [Chat do Giuliano com o Claude](https://claude.ai/share/a7a1ae9d-318f-4836-b737-d47894dda415)
-- [Formulário da pesquisa (edição)](https://docs.google.com/forms/d/1g9mkbGMVdfErK_ww15vlBKYNFtulgBS2pxtbsYoKbNo/edit)
-- Doc do Claude com o histórico de revisões: `https://claude.ai/artifact/GKCMkBp3kA1ko1ygQutEJw`
+Este repositório é público e não carrega endereço de material interno. Os itens
+abaixo ficam no Drive privado do projeto.
+
+- **Formulário da pesquisa e suas respostas.** O link de edição esteve listado
+  aqui até 15/11 às 17h e foi retirado: as respostas contêm o telefone de quem
+  respondeu, e contato de respondente não entra em repositório público (regra na
+  seção 8 do [18](18-pendencias.md)). Os números agregados que usamos estão em
+  `dados/local-roraima.json`, sem identificar ninguém.
+- **Histórico de revisões dos documentos de trabalho** e conversas de apoio da
+  equipe. Não são fonte: fonte é o que está citado nas seções acima, com autor,
+  título e data de leitura.

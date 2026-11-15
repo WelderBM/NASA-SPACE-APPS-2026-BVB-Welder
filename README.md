@@ -173,7 +173,8 @@ E o que **não** se confirmou, igualmente importante:
 ## Regra de trabalho
 
 - **Git:** antes de dar push, conferir a versão do momento. Se houver diferença, estudar e atualizar com base no que está lá.
-- **Marcos:** cada etapa fechada ganha um branch `marco-revN-data`. Tag não funciona neste ambiente (403 do proxy).
-- **Histórico:** o doc do Claude guarda revisões; o git guarda commits. Nada se perde após uma edição.
+- **Marcos:** cada etapa fechada ganha um branch `marco-revN-data`.
+- **Histórico:** o git é o histórico. Nada se perde depois de uma edição, e o commit diz por que a edição foi feita, não só o que mudou.
+- **Registro:** os documentos descrevem **o projeto**, não a conversa que o construiu. Sem "vamos fazer", sem autoria de quem sugeriu o que, sem detalhe da ferramenta usada para escrever. O que fica é a decisão, a data, a fonte e o motivo. A declaração de uso de IA é obrigatória e vive num lugar só: o campo *Use of AI* da submissão.
 - **Dados pessoais:** os números de WhatsApp da planilha de respostas ficam fora do repositório.
 - **Qualidade de dado:** nada vai para slide ou código sem fonte e sem data de leitura. Cada tabela marca o que está "a validar".

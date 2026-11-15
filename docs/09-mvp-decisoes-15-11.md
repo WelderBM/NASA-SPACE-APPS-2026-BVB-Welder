@@ -6,7 +6,7 @@ Dia da entrega. **O Giuliano não pôde vir: o Welder está sozinho.**
 
 ## O que mudou por causa disso
 
-- **O contrato de retorno deixou de ser a prioridade.** Ele existia para os dois trabalharem em paralelo sem se atropelar. O paralelismo hoje é Welder e Claude: o Claude escreve o motor, o Welder escreve o pitch e faz as ligações.
+- **O contrato de retorno deixou de ser a prioridade.** Ele existia para duas pessoas trabalharem em paralelo sem se atropelar. Com uma pessoa, o contrato continua valendo como desenho do motor, mas não bloqueia mais ninguém.
 - **Sem site.** Só WhatsApp. Decisão do Welder.
 - **Plano A, sem o "plus" de API real da Meta.** O motivo é de produto, não de preguiça: deixar em evidência que a ideia entra em qualquer sistema de comunicação. A viabilidade no WhatsApp é explicada, não implementada.
 
@@ -63,13 +63,13 @@ Regras que pegam: links não podem exigir senha, permissão ou cadastro; a pági
 - `index.html` na raiz do `main`, com `.nojekyll`
 - Settings → Pages → Deploy from a branch → `main`, pasta `/ (root)`
 - URL: `https://welderbm.github.io/NASA-SPACE-APPS-2026-BVB-Welder/`
-- A API do Pages é bloqueada pelo proxy do Claude, então habilitar é tarefa manual do Welder
+- Habilitar o Pages é tarefa manual, na interface do GitHub: a API de Pages não está disponível no ambiente onde o motor foi escrito
 
 ## Áudio nos dois sentidos entra no escopo
 
-O Claude havia cortado "receber e entender áudio do produtor". **O Welder discordou, e estava certo.**
+A proposta inicial cortava "receber e entender áudio do produtor" do escopo. **Decisão do Welder: entra, e ele estava certo.**
 
-O erro do Claude foi pensar em transcrever áudio do WhatsApp, que precisa de servidor. No navegador existe a Web Speech API: `SpeechRecognition` ouve e `speechSynthesis` fala, as duas em pt-BR, sem chave e sem backend. Dá para fazer o atendimento inteiro, estilo central de atendimento de operadora, numa página.
+Transcrever áudio de mensagem do WhatsApp exigiria servidor, e foi por isso que o áudio quase ficou fora. No navegador não precisa: existe a Web Speech API, `SpeechRecognition` ouve e `speechSynthesis` fala, as duas em pt-BR, sem chave e sem backend. Dá para fazer o atendimento inteiro, estilo central de atendimento de operadora, numa página.
 
 Ressalvas:
 - `SpeechRecognition` é Chrome e Edge; Firefox e Safari não cobrem bem
@@ -87,7 +87,7 @@ O organizador sugeriu um cerne genérico o bastante para não cobrir só Roraima
 
 Então entrou um segundo lugar: **Rio Verde, Goiás**. Mesmo estado do produtor entrevistado, embora não o município dele.
 
-E a lista de culturas que o Claude errou ontem **não estava errada, estava no arquivo errado**: soja, milheto e braquiária são a configuração do Centro-Oeste. Nada se perde.
+E a lista de culturas levantada em 14/11 **não estava errada, estava no arquivo errado**: soja, milheto e braquiária são a configuração do Centro-Oeste, não a de Roraima. Nada se perde.
 
 | Configuração local | Culturas |
 | --- | --- |
@@ -109,7 +109,7 @@ Dados do POWER, puxados em 15/11 (ver `dados/nasa-power.json`):
 
 ## Virando a mesa nos dados: o que o agricultor pode perguntar
 
-Pedido do Welder: soltar as amarras e não amadurecer ideia cedo demais. Ontem o Claude filtrou o POWER pelas próprias suposições e usou 3 de umas 15 variáveis úteis.
+Decisão do Welder: soltar as amarras e não amadurecer ideia cedo demais. O levantamento de 14/11 filtrou o POWER por suposição antes da hora e ficou com 3 de umas 15 variáveis úteis.
 
 Em vez de perguntar que dado temos, perguntar **o que o agricultor pode perguntar**. Num atendimento por voz, o conjunto de perguntas respondíveis *é* o produto.
 

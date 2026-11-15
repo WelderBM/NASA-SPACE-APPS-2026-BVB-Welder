@@ -40,13 +40,17 @@ A comunidade AG tem **1.388 parâmetros**. Fonte do dado: reanálise MERRA-2, e 
 
 **Períodos-base diferentes:** a climatologia de umidade do solo é de janeiro de 2001 a dezembro de 2025 (25 anos). A climatologia de chuva pode ter outro período-base. Registrar o período de cada consulta antes de comparar os dois.
 
-### Acesso: o proxy bloqueia, o navegador resolve
+### Como estas consultas foram feitas
 
-Em 14/11 o proxy do ambiente do Claude passou a recusar `power.larc.nasa.gov` com **403 no túnel CONNECT**, que é negação de política, não falha de rede. Não se deve insistir nesse tipo de erro.
+Todos os testes desta seção foram rodados abrindo uma página do domínio
+`power.larc.nasa.gov` no navegador e executando `fetch` em JavaScript na própria
+página, o que deixa a chamada como mesma origem. O método está registrado aqui
+porque quem quiser reproduzir os números precisa dele.
 
-**Contorno que funciona:** usar o navegador integrado, que roda na máquina do usuário. Abrir qualquer página do domínio `power.larc.nasa.gov` e executar `fetch` em JavaScript na própria página, que fica como mesma origem. Foi assim que todos os testes abaixo foram rodados.
-
-Isso afeta só o sandbox do Claude, **não o produto**: o backend de vocês vai rodar em outra máquina.
+O ambiente de desenvolvimento usado para montar estes dados não tem acesso
+direto ao domínio. **Isso não é restrição do produto:** em produção o backend
+consulta o POWER direto, por coordenada e sem login, e a demo não depende de
+navegador para isso.
 
 ## Chuva mensal de 2026 contra a climatologia (Cantá)
 
@@ -133,7 +137,11 @@ O CPC prevê El Niño até março-maio de 2027 e neutro a partir de maio-junho-j
 
 ### A conferir no teste 1
 
-- A lista de anos de El Niño foi escrita de memória pelo Claude e **precisa ser checada contra o índice ONI da NOAA**
+- **A lista de anos de El Niño estava incompleta.** Ela foi escrita sem conferir
+  o índice ONI da NOAA. Conferida em 15/11 contra as tabelas públicas de ONI:
+  faltam ao menos 1994, 2018 e 2019, cerca de um quarto da amostra. Por isso a
+  média destes anos não é usada em lugar nenhum, só a faixa, que sobrevive à
+  lista incompleta porque acrescentar anos aumenta a dispersão ([18 §2.1](18-pendencias.md))
 - É um único ponto de grade do MERRA-2, que é grosseiro
 - Outubro a dezembro de 2026 ainda não estão na série
 

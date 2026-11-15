@@ -231,8 +231,8 @@ motivo que vale saber:**
 | `sem_dado` | sempre há pelo menos uma cultura avaliável. A guarda fica |
 | `solo_fundo` | **vale para o pitch:** a condição pede fundo abaixo do normal e superfície **não** abaixo, o caso em que a chuva recente engana. Em 2026 as duas caem juntas em quase todo mês: setembro deu −59% na superfície e −34% no perfil. O ano não secou por cima, secou até embaixo |
 
-**E a varredura pegou um defeito meu, de hoje às 15h20:** eu havia posto
-`veranico` na lista global do invariante 8. Mas "estiagem em vez de veranico" é
+**A varredura pegou um defeito introduzido no mesmo dia, às 15h20:** o
+`veranico` entrou na lista global do invariante 8. Mas "estiagem em vez de veranico" é
 decisão do doc 11 para **Roraima**, onde os respondentes dizem estiagem. No
 Centro-Oeste veranico é a palavra local e correta, e o molde padrão do
 `cerne.py` usa ela de propósito. A lista global reprovaria texto certo de Rio
