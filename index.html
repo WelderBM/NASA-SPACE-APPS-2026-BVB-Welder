@@ -185,6 +185,12 @@ function painel(r){
   if(o){h+=`<div class="lab">${o.cultura}</div>`;
     h+=kv('Encaixe com o que ele quer',o.encaixe??'—');
     h+=kv('Confiança no dado',Math.round(o.confianca*100)+'%');
+    // a confianca mede COBERTURA de critério, nao QUALIDADE de fonte: o cara
+    // tinha 100% de confianca com a especie dele sendo suposicao nossa. Os dois
+    // campos abaixo ja vinham na resposta e morriam aqui, sem chegar na tela.
+    if(o.qualidade_do_dado)h+=kv('Qualidade da fonte',o.qualidade_do_dado);
+    if(o.validar_com_tecnico&&o.validar_com_tecnico.length)
+      h+=`<div class="lab">A validar com técnico</div><p class="diag">${o.validar_com_tecnico.join('<br>')}</p>`;
     if(o.risco&&o.risco.agua&&o.risco.agua.razao!=null)
       h+=kv('Água',o.risco.agua.nivel+' ('+o.risco.agua.razao+'× de '+o.risco.agua.exige_mm+' mm)');
     if(o.risco&&o.risco.chuva_ajustada_mm!=null)

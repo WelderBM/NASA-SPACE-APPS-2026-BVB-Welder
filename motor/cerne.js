@@ -255,7 +255,8 @@ class Cerne{
       por_que:`o ZARC não está carregado para ${semJanela.length} das culturas daqui`,
       efeito:'não dá para dizer se cabe na janela recomendada',falar:false});
     res.sei_pouco=res.opcoes.filter(o=>!o.risco.avaliavel)
-      .map(o=>({cultura:o.cultura,id:o.id,familia:o.familia,encaixe:o.encaixe,falta:o.nao_sei}))
+      .map(o=>({cultura:o.cultura,id:o.id,familia:o.familia,encaixe:o.encaixe,
+        confianca:o.confianca,falta:o.nao_sei}))
       .sort((a,b)=>(a.encaixe==null)-(b.encaixe==null)||(b.encaixe||0)-(a.encaixe||0));
     const gate=o=>((o.confianca||0)>=CONF_MIN?0:1);
     res.opcoes=res.opcoes.filter(o=>o.risco.avaliavel)
@@ -282,7 +283,7 @@ class Cerne{
     }else if(res.opcoes.length){
       const o=res.opcoes[0];
       const sp=res.sei_pouco.length?res.sei_pouco[0]:null;
-      if(sp&&((sp.encaixe||0)-(o.encaixe||0))>=MARGEM_SEM_CICLO){
+      if(sp&&(sp.confianca||0)>=CONF_MIN&&((sp.encaixe||0)-(o.encaixe||0))>=MARGEM_SEM_CICLO){
         res.destaque=sp.id;
         res.falas=this.renderAll(M,'melhor_sem_ciclo',null,
           {cultura:nc(sp.id),alternativa:nc(o.id)});

@@ -100,6 +100,15 @@ def checa(r, caso):
             if palavra in baixo:
                 erros.append(f"jargao na fala: {palavra!r} em {f[:90]!r}")
 
+    # 9. uma cultura que o motor NAO consegue avaliar so pode ser a resposta se
+    # a confianca dela passar a porteira. Sem isso, encaixe alto tirado de um
+    # critério medido vence encaixe honesto tirado de tres.
+    sp = (r.get('sei_pouco') or [])
+    if r.get('destaque') and sp and r['destaque'] == sp[0].get('id'):
+        if (sp[0].get('confianca') or 0) < CONF_MIN:
+            erros.append(f"destaque sem lastro: {r['destaque']} e inavaliavel e tem "
+                         f"confianca {sp[0].get('confianca')}")
+
     # 7. o que a LINHA da cultura manda validar nao pode morrer no motor.
     # O dado do cara trazia "qual especie se planta aqui e suposicao" e a
     # resposta devolvia so a janela do ZARC: o motor engolia o aviso do dado.

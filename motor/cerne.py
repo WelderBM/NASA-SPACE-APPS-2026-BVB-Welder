@@ -375,8 +375,11 @@ def atender(p):
         res['lacunas'].append({'o_que': 'a janela oficial de plantio',
             'por_que': f"o ZARC não está carregado para {len(sem_janela)} das culturas daqui",
             'efeito': 'não dá para dizer se cabe na janela recomendada', 'falar': False})
+    # a confianca vem junto: sem ela nada conseguia barrar uma cultura daqui de
+    # virar destaque com encaixe inflado por ignorancia (ver o bloco abaixo)
     res['sei_pouco'] = [{'cultura': o['cultura'], 'id': o['id'], 'familia': o['familia'],
-                         'encaixe': o['encaixe'], 'falta': o['nao_sei']}
+                         'encaixe': o['encaixe'], 'confianca': o['confianca'],
+                         'falta': o['nao_sei']}
                         for o in res['opcoes'] if not o['risco'].get('avaliavel')]
     res['sei_pouco'].sort(key=lambda x: (x['encaixe'] is None, -(x['encaixe'] or 0)))
     res['opcoes'] = [o for o in res['opcoes'] if o['risco'].get('avaliavel')]
@@ -408,7 +411,18 @@ def atender(p):
     elif res['opcoes']:
         o = res['opcoes'][0]
         sp = res['sei_pouco'][0] if res['sei_pouco'] else None
-        if sp and (sp['encaixe'] or 0) - (o['encaixe'] or 0) >= MARGEM_SEM_CICLO:
+        # A MARGEM NAO BASTAVA, porque ela subtraia dois encaixes medidos em
+        # quantidades diferentes de evidencia. A braquiaria tirava 1,00 na
+        # prioridade 'risco' com UM critério dos quatro medido (tolera_seca), e
+        # roubava o destaque de quem tinha 0,60 com tres medidos. Resultado: em
+        # 5 dos 6 meses, a resposta de "arriscar pouco" era uma cultura cujo
+        # ciclo a gente nao sabe, na prioridade em que o ciclo e o critério
+        # principal. A porteira da confianca, que ja valia para as opcoes, agora
+        # vale aqui tambem. No 'pasto' a braquiaria tem confianca 1,00, com os
+        # tres critérios conhecidos, entao ela continua ganhando: e o caso que a
+        # correcao original queria, e ele sobrevive.
+        if sp and (sp['confianca'] or 0) >= CONF_MIN \
+                and (sp['encaixe'] or 0) - (o['encaixe'] or 0) >= MARGEM_SEM_CICLO:
             res['destaque'] = sp['id']
             res['falas'] = render_all(M, 'melhor_sem_ciclo',
                 cultura=nome_curto(sp['id']), alternativa=nome_curto(o['id']))
