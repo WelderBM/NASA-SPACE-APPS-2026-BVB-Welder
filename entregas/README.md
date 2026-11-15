@@ -16,6 +16,7 @@
 | `video-pitch/` | **Vídeo-pitch de 29,9 s com história, narração e legenda em inglês.** Roteiro, fontes de cada afirmação e como foi feito no README da pasta | — |
 | `animacao/` | (Substituída pelo `video-pitch/`.) Animação de 29,5 s em inglês, com marca d'água de IA (`field-shift-roraima-30s.mp4`) e o script que a gera (`make.py`, Python + PIL + ffmpeg) | — |
 | `docs/benchmark-e-proposta-de-valor.md` | Benchmark contra Plantio Certo, RAImundo, JoIA, Plantix, FieldView, Cropwise, Agrolink, Climatempo, vencedores do Space Apps; teste da hipótese | Drive: 1LD9KpiqjeojsQaKOg7nLG9ZgDTJQXoCdTFfOt6ueYhQ |
+| `docs/relatorio-critico-do-produto.md` | Relatório crítico do produto em 15/11, 16h: o que conferi no motor, 9 defeitos da demo em ordem de gravidade, cada um com a pergunta de classe, e o que fazer antes das 22h59 | — |
 | `docs/texto-de-estudo-do-pitch.md` | Texto longo em português para estudar antes de apresentar, com perguntas difíceis da banca | Drive: 1t7iDUxvjZeTRKCQGOipAoEyJHT-EjVL6WwXTMT7oHwo |
 
 ## Onde cada coisa entra na submissão
