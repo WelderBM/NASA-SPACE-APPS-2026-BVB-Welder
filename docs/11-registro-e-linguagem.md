@@ -1,8 +1,8 @@
 # 11 — Registro: como o bot fala
 
-> Escrito em 15/11/2026, 11h30, depois do Welder apontar que as frases do bot
-> estavam cheias de conceito formal. Ele estava certo, e o lugar do erro era o
-> pior possível: a frase falada.
+> 15/11/2026, 11h30. As frases do bot estavam cheias de conceito formal, no pior
+> lugar possível: a frase falada, que é a única coisa que o produtor recebe.
+> Correção decidida pelo Welder.
 
 ## O erro
 
@@ -95,7 +95,7 @@ Também entrou um campo `artigo` em cada cultura: sem ele o bot falava
 5. Termina oferecendo o próximo passo, para o turno continuar vivo.
 6. O que o bot não sabe, ele diz, e aponta para onde tem.
 
-## Pendências
+## Limites do registro
 
 - **"tu" ou "você"**: Roraima fala "tu" com verbo na terceira pessoa ("tu quer").
   Os moldes estão com "você", que é mais seguro mas menos de casa. **Decisão do

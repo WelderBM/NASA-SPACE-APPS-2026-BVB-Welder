@@ -10,11 +10,13 @@ Dia da entrega. **O Giuliano não pôde vir: o Welder está sozinho.**
 - **Sem site.** Só WhatsApp. Decisão do Welder.
 - **Plano A, sem o "plus" de API real da Meta.** O motivo é de produto, não de preguiça: deixar em evidência que a ideia entra em qualquer sistema de comunicação. A viabilidade no WhatsApp é explicada, não implementada.
 
-## Possível hora extra no prazo
+## A hora do prazo
 
-O guia de submissão diz **23h59 no horário local do evento**. Nosso doc registrava 22h59. Pode ser uma hora inteira a favor.
-
-- [ ] **Confirmar com o líder local.** Até confirmar, planejar para 22h59.
+O guia de submissão diz **23h59 no horário local do evento**, e a página do
+formulário do projeto, lida em 15/11 às 16h40, diz o mesmo. Um documento anterior
+registrava 22h59, que é a hora para a qual o trabalho foi planejado: uma hora de
+margem. O que conta é o último clique em "Submit for Judging"; "Save Progress"
+deixa a página pública mas não envia.
 
 ## Formato do demo: 7 slides, não vídeo
 

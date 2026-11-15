@@ -1,9 +1,9 @@
 # 12 — Alinhamento depois do benchmark
 
-> 15/11/2026, 11h45. Um chat paralelo fez o benchmark e derrubou duas das três
-> pernas da proposta de valor. Eu verifiquei as três afirmações que passam a
-> sustentar tudo, nas fontes primárias, antes de reescrever. **Este documento
-> substitui a proposta de valor do doc 02 e a abertura do doc 07.**
+> 15/11/2026, 11h45. O benchmark derrubou duas das três pernas da proposta de
+> valor. As três afirmações que passam a sustentar tudo foram conferidas nas
+> fontes primárias antes da reescrita. **Este documento substitui a proposta de
+> valor do [2](02-problema-e-produto.md) e a abertura do [7](07-pitch-e-demo.md).**
 
 ## O que morreu, e por quê
 

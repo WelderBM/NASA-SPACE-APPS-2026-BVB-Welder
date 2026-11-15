@@ -1,8 +1,8 @@
 # 16 — De onde vem cada campo, no produto real
 
-> 15/11/2026, 13h50. Pergunta do Welder olhando a demo: "essa configuração será
-> adquirida como?" É a única coisa que a demo disfarça, porque ela tem seletores
-> e o WhatsApp por voz não tem nenhum.
+> 15/11/2026, 13h50. De onde vem cada campo da configuração no produto real. É a
+> única coisa que a demo disfarça: ela tem seletores, e uma conversa de WhatsApp
+> por voz não tem nenhum.
 
 O motor precisa de quatro coisas: **lugar, data, o que foi colhido e a
 prioridade**. Cada uma chega por um caminho diferente, e três delas o produtor

@@ -60,6 +60,6 @@ Observação sobre Apresentação: o guia pede peso igual aos outros critérios.
 
 Apresentação do time (2 s), desafio e inspiração (3 s), nome e slogan (5 s), como funciona e como usa dados da NASA (10 s), visão de futuro (10 s).
 
-## Pendência de regra
+## Regra sem texto explícito no guia
 
 - [ ] Regra sobre código pré-existente: não há texto explícito nos guias; confirmar com o líder local

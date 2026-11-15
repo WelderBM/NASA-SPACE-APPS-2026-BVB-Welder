@@ -1,12 +1,12 @@
 # 14 — ECOCROP: o que ele dá, o que ele não dá, e o que o dado novo expôs
 
-> 15/11/2026, 13h. Preenchimento do ciclo das culturas que voltavam "não sei",
-> decidido pelo Welder: só `ciclo_dias` pelo ECOCROP, água nula com motivo.
-> O dado ficou no branch `ecocrop-ciclo-15-11`, fora do `main`, pelo motivo
-> da seção 4. **Entrou no `main` em 15/11/2026, 15h**, depois que os dois
-> defeitos da seção 4 foram corrigidos; a seção 5 conta o que o merge achou.
+> 15/11/2026, 13h. Preenchimento do ciclo das culturas que respondiam "não sei".
+> Decisão do Welder: só `ciclo_dias` pelo ECOCROP, água nula com o motivo escrito.
+> O dado esperou fora do `main` pelo motivo da seção 4 e **entrou às 15h**, depois
+> que os dois defeitos daquela seção foram corrigidos. A seção 5 registra o que o
+> merge achou.
 
-## 1. O ECOCROP não serve para a água do ciclo. Leia antes de tentar de novo.
+## 1. O ECOCROP não serve para a água do ciclo
 
 O campo de chuva do ECOCROP (`RMIN`, `ROPMN`, `ROPMX`, `RMAX`) é **chuva anual**.
 A ficha oficial de cada espécie no portal da FAO rotula a linha como

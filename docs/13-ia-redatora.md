@@ -1,9 +1,8 @@
 # 13 — A segunda IA: redatora, nunca calculista
 
-> 15/11/2026, 12h. Ideia do Welder: uma segunda IA que faça o elo entre o que
-> está no banco e o que a IA decifradora entendeu. Este documento adota a ideia,
-> coloca o limite que ela precisa, e separa o que vai ao ar hoje do que fica
-> para produção.
+> 15/11/2026, 12h. Desenho de uma segunda IA, redatora, que liga o que está no
+> banco ao que a primeira entendeu. Proposta do Welder, adotada com o limite que
+> ela exige. Separa o que vai ao ar hoje do que fica para produção.
 
 ## O problema que ela resolve
 

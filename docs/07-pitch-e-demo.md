@@ -1,18 +1,22 @@
 # 7. Pitch e demo
 
-> **Atenção, 15/11 11h45:** a abertura do pitch mudou. Ver [12 — Alinhamento depois do benchmark](12-alinhamento-pos-benchmark.md).
+> **Abertura do pitch superada em 15/11, 11h45** por [12 — Alinhamento depois do benchmark](12-alinhamento-pos-benchmark.md).
 
 [Voltar ao índice](../README.md)
 
-## URGENTE: o pitch atual tem uma afirmação errada
+## A afirmação errada que saiu do pitch
 
-O pitch, como está desenhado, abre com o El Niño e dá a entender que 2027 repete 2026. **Os dados não sustentam isso.**
+A primeira versão do pitch abria com o El Niño e dava a entender que 2027
+repetiria 2026. Os dados não sustentam isso, e a abertura foi reescrita em 15/11.
 
-O CPC prevê neutro a partir de maio-junho-julho de 2027, então a safra de 2027 cai num ano de decaimento, e anos de decaimento dão média de apenas 2% abaixo do normal no Cantá. Ver o teste completo em [04-dados-nasa](04-dados-nasa.md).
+O CPC prevê neutro a partir de maio-junho-julho de 2027. O número que sustentava
+essa correção, a média dos anos de decaimento, **saiu de uso**: ele depende da
+lista de anos de El Niño, que estava incompleta (faltam ao menos 1994, 2018 e
+2019). O que sobrevive é a faixa, de −48% a +17% sem contar 2026, e ela basta:
+não há regra, então o produto observa em vez de prever. Teste completo em
+[04](04-dados-nasa.md), ressalva em [18 §2.1](18-pendencias.md).
 
-- [ ] **Reescrever a abertura do pitch.** É a pendência mais urgente.
-
-A abertura honesta e mais forte é outra: o que atravessa o ano não é a chuva, é o solo. Em setembro de 2026 o perfil estava em 0,51 contra 0,76 do normal, nível que ali só aparece em janeiro. O solo entrou na estiagem no mínimo do ano, cinco meses mais cedo, e o plantio começa em abril.
+A abertura que ficou é outra, e é mais forte: o que atravessa o ano não é a chuva, é o solo. Em setembro de 2026 o perfil estava em 0,51 contra 0,76 do normal, nível que ali só aparece em janeiro. O solo entrou na estiagem no mínimo do ano, cinco meses mais cedo, e o plantio começa em abril.
 
 E a proposta de valor vem da entrevista de campo: o prejuízo não é só a safra perdida, é a paralisia. Produtores ficaram com medo de investir. Ver [03-persona-e-pesquisa](03-persona-e-pesquisa.md).
 
@@ -41,7 +45,7 @@ Todos do POWER, rodados em 14/11, no Cantá. Ver [04-dados-nasa](04-dados-nasa.m
 4. **Solo em setembro no nível de janeiro**: perfil 0,51 contra 0,76 do normal; superfície 0,32 contra 0,78.
 5. **O POWER previu o que a Embrapa relatou**: nosso teste deu julho com 54% menos chuva, e o relato oficial é de corte das chuvas em julho. Isso é validação do método.
 
-## Recomendações de pitch
+## Decisões de pitch
 
 - [ ] Abrir com a orientação da Embrapa: não planejar só pelo calendário tradicional ([Folha BV](https://www.folhabv.com.br/?p=676921))
 - [ ] Usar um caso real do interior de Roraima, como o Cantá, em vez de um campo genérico

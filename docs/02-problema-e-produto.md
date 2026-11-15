@@ -1,6 +1,6 @@
 # 2. Problema e produto
 
-> **Atenção, 15/11 11h45:** a proposta de valor deste documento foi substituída depois do benchmark. Duas das três vantagens que eu afirmava aqui não se sustentam. Ver [12 — Alinhamento depois do benchmark](12-alinhamento-pos-benchmark.md).
+> **Proposta de valor superada em 15/11, 11h45** por [12 — Alinhamento depois do benchmark](12-alinhamento-pos-benchmark.md): duas das três vantagens afirmadas aqui não se sustentaram no benchmark. O resto deste documento, a pergunta do produto e as decisões de horizonte e de linguagem, continua valendo.
 
 [Voltar ao índice](../README.md)
 
@@ -67,7 +67,7 @@ Resolve também uma angústia do projeto: **não precisamos prever para ser úte
 
 Ver a entrevista completa e as ressalvas de método em [03-persona-e-pesquisa](03-persona-e-pesquisa.md).
 
-## O núcleo que cabe até domingo
+## O núcleo do MVP
 
 Comparar o que a pessoa acabou de colher com as opções de próximo plantio, usando dados do NASA POWER mais a camada local, e explicar o resultado num áudio de WhatsApp.
 
@@ -101,6 +101,6 @@ O enunciado pede fortalecer a saúde do solo, então a comparação precisa most
 - [ ] Usar um caso real do interior de Roraima, como o Cantá, em vez de um campo genérico
 - [ ] Declarar os limites: o que é estimativa de satélite, o que falta validar em campo, incluindo a falta de levantamento de solo do Cantá
 
-## Cortado do núcleo, fica como próximos passos
+## Fora do núcleo, e por quê
 
 O robô Buddy, os sensores como centro, o mercúrio do garimpo, a API oficial do WhatsApp, SMAP, ECOSTRESS e Landsat.

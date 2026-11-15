@@ -1,8 +1,8 @@
 # 10 — O cruzamento: do dado até a decisão
 
-> Escrito em 15/11/2026, 11h, depois do Welder perguntar se o cruzamento
-> estava descrito. **Não estava.** Este documento descreve, mede e dá o
-> veredito de viabilidade com número real.
+> 15/11/2026, 11h. O cruzamento entre o dado e a decisão não estava descrito em
+> nenhum documento, e o motor não o fazia. Aqui ele está descrito, medido, e com
+> o veredito de viabilidade em número.
 
 ## O que faltava
 

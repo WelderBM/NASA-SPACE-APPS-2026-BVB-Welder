@@ -1,9 +1,8 @@
 # 17 — A raiz dos defeitos, e o que foi feito com ela
 
-> 15/11/2026, 14h30. O Welder: "a gente tá perdendo tempo consertando bugs que
-> não deviam existir e precisamos fazer uma recapitulação para matar o mal pela
-> raiz." Ele estava certo. Este documento é a recapitulação, e a correção
-> estrutural que saiu dela.
+> 15/11/2026, 14h30. Vinte defeitos em um dia, quase todos da mesma causa. Esta é
+> a recapitulação pedida pelo Welder e a correção estrutural que saiu dela: a
+> classe foi fechada, não os casos.
 
 ## O sintoma
 
@@ -92,7 +91,7 @@ Custou cerca de uma hora. Devolveu: metade das combinações deixou de mentir po
 omissão, e **a próxima vez que alguém escrever um consumidor de dado novo, o
 teste quebra antes de chegar no palco.**
 
-## Regra para quem mexer daqui pra frente
+## A regra que saiu disso
 
 > Nulo não é um valor. É uma lacuna, e lacuna tem dono, motivo e efeito.
 > Se o seu código decide sozinho o que fazer com um nulo, ele está errado.

@@ -67,9 +67,15 @@ Serviços separados hoje é over-engineering para uma entrega amanhã às 22h59.
 
 O que queremos é um **monolito modular**: um repositório, fronteiras limpas entre as quatro camadas, motor como função pura, camada local como arquivo de dados. Ganha-se toda a separação e nenhum custo de deploy, mostra-se a arquitetura para a banca, e dá para quebrar em serviços depois sem reescrever o motor. Quebrar agora custa horas que não temos.
 
-## Por que o contrato é urgente
+## Por que o contrato existe
 
-Esse contrato é exatamente a fronteira entre o Welder e o Giuliano. Enquanto o formato de retorno não estiver escrito, os dois não conseguem trabalhar em paralelo sem se atropelar. Com ele escrito, o Giuliano constrói o hub contra um retorno falso e o Welder constrói o atendimento contra o mesmo retorno falso, e o motor entra no fim.
+O contrato nasceu como fronteira entre duas pessoas: sem o formato de retorno
+escrito, quem constrói o canal e quem constrói o motor se atropelam, porque cada
+um precisa de um retorno falso para testar contra.
+
+Com uma pessoa, essa razão caiu, e o contrato ficou **pela razão que importa
+mais**: é ele que permite ao mesmo motor atender num canal e noutro sem mudar
+uma linha, e é por isso que a demo roda o mesmo cerne em Cantá e em Rio Verde.
 
 ## O atendimento no WhatsApp é fluxo com ramos
 
@@ -110,7 +116,7 @@ O formulário oferece quatro prioridades: renda, pasto, risco e mão de obra. O 
 
 Também seguem fora: levantamento de solo do Cantá, que não existe, e dados de mão de obra por cultura, sem fonte boa.
 
-## O que falta para fechar o cerne
+## Limites do cerne
 
 1. **Coluna de família botânica na tabela de culturas** mais a regra de sucessão: não seguir família com a mesma família, e marcar quando a sequência empilha hospedeiro. (A tabela de famílias já está em [05](05-base-agronomica.md); falta virar dado do motor.)
 2. **O contrato de retorno fechado**, com a pergunta generalizada no centro.

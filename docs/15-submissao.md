@@ -132,7 +132,7 @@ Duas caixas para marcar na página. A do guia de julgamento:
 
 ---
 
-## Antes de enviar
+## Checagem final da submissão
 
 - [ ] Abrir os dois links em aba anônima: nada pode pedir login
 - [ ] Confirmar que a frase sobre a tabela de culturas bate com o que está no `main` na hora do envio

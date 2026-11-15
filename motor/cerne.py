@@ -300,8 +300,8 @@ def avisos(r, moldes):
     out = []
     v = r.get('veranico')
     if r.get('agua_indireta') and v:
-        # nao sei o numero dela, mas sei a chuva da janela e a estiagem na fase
-        # critica. isso e resposta, e antes eu calava.
+        # sem o numero dela, a chuva da janela e a estiagem na fase critica ainda
+        # sao resposta. Antes de 15/11 o bot calava aqui, ou pior: afirmava.
         out.append(_fmt(_lista(moldes.get('agua_sem_numero', ''))[0],
             chuva_mm=r.get('chuva_ajustada_mm') or r.get('chuva_normal_mm'),
             estiagem=_r(v['dias']), base=v['base']))

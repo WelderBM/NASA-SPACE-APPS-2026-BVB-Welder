@@ -26,10 +26,10 @@ JARGAO = ['inverno', 'verão', 'nitrogênio', 'inmet', 'pousio',
           'sucessão', 'euphorbiaceae', 'cucurbitaceae', 'poaceae', 'fabaceae',
           'convolvulaceae', 'dioscoreaceae', 'solanaceae', 'musaceae']
 # 'veranico' e decisao do doc 11 e vale SO em Roraima, onde os respondentes
-# dizem 'estiagem'. No Centro-Oeste veranico e a palavra local e correta, e o
-# molde padrao do cerne.py usa ela de proposito. Eu tinha posto na lista global
-# hoje as 15h20 e isso reprovaria texto certo de Rio Verde: armadilha minha,
-# achada na varredura dos moldes as 16h.
+# dizem 'estiagem'. No Centro-Oeste veranico e a palavra local e CORRETA, e o
+# molde padrao do cerne.py usa ela de proposito. A palavra esteve na lista
+# global entre 15h20 e 16h de 15/11/2026, o que reprovaria texto certo de Rio
+# Verde: regra de um lugar nao vira teste global.
 JARGAO_ROraima = ['veranico']
 
 # 10. gramatica. O motor arredonda e a estiagem de junho, 1,2 dias, virava

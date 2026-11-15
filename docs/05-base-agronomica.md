@@ -30,7 +30,7 @@ O consórcio é a terceira categoria: a consorciação envolve o cultivo de duas
 
 Nenhuma está errada como prática. O que estava errado era chamar as três de rotação, e isso é visível para qualquer agrônomo na banca.
 
-### O que fazer com os termos
+### Como o projeto usa os termos
 
 1. Cada opção que o motor devolve ganha um rótulo interno: rotação, sucessão ou consórcio. Vira ponto de rigor em vez de erro.
 2. No texto em inglês, manter *rotation* como guarda-chuva, que é a palavra do enunciado, e ser preciso dentro da ferramenta. A própria Embrapa publica com os dois termos no mesmo título, "Rotação e Sucessão de Culturas".
@@ -47,7 +47,7 @@ O propósito principal da rotação é quebrar ciclo de praga e doença, e isso 
 
 Isso é decisivo para nós: **a regra de família não depende de ser rotação em sentido estrito.** Funciona na sucessão, que é o que nosso produto entrega.
 
-### Alerta contra as nossas próprias estratégias
+### O erro que as três estratégias antigas cometiam
 
 Milheto, e mesmo o milho, usados como cultura principal ou como cobertura para palhada, são hospedeiros e multiplicadores de nematoide ([Embrapa](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/943518/1/COT371.pdf)). As sequências com milho e milheto empilham Poaceae e precisam de ressalva, não de exclusão.
 
@@ -153,7 +153,7 @@ Quem tem pouca terra não consegue fazer rotação de verdade. A Embrapa Hortali
 
 E um reforço: o mesmo manual diz que produtores experientes recorrem a numerosas sequências curtas de confiança, ou "duplas" de culturas, para atingir seus objetivos de rotação. **A dupla, o par colheita-plantio, é literalmente a unidade que o motor vai devolver.** Com a ressalva que eles mesmos fazem: a mesma cultura ou a mesma sequência raramente é replantada no mesmo canteiro no ano seguinte, pela probabilidade de surtos de praga e doença.
 
-## Outras pendências
+## Limites desta base
 
 - [ ] Nota técnica original da Embrapa para a Região Norte: só achei matérias que a citam
 - [ ] Espécies e cultivares recomendadas: validar com a Embrapa Roraima ou um técnico local

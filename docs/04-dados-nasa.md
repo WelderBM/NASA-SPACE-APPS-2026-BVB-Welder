@@ -10,7 +10,7 @@ Todos os testes deste documento foram rodados em 14/11/2026, no ponto do Cantá:
 
 A comunidade AG tem **1.388 parâmetros**. Fonte do dado: reanálise MERRA-2, e IMERG para a chuva por satélite.
 
-### Parâmetros que usamos ou devemos usar
+### Os parâmetros, e o que cada um resolve
 
 | Parâmetro | O que é | Unidade | Status |
 | --- | --- | --- | --- |
@@ -135,7 +135,7 @@ O CPC prevê El Niño até março-maio de 2027 e neutro a partir de maio-junho-j
 
 **Não há base nos dados para dizer que 2027 repete 2026.** O pitch atual abre dando a entender que repete, e isso precisa mudar. Ver [07-pitch-e-demo](07-pitch-e-demo.md).
 
-### A conferir no teste 1
+### Limites do teste 1
 
 - **A lista de anos de El Niño estava incompleta.** Ela foi escrita sem conferir
   o índice ONI da NOAA. Conferida em 15/11 contra as tabelas públicas de ONI:
@@ -221,7 +221,7 @@ Pesquisado em 14/11, a pedido do Welder.
 - Deixar para depois: SMAP, ECOSTRESS e Landsat, que exigem login no Earthdata e arquivos pesados
 - **Não servem:** SSURGO, CropScape, PRISM e os demais dados do USDA só cobrem os EUA
 
-## A conferir antes de usar
+## Limites destas fontes
 
 - [ ] O número de 40% menos chuva vem de dado de modelo em grade larga, não de pluviômetro; já conferido com medições de campo, que apontam na mesma direção, mas dizer "estimativa"
 - [ ] Os meses mais recentes do POWER podem ser revisados depois; registrar a data da consulta (14/11/2026)

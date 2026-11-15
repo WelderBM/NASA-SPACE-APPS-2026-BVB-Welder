@@ -1,8 +1,8 @@
 # 19 — Roteiro das três ligações
 
-> 15/11/2026, 14h50. O buraco de campo é o único que nenhum chat fecha: são
-> **zero entrevistas em Roraima**. Este roteiro existe para transformar isso
-> numa tarefa de quinze minutos.
+> 15/11/2026, 14h50. A pesquisa de campo tem **zero entrevistas em Roraima**: a
+> única é de Goiás, n=1. É a lacuna que nenhum trabalho de mesa fecha. Este
+> roteiro existe para transformá-la numa tarefa de quinze minutos.
 
 ## Para quem ligar
 
@@ -87,7 +87,7 @@ Com duas ou três ligações vira *"produtores de Caracaraí e do Cantá nos
 disseram"*. É a diferença entre hipótese e evidência, no critério de Impacto, e
 custa quinze minutos.
 
-## Uma regra que vale para o projeto inteiro
+## Por que este roteiro não traz os contatos
 
 Telefone, nome e qualquer coisa que identifique quem respondeu **não entram
 neste repositório**, que é público. Ficam na planilha privada. Isto aqui quase

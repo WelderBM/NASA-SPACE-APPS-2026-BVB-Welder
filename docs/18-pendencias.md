@@ -1,9 +1,9 @@
 # 18 — Pendências, consolidadas
 
-> 15/11/2026, 14h40. Varredura de todos os documentos. Três chats estão
-> trabalhando no mesmo repositório, e pendência espalhada em quinze documentos
-> faz dois chats refazerem o mesmo trabalho. Esta é a lista única.
-> **Se resolver algo daqui, risque aqui.**
+> 15/11/2026, 14h40, varredura de todos os documentos. Pendência espalhada em
+> quinze arquivos faz o mesmo trabalho ser feito duas vezes. **Esta é a lista
+> única do projeto**, e é o único documento que registra o que ainda falta:
+> nenhum outro carrega cópia dela. Resolveu, risque aqui, no mesmo commit.
 
 ## 1. Bloqueia a submissão
 
@@ -166,7 +166,7 @@ Welder achou o PR na interface do GitHub às 14h53.
 A numeração não tem mais buraco: 01 a 19, sem faltas. A citação "(doc 14)" no
 `docs/05` volta a valer.
 
-## 7. Inconsistências entre documentos, varredura de 14h50 (chat do dado)
+## 7. Inconsistências entre documentos, varredura de 14h50
 
 Conferido contra o `main` em `2bbd12b`. Só o que não estava acima.
 
@@ -204,7 +204,21 @@ Conferido contra o `main` em `2bbd12b`. Só o que não estava acima.
 - **Achado de brinde:** esse molde **nunca é alcançado** em nenhum dos 2.748
   casos, então o invariante 8 não o pegaria.
 
-### 7.2 A varredura dos moldes, feita às 16h. Medido com instrumentação, não com heurística
+### 7.1 O README tinha a sua própria lista de pendências, e ela envelheceu
+
+Varredura de 15/11, 15h. O `README.md` carregava uma seção "O que está aberto,
+por ordem de bloqueio" escrita em 14/11 e nunca atualizada. Ela dizia que a
+regra de comparação do motor era "o buraco mais bloqueante" (resolvida há
+horas), pedia mandar o contrato de retorno ao Giuliano (fora do projeto desde
+15/11, e o próprio cabeçalho do README já dizia "Welder, sozinho desde 15/11"),
+e trazia **a média de −10% dos anos de El Niño** como número nosso — o número
+que a seção 2.1 aqui manda não usar.
+
+A causa não é desatenção, é estrutura: **duas listas da mesma coisa divergem
+sempre.** Corrigido pela forma, não pelo caso — o README agora resume e aponta
+para cá, e esta lista é a única.
+
+### 7.2 A varredura dos moldes de fala, às 16h
 
 A estimativa de "18 das 66 variantes nunca rodam" era minha e estava inflada:
 ela contava **pares** de corpo e fecho que nunca se encontram, e não texto que
@@ -250,29 +264,18 @@ Roraima.
   Centro-Oeste com **sorgo**, que não existe no `culturas.json`; o arquivo tem
   guandu e caupi.
 
-### 7.1 O README tinha a sua própria lista de pendências, e ela envelheceu
-
-Varredura de 15/11, 15h. O `README.md` carregava uma seção "O que está aberto,
-por ordem de bloqueio" escrita em 14/11 e nunca atualizada. Ela dizia que a
-regra de comparação do motor era "o buraco mais bloqueante" (resolvida há
-horas), pedia mandar o contrato de retorno ao Giuliano (fora do projeto desde
-15/11, e o próprio cabeçalho do README já dizia "Welder, sozinho desde 15/11"),
-e trazia **a média de −10% dos anos de El Niño** como número nosso — o número
-que a seção 2.1 aqui manda não usar.
-
-A causa não é desatenção, é estrutura: **duas listas da mesma coisa divergem
-sempre.** Corrigido pela forma, não pelo caso — o README agora resume e aponta
-para cá, e esta lista é a única.
-
-## Como usar esta lista
-
-Quem resolver um item: risca aqui, no mesmo commit da correção. Quem achar
-pendência nova em qualquer documento: traz para cá em vez de deixar no lugar
-onde achou.
-
 ## 8. Privacidade
 
 Telefone, nome e qualquer coisa que identifique quem respondeu o formulário
 **não entram neste repositório**, que é público. Ficam na planilha privada do
 Drive. Quase aconteceu em 15/11: a primeira versão do `docs/19` tinha os três
 números escritos, e a ação foi bloqueada antes do commit.
+
+
+---
+
+## Como usar esta lista
+
+Quem resolver um item: risca aqui, no mesmo commit da correção. Quem achar
+pendência nova em qualquer documento: traz para cá em vez de deixar no lugar
+onde achou.

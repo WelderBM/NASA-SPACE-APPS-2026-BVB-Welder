@@ -1,7 +1,7 @@
 // O CERNE, em JavaScript. Mesmas regras do motor/cerne.py, para a pagina
 // CALCULAR em vez de consultar tabela pre-cozinhada.
 //
-// A tabela era o "if n==1 impar, if n==2 par": funcionava para o que eu tinha
+// A tabela era o "if n==1 impar, if n==2 par": funcionava para o que estava
 // enumerado e nao tinha nada para o resto. Aqui esta o %2: a regra geral, que
 // responde combinacao que ninguem enumerou, inclusive mes que nao existia na
 // tabela.
