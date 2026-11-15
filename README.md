@@ -29,6 +29,7 @@ Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift:
 | [11. Registro e linguagem](docs/11-registro-e-linguagem.md) | como o bot fala: a armadilha do inverno amazônico, o vocabulário dos respondentes, a troca palavra por palavra |
 | [12. Alinhamento depois do benchmark](docs/12-alinhamento-pos-benchmark.md) | **a proposta de valor reescrita**: o que o benchmark derrubou, a lacuna de literatura que nos posiciona, a tabela comparativa |
 | [13. A segunda IA, redatora](docs/13-ia-redatora.md) | a IA que escreve mas não calcula, a verificação que impede número inventado, e por que o molde fixo vira rede de segurança |
+| [16. De onde vem cada campo](docs/16-como-a-configuracao-chega.md) | como o lugar, a data, a colheita e a prioridade chegam no WhatsApp, sem formulário |
 | [Motor](motor/cerne.py) | o cerne rodando: contrato de entrada e saída, as três notas, as frases de molde fixo |
 | [Demo](index.html) | a página roda o motor **dentro do navegador** (`motor/cerne.js`), não consulta tabela. Trocar prioridade reordena, trocar o mês muda o veredito, trocar o lugar inverte |
 | [Teste de conformidade](motor/conformidade.py) | 816 casos exigindo que o motor em Python e o em JavaScript respondam igual. Rode depois de mexer em qualquer um dos dois |
