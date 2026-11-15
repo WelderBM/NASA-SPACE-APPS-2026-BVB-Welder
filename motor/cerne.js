@@ -27,6 +27,7 @@ const MOLDES_NEUTROS={
  nao_sei_prever:"Previsão de chuva eu não tenho. {mes} costuma ter {chuva}, com estiagem máxima de {estiagem} dias, e o solo está {estado}.",
  hipotese_sem_agua:"{cultura} não é da mesma família {de_colheu}. A exigência de água dela não está registrada; a janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
  indicacao_pouca_confianca:"Depois {de_colheu}, a melhor opção é {cultura}, mas só {pct}% dos critérios dessa prioridade puderam ser avaliados nela.",
+ lacuna_falada:"A leitura deste ano vai até {ate}; para {mes} há apenas a média de {anos} anos, sem ajuste pelo ano corrente.",
  melhor_sem_ciclo:"Para esse objetivo a cultura indicada seria {cultura}, mas falta a duração do ciclo dela. Entre as avaliáveis, {alternativa} é a mais próxima.",
  solo_fundo:"Camada superficial {sup}; camada profunda {fundo}. A reserva profunda é a que sustenta no veranico.",
  aviso_calor:"A máxima de {mes} chega a {pico} °C, acima do limite de {limite} °C dessa cultura.",
@@ -70,6 +71,24 @@ class Cerne{
   }
   qualificaChuva(place,m){const a=this.NASA[place].clim.chuva_mm,c=a.slice().sort((x,y)=>x-y);
     return a[m]<=c[3]?'pouca':a[m]>=c[8]?'muita':'media'}
+  ateOndeEnxergo(place){
+    const ch=this.NASA[place].ano2026.chuva_mm,idx=[];
+    ch.forEach((v,i)=>{if(v!=null)idx.push(i)});
+    return idx.length?Math.max(...idx):null;
+  }
+  lacunasDoLugar(place,m0){
+    // UM lugar so que sabe o que falta e POR QUE
+    const an=this.NASA[place].ano2026,out=[],ate=this.ateOndeEnxergo(place);
+    if(ate==null)return out;
+    const faltaChuva=[1,2,3].some(k=>an.chuva_mm[((m0-k)%12+12)%12]==null);
+    if(faltaChuva)out.push({o_que:'como o ano está indo',ate:MES[ate],falar:true,
+      por_que:`a leitura deste ano vai até ${MES[ate]}`,
+      efeito:'uso só a média da série, sem ajustar pelo ano corrente'});
+    if(an.solo_raiz[m0]==null)out.push({o_que:'umidade do solo deste mês',ate:MES[ate],
+      falar:!faltaChuva,por_que:`a leitura deste ano vai até ${MES[ate]}`,
+      efeito:'uso só a média da série'});
+    return out;
+  }
   estadoObservado(place,m0){
     const cl=this.NASA[place].clim,an=this.NASA[place].ano2026,[f,det]=this.fatorDoAno(place,m0);
     const e={mes:MES[m0],anos_de_serie:(this.NASA[place].abr_set||{}).anos_base||null,
@@ -169,7 +188,14 @@ class Cerne{
     const de=n=>((this.CULT[n].artigo||'a')==='a'?'da ':'do ')+nc(n);
     const res={intencao,lugar:this.NASA[place].nome,mes_plantio:MES[m0],
       registro:loc.moldes?'local':'português neutro',estado_observado:est,
+      lacunas:this.lacunasDoLugar(place,m0),
       opcoes:[],sei_pouco:[],limites:[],fala:null,falas:[],aviso_do_ano:null,destaque:null};
+    const _fecha=()=>{
+      const f=res.lacunas.filter(l=>l.falar);
+      if(f.length&&!res.aviso_do_ano)res.aviso_do_ano=this.renderAll(M,'lacuna_falada',null,
+        {ate:f[0].ate,mes:est.mes,anos:est.anos_de_serie||45})[0];
+      res.lacunas.forEach(l=>res.limites.push(`${l.o_que}: ${l.por_que}, então ${l.efeito}`));
+    };
     const sr=est.solo_raiz;
     if(intencao==='estado-do-solo'){
       res.falas=this.renderAll(M,'estado_da_terra','fechos_terra',{mes:est.mes,
@@ -180,7 +206,7 @@ class Cerne{
         res.aviso_do_ano=fmt(lista(M.solo_fundo||'')[0],
           {sup:M.estado_terra[sp.situacao],fundo:M.estado_terra[fu.situacao]});}
       if(!sr)res.limites.push('sem leitura de umidade do solo para este mês');
-      return res;
+      _fecha();return res;
     }
     if(intencao==='vai-chover'){
       res.limites.push('não existe previsão de chuva nestes dados; a série é histórica');
@@ -188,7 +214,7 @@ class Cerne{
         chuva:M.chuva_qualitativa[est.chuva_qualitativa],
         estiagem:Math.floor(est.veranico_normal_do_mes_dias+0.5),
         estado:sr?M.estado_terra[sr.situacao]:'sem leitura'});
-      res.fala=res.falas[0];return res;
+      res.fala=res.falas[0];_fecha();return res;
     }
     const colheu=p.colheu,fam=colheu?this.CULT[colheu].familia:null;
     const cn=colheu?nc(colheu):'',dcn=colheu?de(colheu):'';
@@ -204,7 +230,9 @@ class Cerne{
         encaixe:enc==null?null:Math.round(enc*100)/100,
         confianca:Math.round(conf*100)/100,_pqs:pqs,
         porques:pqs.map(([k,pr])=>fmt(lista(M.porques[k]||'')[0],Object.assign({colheu:cn,de_colheu:dcn},pr))),
-        avisos:this.avisos(r,M),nao_sei:ns,qualidade_do_dado:c.qualidade,
+        avisos:this.avisos(r,M),nao_sei:ns,
+        nao_sei_nao_dito:ns.filter(x=>!(r.agua_indireta&&x.indexOf('água')>=0)),
+        qualidade_do_dado:c.qualidade,
         validar_com_tecnico:['a janela de plantio oficial do ZARC para o município']});
     }
     res.sei_pouco=res.opcoes.filter(o=>!o.risco.avaliavel)
@@ -254,6 +282,7 @@ class Cerne{
           cultura:nc(o.id),porque:pq?pq.charAt(0).toUpperCase()+pq.slice(1):''});
       }
     }
+    _fecha();
     const fa=est.fator_do_ano;
     if(fa&&(intencao==='proximo-plantio'||intencao==='e-se')&&res.falas.length){
       const rz=fa.razao;

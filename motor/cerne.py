@@ -55,6 +55,7 @@ MOLDES_NEUTROS = {
   'nao_sei_prever': "Previsão de chuva eu não tenho. {mes} costuma ter {chuva}, com estiagem máxima de {estiagem} dias, e o solo está {estado}.",
   'hipotese_sem_agua': "{cultura} não é da mesma família {de_colheu}. A exigência de água dela não está registrada; a janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
   'indicacao_pouca_confianca': "Depois {de_colheu}, a melhor opção é {cultura}, mas só {pct}% dos critérios dessa prioridade puderam ser avaliados nela.",
+  'lacuna_falada': "A leitura deste ano vai até {ate}; para {mes} há apenas a média de {anos} anos, sem ajuste pelo ano corrente.",
   'melhor_sem_ciclo': "Para esse objetivo a cultura indicada seria {cultura}, mas falta a duração do ciclo dela. Entre as avaliáveis, {alternativa} é a mais próxima.",
   'solo_fundo': "Camada superficial {sup}; camada profunda {fundo}. A reserva profunda é a que sustenta no veranico.",
   'aviso_calor': "A máxima de {mes} chega a {pico} °C, acima do limite de {limite} °C dessa cultura.",
@@ -113,6 +114,30 @@ def qualifica_chuva(place, m):
     mediano no Canta. Tercis dos 12 meses daquela coordenada."""
     c = sorted(NASA[place]['clim']['chuva_mm']); v = NASA[place]['clim']['chuva_mm'][m]
     return 'pouca' if v <= c[3] else 'muita' if v >= c[8] else 'media'
+
+def ate_onde_enxergo(place):
+    """ate que mes a serie observada de 2026 chega naquele lugar"""
+    ch = NASA[place]['ano2026']['chuva_mm']
+    idx = [i for i, v in enumerate(ch) if v is not None]
+    return max(idx) if idx else None
+
+def lacunas_do_lugar(place, m0):
+    """UM lugar so que sabe o que falta e POR QUE. Antes cada consumidor de
+    dado tratava o nulo no ponto de uso, com o if que estivesse ali, e por isso
+    metade das combinacoes de lugar e mes degradava sem dizer nada."""
+    an, out = NASA[place]['ano2026'], []
+    ate = ate_onde_enxergo(place)
+    if ate is None: return out
+    falta_chuva = any(an['chuva_mm'][(m0 - k) % 12] is None for k in (1, 2, 3))
+    if falta_chuva:
+        out.append({'o_que': 'como o ano está indo', 'ate': MES[ate], 'falar': True,
+                    'por_que': f'a leitura deste ano vai até {MES[ate]}',
+                    'efeito': 'uso só a média da série, sem ajustar pelo ano corrente'})
+    if an['solo_raiz'][m0] is None:
+        out.append({'o_que': 'umidade do solo deste mês', 'ate': MES[ate], 'falar': not falta_chuva,
+                    'por_que': f'a leitura deste ano vai até {MES[ate]}',
+                    'efeito': 'uso só a média da série'})
+    return out
 
 def estado_observado(place, m0):
     cl, an = NASA[place]['clim'], NASA[place]['ano2026']
@@ -259,7 +284,8 @@ def atender(p):
         return ('da ' if a == 'a' else 'do ') + nome_curto(n)
     res = {'intencao': intencao, 'lugar': NASA[place]['nome'], 'mes_plantio': MES[m0],
            'registro': 'local' if loc.get('moldes') else 'português neutro',
-           'estado_observado': est, 'opcoes': [], 'sei_pouco': [], 'limites': [],
+           'estado_observado': est, 'lacunas': lacunas_do_lugar(place, m0),
+           'opcoes': [], 'sei_pouco': [], 'limites': [],
            'fala': None, 'falas': [], 'aviso_do_ano': None, 'destaque': None}
 
     if intencao == 'estado-do-solo':
@@ -273,6 +299,12 @@ def atender(p):
             res['aviso_do_ano'] = _lista(M.get('solo_fundo',''))[0].format(
                 sup=M['estado_terra'][sup['situacao']], fundo=M['estado_terra'][fun['situacao']])
         if not sr: res['limites'].append('sem leitura de umidade do solo para este mês')
+        for l in res['lacunas']:
+            res['limites'].append(f"{l['o_que']}: {l['por_que']}, então {l['efeito']}")
+        if [x for x in res['lacunas'] if x.get('falar')] and not res.get('aviso_do_ano'):
+            l = [x for x in res['lacunas'] if x.get('falar')][0]
+            res['aviso_do_ano'] = render_all(M, 'lacuna_falada', ate=l['ate'],
+                mes=est['mes'], anos=est.get('anos_de_serie') or 45)[0]
         return res
     if intencao == 'vai-chover':
         res['limites'].append('não existe previsão de chuva nestes dados; a série é histórica')
@@ -282,6 +314,12 @@ def atender(p):
             estiagem=_r(est['veranico_normal_do_mes_dias']),
             estado=M['estado_terra'][s['situacao']] if s else 'sem leitura')
         res['fala'] = res['falas'][0]
+        for l in res['lacunas']:
+            res['limites'].append(f"{l['o_que']}: {l['por_que']}, então {l['efeito']}")
+        if [x for x in res['lacunas'] if x.get('falar')] and not res.get('aviso_do_ano'):
+            l = [x for x in res['lacunas'] if x.get('falar')][0]
+            res['aviso_do_ano'] = render_all(M, 'lacuna_falada', ate=l['ate'],
+                mes=est['mes'], anos=est.get('anos_de_serie') or 45)[0]
         return res
 
     colheu = p.get('colheu'); fam = CULT[colheu]['familia'] if colheu else None
@@ -302,7 +340,11 @@ def atender(p):
             'risco': r, 'encaixe': _r(enc,2) if enc is not None else None,
             'confianca': _r(conf,2), '_pqs': pqs,
             'porques': [M['porques'].get(k,'').format(colheu=cn, de_colheu=dcn, **pr) for k, pr in pqs],
-            'avisos': avisos(r, M), 'nao_sei': ns, 'qualidade_do_dado': c['qualidade'],
+            'avisos': avisos(r, M), 'nao_sei': ns,
+            # o que o aviso ja falou nao volta no "e tem coisa que eu nao sei":
+            # a pagina dizia a mesma ignorancia duas vezes na mesma frase
+            'nao_sei_nao_dito': [x for x in ns if not (r.get('agua_indireta') and 'água' in x)],
+            'qualidade_do_dado': c['qualidade'],
             'validar_com_tecnico': ['a janela de plantio oficial do ZARC para o município'],
         })
     res['sei_pouco'] = [{'cultura': o['cultura'], 'id': o['id'], 'familia': o['familia'],
@@ -356,6 +398,11 @@ def atender(p):
             res['falas'] = render_all(M, 'indicacao', 'fechos', colheu=cn, de_colheu=dcn,
                                       cultura=nome_curto(o['id']),
                                       porque=pq[0].upper()+pq[1:] if pq else '')
+    fal = [l for l in res['lacunas'] if l.get('falar')]
+    if fal and not res.get('aviso_do_ano'):
+        l = fal[0]
+        res['aviso_do_ano'] = render_all(M, 'lacuna_falada', ate=l['ate'],
+            mes=est['mes'], anos=est.get('anos_de_serie') or 45)[0]
     fa = est.get('fator_do_ano')
     if fa and intencao in ('proximo-plantio', 'e-se') and res.get('falas'):
         rz = fa['razao']
@@ -365,6 +412,8 @@ def atender(p):
     if res.get('falas'): res['fala'] = res['falas'][0]
     if not res.get('destaque') and res['opcoes']: res['destaque'] = res['opcoes'][0]['id']
     for o in res['opcoes']: o.pop('_pqs', None)
+    for l in res['lacunas']:
+        res['limites'].append(f"{l['o_que']}: {l['por_que']}, então {l['efeito']}")
     res['limites'].append('a janela de plantio oficial do ZARC não está carregada; confirme com técnico')
     return res
 

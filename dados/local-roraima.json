@@ -247,6 +247,10 @@
     "melhor_sem_ciclo": [
       "Pra isso aqui quem serve é {cultura}, só que eu não sei quanto tempo ela leva na terra, então não garanto que cabe. Das que eu conheço bem, a mais perto é {alternativa}.",
       "Olha, {cultura} é a que serve pro que você quer. Só me falta o tempo dela. Das que eu conheço direito, {alternativa} é a que mais chega perto."
+    ],
+    "lacuna_falada": [
+      "Uma coisa antes: a minha leitura deste ano vai até {ate}, então pra {mes} eu só tenho a média dos {anos} anos. Não dá pra te dizer como o ano está indo.",
+      "Te aviso que eu enxergo este ano só até {ate}. Pra {mes} eu uso a média de {anos} anos, e não o que o ano fez."
     ]
   }
 }

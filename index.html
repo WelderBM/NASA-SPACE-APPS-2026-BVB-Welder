@@ -154,6 +154,7 @@ function fala(t,continua){
 function responde(t,r,ctx){
   const d=digitando();
   setTimeout(()=>{
+    t=t.replace(/\.\s*\./g,'.').replace(/([.!?]\s+)([a-zà-ú])/g,(m,a,c)=>a+c.toUpperCase());
     d.remove();diz(t);fala(t);
     if(r!==undefined)painel(r);
     // o aviso do ano vem como SEGUNDO balao: a frase principal fica curta e o
@@ -234,8 +235,10 @@ function mostraRiscos(){
   if(!o){responde('Dessa eu não tenho número pra te dar.',undefined,'inicio');return}
   const p=[];
   if(o.avisos&&o.avisos.length)p.push(o.avisos.join('. '));
-  if(o.nao_sei&&o.nao_sei.length)p.push('E tem coisa que eu não sei: '+o.nao_sei[0]);
-  responde(p.length?p.join('. ')+'.':'Nessa eu não vi problema com a chuva do período.',st.ultima,'risco');
+  const falta=o.nao_sei_nao_dito||o.nao_sei||[];
+  if(falta.length)p.push('E tem coisa que eu não sei: '+falta[0]+'.');
+  const txt=p.join(' ').replace(/\.\s*\./g,'.').replace(/\.([a-zà-ú])/g,(m,c)=>'. '+c.toUpperCase());
+  responde(p.length?txt:'Nessa eu não vi problema com a chuva do período.',st.ultima,'risco');
 }
 function defineColheita(c,ecoar){
   st.colheu=c;$('colheu').value=c;
@@ -359,8 +362,12 @@ $('colheu').onchange=e=>{if(!e.target.value)return;diz('colhi '+nome(e.target.va
 $('mes').onchange=e=>{st.mes=parseInt(e.target.value,10);
   $('sub').textContent=DADOS.nasa.lugares[st.lugar].nome+' · '+MES_CERNE[st.mes];
   diz('e se fosse em '+MES_CERNE[st.mes]+'?','me');
-  if(st.colheu&&st.prio)indica();else{st.ultima=null;const r=pergunta({intencao:'estado-do-solo'});
-    responde(escolhe(r,'terra'+st.mes),r,st.ctx)}};
+  // trocar o mes mudava o painel e repetia a MESMA frase, porque o encaixe vem
+  // da caracteristica da planta e nao do mes. parecia que ele ignorou a
+  // pergunta. agora ele diz primeiro o que mudou no dado daquele mes.
+  const t=pergunta({intencao:'estado-do-solo'});
+  responde(escolhe(t,'terra'+st.mes),t,st.ctx);
+  if(st.colheu&&st.prio)setTimeout(()=>indica(),2100); else st.ultima=null;};
 if('speechSynthesis'in window)speechSynthesis.onvoiceschanged=()=>{diag();montaVozes()};
 
 const D='dados/';

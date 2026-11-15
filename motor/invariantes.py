@@ -73,7 +73,11 @@ def checa(r, caso):
             if n not in disp and n.rstrip('0').rstrip('.') not in disp:
                 erros.append(f"número {n} na fala e não na resposta: {f!r}")
 
-    # 5. confianca baixa tem que aparecer na fala, nao so no painel
+    # 5. degradar em silencio e proibido: se falta dado do ano, a resposta diz
+    if [l for l in (r.get('lacunas') or []) if l.get('falar')] and not r.get('aviso_do_ano'):
+        erros.append(f"degrada em silêncio: lacuna {r['lacunas'][0]['o_que']} e a resposta não declara")
+
+    # 6. confianca baixa tem que aparecer na fala, nao so no painel
     if o and (o.get('confianca') or 0) < CONF_MIN and r['intencao'] == 'proximo-plantio':
         if falas and not any('%' in f for f in falas):
             erros.append(f"confiança {o['confianca']} e a fala não avisa: {falas[0]!r}")
