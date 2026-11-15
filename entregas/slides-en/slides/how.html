@@ -2,14 +2,15 @@
 <p class="eyebrow">HOW IT WORKS</p>
 <h2>Three numbers, not one score</h2>
 <div class="three">
-<div class="box in" style="--i:0"><h3>Risk</h3><p class="q">Can I plant this here, now?</p><p class="small">NASA POWER rain (PRECTOTCORR), root-zone soil moisture (GWETROOT), and a year factor: the last 3 months vs normal</p></div>
-<div class="box in" style="--i:1"><h3>Fit</h3><p class="q">Does it serve what I want?</p><p class="small">Crop traits weighted by the farmer’s priority: nitrogen fixation, residue, drought tolerance, cycle length</p></div>
-<div class="box c in" style="--i:2"><h3>Confidence</h3><p class="q">How much of this is measured?</p><p class="small">The share of criteria we could actually evaluate. What we don’t know is listed in the answer.</p></div>
+<div class="box in" style="--i:0"><h3>Risk</h3><p class="q">Can I plant this here, now?</p><p class="small">NASA POWER rain, soil moisture at three depths, and a year factor: the last 3 months against normal</p></div>
+<div class="box in" style="--i:1"><h3>Fit</h3><p class="q">Does it serve what I want?</p><p class="small">Crop traits weighted by the farmer’s priority: nitrogen fixation, residue, drought tolerance, cycle, official planting window</p></div>
+<div class="box c in" style="--i:2"><h3>Confidence</h3><p class="q">How much of this is measured?</p><p class="small">The share of criteria we could evaluate. Every gap is listed in the answer, never filled with a guess.</p></div>
 </div>
-<div class="row" style="gap:48px;">
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;"><h3>Same code, opposite answers</h3><p class="small">Maize, same 500 mm need. Cantá, RR, April: 621 mm expected this year, water risk <b>low</b>. Rio Verde, GO, September: 331 mm, water risk <b>high</b>. No line of location-specific code.</p></div>
-<div style="flex:1;display:flex;flex-direction:column;gap:12px;"><h3>Why we split the score</h3><p class="small">Our first engine ranked brachiaria first using 27% of its criteria. Less data scored higher. The engine runs in the browser. AI understands and words, but never calculates, picks the crop or adds a number.</p></div>
+<div class="row" style="gap:40px;">
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;"><h3>Same code, opposite answers</h3><p class="small">Maize, 500 mm need. Cantá, April: 686 mm expected, risk <b>low</b>. Rio Verde, September: 386 mm, risk <b>high</b>. No location-specific code.</p></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;"><h3>The official window counts</h3><p class="small">ZARC window for cowpea in Roraima: June to August. Low-risk fit: 53% in April, 87% in July. No window loaded: a declared gap, never a zero.</p></div>
+<div style="flex:1;display:flex;flex-direction:column;gap:10px;"><h3>Honesty is tested</h3><p class="small">Our first engine ranked brachiaria first on 27% of its criteria. Now a gap left unsaid fails the test suite. No AI calculates or picks the crop.</p></div>
 </div>
-<p class="foot">Layers: NASA observation by coordinate · global crop traits · local crop list · farmer priority · thin channel adapter</p>
-<aside>Each option comes back with three separate numbers. Risk comes from NASA data for that coordinate and that month, adjusted by how this year is going. Fit comes from the crop’s traits weighted by what the farmer chose. Confidence says how much of the answer we could measure. We split them because our first engine had a bug: the crop we knew least about ranked first. The proof that the core is generic: same maize, same code, low water risk in Cantá and high in Rio Verde, Goiás, where the seasons are reversed.</aside>
+<p class="foot">Layers: NASA observation by coordinate · global crop traits · local crops and windows · farmer priority · thin channel adapter</p>
+<aside>Each option comes back with three separate numbers. Risk comes from NASA data for that coordinate and month: rain, soil moisture at three depths, and how this year is going. Fit comes from the crop’s traits weighted by what the farmer chose, and now also the official ZARC planting window: for cowpea in Roraima, the low-risk fit goes from 53 percent in April to 87 in July. Confidence says how much we could measure. The proof the core is generic: same maize, same code, low water risk in Cantá and high in Rio Verde, Goiás. And honesty is not a promise, it is a test: our first engine ranked the crop we knew least about first, so now any gap the answer does not say out loud breaks the test suite.</aside>
 </section>

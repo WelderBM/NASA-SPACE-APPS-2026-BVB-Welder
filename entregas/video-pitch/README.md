@@ -8,7 +8,7 @@
 
 | Tempo | Cena | Narração |
 | --- | --- | --- |
-| 0 a 7 s | Lavrado seco, buritis, Rosa com o cesto de mandioca. Etiqueta "−62% rain, Jun–Sep 2026, worst in 45 years, NASA POWER" | Cantá, Brazilian Amazon. Rosa just pulled up her cassava… after the weakest rains in forty-five years. |
+| 0 a 7 s | Lavrado seco, buritis, Rosa com o cesto de mandioca. Etiqueta "−62% rain, Jun–Sep 2026, lowest since 1981, NASA POWER" | Cantá, Brazilian Amazon. Rosa just pulled up her cassava… after the weakest rains since 1981. |
 | 7 a 10 s | Close, balão de pensamento com "?" | Now, one question. What do I plant next? |
 | 10 a 16 s | Ela fala com o celular; satélite chega e mira a terra; cartões "Rain" e "Soil moisture" | She asks. Our assistant reads NASA satellite data for her land. Rain, and soil. |
 | 16 a 21 s | Celular com as 4 prioridades; ela toca "Better soil"; resposta "Cowpea"; o chão escurece e brota | She picks what matters. Better soil? Cowpea. It leaves the ground stronger. |

@@ -1,0 +1,259 @@
+<!-- ===== SC2: title ===== -->
+<g id="sc2" opacity="0">
+  <rect width="1920" height="1080" fill="url(#endG)"/>
+  <g id="t2sprout" transform="translate(960,330) scale(2.6)"><use href="#sprout"/></g>
+  <text id="t2a" x="960" y="470" text-anchor="middle" font-size="150" font-weight="800" fill="#F5F0E6">AgroDeal</text>
+  <text id="t2b" x="960" y="570" text-anchor="middle" font-size="64" font-weight="700" fill="#E9B66A">What do I plant next?</text>
+  <g id="t2cart" opacity="0" transform="translate(960,680)">
+    <rect x="-330" y="-40" width="660" height="80" rx="40" fill="#25342B"/>
+    <g transform="translate(-270,0)" stroke="#C9D3C6" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-26,-18 h10 l10,30 h34 l8,-22 h-46"/><circle cx="2" cy="20" r="4"/><circle cx="26" cy="20" r="4"/>
+      <line x1="-30" y1="26" x2="40" y2="-30" stroke="#E07B5A" stroke-width="6"/>
+    </g>
+    <text x="-200" y="12" font-size="34" font-weight="600" fill="#F5F0E6">The name says deal. It sells nothing.</text>
+  </g>
+  <g id="t2chips" font-size="34" font-weight="700">
+    <g id="k1"><rect x="-150" y="-36" width="300" height="72" rx="36" fill="#2E6A4C"/><text text-anchor="middle" y="12" fill="#F5F0E6">Better soil</text></g>
+    <g id="k2"><rect x="-150" y="-36" width="300" height="72" rx="36" fill="#D9902F"/><text text-anchor="middle" y="12" fill="#1C2620">Low risk</text></g>
+    <g id="k3"><rect x="-150" y="-36" width="300" height="72" rx="36" fill="#3A8DC1"/><text text-anchor="middle" y="12" fill="#F5F0E6">Food at home</text></g>
+    <g id="k4"><rect x="-150" y="-36" width="300" height="72" rx="36" fill="#8C4A2F"/><text text-anchor="middle" y="12" fill="#F5F0E6">Pasture</text></g>
+  </g>
+</g>
+
+<!-- ===== SC3: the data ===== -->
+<g id="sc3" opacity="0">
+  <rect width="1920" height="1080" fill="#F5F0E6"/>
+  <text x="120" y="130" font-size="30" font-weight="700" fill="#2E6A4C" letter-spacing="3">THE PROBLEM · NASA POWER, CANTÁ, RORAIMA</text>
+  <!-- rain bars -->
+  <g id="rainChart">
+    <text x="120" y="220" font-size="44" font-weight="800" fill="#1C2620">June to September rain</text>
+    <line x1="120" y1="800" x2="720" y2="800" stroke="#4A5148" stroke-width="3"/>
+    <rect id="barAvg" x="170" y="800" width="200" height="0" rx="10" fill="#9AB8A6"/>
+    <rect id="bar26" x="450" y="800" width="200" height="0" rx="10" fill="#B5442E"/>
+    <text id="lblAvg" x="270" y="0" text-anchor="middle" font-size="56" font-weight="800" fill="#2E6A4C">859 mm</text>
+    <text id="lbl26" x="550" y="0" text-anchor="middle" font-size="56" font-weight="800" fill="#B5442E">330 mm</text>
+    <text x="270" y="850" text-anchor="middle" font-size="30" fill="#4A5148">1981–2025 average</text>
+    <text x="550" y="850" text-anchor="middle" font-size="30" fill="#4A5148">2026</text>
+    <g id="lowest" opacity="0" transform="translate(550,520)">
+      <rect x="-170" y="-40" width="340" height="80" rx="40" fill="#1C2620"/>
+      <text text-anchor="middle" y="12" font-size="34" font-weight="700" fill="#F5F0E6">Lowest since 1981</text>
+    </g>
+  </g>
+  <!-- dry spell -->
+  <g id="dry" opacity="0" transform="translate(860,200)">
+    <text x="0" y="20" font-size="44" font-weight="800" fill="#1C2620">Longest dry spell, rainy season</text>
+    <text x="0" y="110" font-size="30" fill="#4A5148">Normal</text>
+    <g id="dryN"></g>
+    <text x="0" y="230" font-size="30" fill="#4A5148">2026</text>
+    <g id="dry26"></g>
+    <text id="dryNum" x="0" y="345" font-size="56" font-weight="800" fill="#B5442E">24 days vs 9</text>
+  </g>
+  <!-- soil line -->
+  <g id="soil" opacity="0" transform="translate(860,640)">
+    <text x="0" y="0" font-size="44" font-weight="800" fill="#1C2620">Root-zone soil moisture, 2026</text>
+    <polyline id="soilLine" fill="none" stroke="#6E4527" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" points=""/>
+    <g id="soilDots"></g>
+    <g id="soilMonths" font-size="26" fill="#4A5148"></g>
+    <g id="soilNote" opacity="0"><rect x="690" y="110" width="350" height="110" rx="20" fill="#1C2620"/><text x="712" y="158" font-size="30" font-weight="700" fill="#F5F0E6">September = January</text><text x="712" y="198" font-size="26" fill="#C9D3C6">five months early</text></g>
+  </g>
+  <text x="120" y="1072" font-size="20" fill="#4A5148">Source: NASA POWER (PRECTOTCORR, GWETROOT), lat 2.61, lon −60.60, read on Nov 14–15, 2026</text>
+</g>
+
+<!-- ===== SC4: El Nino ===== -->
+<g id="sc4" opacity="0">
+  <rect width="1920" height="1080" fill="#EAE3D3"/>
+  <text x="120" y="130" font-size="30" font-weight="700" fill="#2E6A4C" letter-spacing="3">WILL 2027 REPEAT IT?</text>
+  <text x="120" y="210" font-size="52" font-weight="800" fill="#1C2620">June–September rain in El Niño years, vs average</text>
+  <line x1="200" y1="560" x2="1720" y2="560" stroke="#4A5148" stroke-width="4"/>
+  <text x="1740" y="570" font-size="28" fill="#4A5148">average</text>
+  <g id="enDots"></g>
+  <g id="noRule" opacity="0" transform="translate(960,320)">
+    <rect x="-470" y="-50" width="940" height="100" rx="50" fill="#1C2620"/>
+    <text text-anchor="middle" y="14" font-size="42" font-weight="800" fill="#F5F0E6">No rule. We don’t predict. We observe.</text>
+  </g>
+  <text x="120" y="1072" font-size="20" fill="#4A5148">NASA POWER, Cantá. El Niño year list is partial (1994, 2018 and 2019 missing), so we show the spread, never an average.</text>
+</g>
+
+<!-- ===== SC5: people ===== -->
+<g id="sc5" opacity="0">
+  <rect width="1920" height="1080" fill="#DCEFD7"/>
+  <text x="120" y="130" font-size="30" font-weight="700" fill="#2E6A4C" letter-spacing="3">THE PEOPLE</text>
+  <g id="waffle" transform="translate(120,170)"></g>
+  <text id="w87" x="120" y="790" font-size="110" font-weight="800" fill="#B5442E" opacity="0">87%</text>
+  <text id="w87b" x="120" y="850" font-size="32" fill="#1C2620" opacity="0">of Roraima’s 16,850 farms: no technical assistance</text>
+  <text id="w87c" x="120" y="895" font-size="26" fill="#4A5148" opacity="0">IBGE Agricultural Census, 2017</text>
+  <!-- road + truck -->
+  <g id="road" opacity="0">
+    <path d="M900,700 C1100,640 1300,760 1500,690 C1650,640 1760,700 1900,660" stroke="#C9A066" stroke-width="40" fill="none"/>
+    <g id="houses"></g>
+    <g id="truck">
+      <rect x="-60" y="-50" width="80" height="40" rx="6" fill="#2E6A4C"/><rect x="20" y="-38" width="40" height="28" rx="5" fill="#2E6A4C"/><rect x="28" y="-34" width="22" height="14" fill="#CFE3F2"/>
+      <circle cx="-38" cy="-8" r="13" fill="#2B2B2B"/><circle cx="38" cy="-8" r="13" fill="#2B2B2B"/>
+    </g>
+    <g id="agentNote" opacity="0" transform="translate(1340,300)">
+      <rect x="-420" y="-110" width="840" height="220" rx="30" fill="#FFFDF6"/>
+      <text text-anchor="middle" y="-50" font-size="30" font-weight="700" fill="#2E6A4C">Roraima’s extension agency, this season:</text>
+      <text text-anchor="middle" y="0" font-size="34" font-weight="700" fill="#1C2620">“choose crops better adapted</text>
+      <text text-anchor="middle" y="44" font-size="34" font-weight="700" fill="#1C2620">to the dry period”</text>
+      <text text-anchor="middle" y="90" font-size="24" fill="#4A5148">IATER, El Niño 2026/27 action (Diário RR, Oct 2026)</text>
+    </g>
+  </g>
+  <g id="survey" opacity="0" transform="translate(1340,930)">
+    <rect x="-470" y="-62" width="940" height="124" rx="30" fill="#1C2620"/>
+    <text text-anchor="middle" y="-10" font-size="32" font-weight="700" fill="#F5F0E6">4 of 7 surveyed families plant again right after harvest</text>
+    <text text-anchor="middle" y="36" font-size="28" fill="#E9B66A">“Many were afraid to invest.” · farmer, Goiás (interview)</text>
+  </g>
+</g>
+
+<!-- ===== SC6: the gap ===== -->
+<g id="sc6" opacity="0">
+  <rect width="1920" height="1080" fill="#F5F0E6"/>
+  <text x="120" y="130" font-size="30" font-weight="700" fill="#2E6A4C" letter-spacing="3">WHAT EXISTS</text>
+  <g id="g1" transform="translate(120,220)">
+    <rect width="800" height="330" rx="30" fill="#EAE3D3"/>
+    <g transform="translate(70,80)"><rect width="120" height="110" rx="12" fill="#FFFDF6" stroke="#4A5148" stroke-width="4"/><rect width="120" height="30" rx="8" fill="#2E6A4C"/><g fill="#9AB8A6"><rect x="15" y="45" width="20" height="18"/><rect x="50" y="45" width="20" height="18"/><rect x="85" y="45" width="20" height="18"/><rect x="15" y="75" width="20" height="18"/><rect x="50" y="75" width="20" height="18" fill="#D9902F"/></g></g>
+    <text x="230" y="110" font-size="40" font-weight="800" fill="#1C2620">Official zoning (ZARC)</text>
+    <text x="230" y="160" font-size="32" fill="#4A5148">When to plant the crop</text>
+    <text x="230" y="200" font-size="32" fill="#4A5148">you already chose.</text>
+    <text x="230" y="270" font-size="26" fill="#2E6A4C" font-weight="700">We walk beside it.</text>
+  </g>
+  <g id="g2" transform="translate(1000,220)">
+    <rect width="800" height="330" rx="30" fill="#D5D8DB"/>
+    <g transform="translate(130,150)"><circle r="70" fill="#7A8D3A"/><text text-anchor="middle" y="32" font-size="96" font-weight="800" fill="#F1F4E2">$</text></g>
+    <text x="250" y="110" font-size="40" font-weight="800" fill="#1C2620">Rotation tools</text>
+    <text x="250" y="160" font-size="32" fill="#4A5148">Almost all optimize only</text>
+    <text x="250" y="200" font-size="32" fill="#4A5148">profit, for big farms.</text>
+    <text x="250" y="270" font-size="24" fill="#4A5148">Schöning et al., 2023</text>
+  </g>
+  <g id="g3" transform="translate(120,620)">
+    <rect width="1680" height="300" rx="30" fill="#2E6A4C"/>
+    <g transform="translate(150,170) scale(2)"><use href="#sprout"/></g>
+    <text x="300" y="110" font-size="52" font-weight="800" fill="#F5F0E6">AgroDeal starts from the harvest,</text>
+    <text x="300" y="180" font-size="52" font-weight="800" fill="#E9B66A">and the small farmer picks the goal.</text>
+    <text x="300" y="245" font-size="28" fill="#DCEFD7">None of the tools we found does both.</text>
+  </g>
+</g>
+
+<!-- ===== SC7: demo ===== -->
+<g id="sc7" opacity="0">
+  <rect width="1920" height="1080" fill="url(#skyWet)"/>
+  <rect x="0" y="720" width="1920" height="360" fill="url(#groundWet)"/>
+  <g transform="translate(1700,705) scale(.8)"><use href="#buriti"/></g>
+  <g fill="#4A2F18" opacity=".55"><rect x="1050" y="820" width="860" height="14" rx="7"/><rect x="1030" y="900" width="880" height="14" rx="7"/></g>
+  <g id="sp7"></g>
+  <g id="rosa7" transform="translate(1260,700) scale(.85)"></g>
+  <!-- phone -->
+  <g transform="translate(470,540)">
+    <rect x="-260" y="-470" width="520" height="940" rx="60" fill="#1E2A30"/>
+    <rect x="-235" y="-440" width="470" height="880" rx="40" fill="#F5F0E6"/>
+    <rect x="-235" y="-440" width="470" height="90" rx="40" fill="#2E6A4C"/><rect x="-235" y="-380" width="470" height="30" fill="#2E6A4C"/>
+    <text x="0" y="-380" text-anchor="middle" font-size="32" font-weight="700" fill="#F5F0E6">AgroDeal</text>
+    <g id="userMsg"><rect x="-40" y="-320" width="255" height="70" rx="22" fill="#9BE3B8"/><text x="-20" y="-276" font-size="26" fill="#1C2620">I harvested cassava</text></g>
+    <g id="selChips" font-size="26" font-weight="700"></g>
+    <g id="botMsg" opacity="0"><rect id="botBg" x="-215" y="-80" width="430" height="200" rx="24" fill="#1C2620"/><text id="botT1" x="-190" y="-30" font-size="30" font-weight="800" fill="#E9B66A"></text><text id="botT2" x="-190" y="15" font-size="26" fill="#F5F0E6"></text><text id="botT3" x="-190" y="50" font-size="26" fill="#F5F0E6"></text><text id="botT4" x="-190" y="85" font-size="26" fill="#F5F0E6"></text></g>
+    <g id="confBadge" opacity="0" transform="translate(0,200)"><rect x="-215" y="-34" width="430" height="68" rx="34" fill="#FFFDF6" stroke="#B5442E" stroke-width="4"/><text id="confT" text-anchor="middle" y="10" font-size="26" font-weight="700" fill="#B5442E"></text></g>
+  </g>
+  <!-- ZARC window meter -->
+  <g id="zarc" opacity="0" transform="translate(860,140)">
+    <rect x="0" y="0" width="1000" height="300" rx="30" fill="#FFFDF6" opacity=".96"/>
+    <text x="40" y="60" font-size="34" font-weight="800" fill="#1C2620">Official ZARC window, cowpea, Roraima</text>
+    <g id="months" font-size="24" fill="#4A5148"></g>
+    <rect x="40" y="200" width="920" height="16" rx="8" fill="#EAE3D3"/>
+    <rect id="fitBar" x="40" y="200" width="0" height="16" rx="8" fill="#2E6A4C"/>
+    <text id="fitT" x="40" y="265" font-size="34" font-weight="800" fill="#2E6A4C"></text>
+  </g>
+</g>
+
+<!-- ===== SC8: three numbers ===== -->
+<g id="sc8" opacity="0">
+  <rect width="1920" height="1080" fill="#1C2620"/>
+  <text x="120" y="130" font-size="30" font-weight="700" fill="#E9B66A" letter-spacing="3">HOW IT WORKS</text>
+  <text x="120" y="210" font-size="56" font-weight="800" fill="#F5F0E6">Three numbers per option. Never mixed.</text>
+  <g id="n1" transform="translate(120,290)"><rect width="520" height="470" rx="30" fill="#25342B"/><rect width="520" height="12" rx="6" fill="#3A8DC1"/>
+    <text x="40" y="90" font-size="52" font-weight="800" fill="#F5F0E6">Risk</text>
+    <text x="40" y="140" font-size="28" fill="#C9D3C6">Can I plant this here, now?</text>
+    <path d="M90,220 C90,220 60,260 60,280 a30,30 0 0,0 60,0 C120,260 90,220 90,220Z" fill="#3A8DC1"/>
+    <rect x="170" y="225" width="90" height="28" fill="#C98B4E"/><rect x="170" y="256" width="90" height="28" fill="#9C6534"/><rect x="170" y="287" width="90" height="28" fill="#6E4527"/>
+    <text x="40" y="370" font-size="28" fill="#F5F0E6">NASA rain + soil moisture</text>
+    <text x="40" y="410" font-size="28" fill="#F5F0E6">at 3 depths, adjusted</text>
+    <text x="40" y="450" font-size="28" fill="#F5F0E6">to how this year is going</text></g>
+  <g id="n2" transform="translate(700,290)"><rect width="520" height="470" rx="30" fill="#25342B"/><rect width="520" height="12" rx="6" fill="#2E6A4C"/>
+    <text x="40" y="90" font-size="52" font-weight="800" fill="#F5F0E6">Fit</text>
+    <text x="40" y="140" font-size="28" fill="#C9D3C6">Does it serve what I want?</text>
+    <g transform="translate(110,300) scale(1.6)"><use href="#sprout"/></g>
+    <text x="40" y="370" font-size="28" fill="#F5F0E6">Crop traits: nitrogen,</text>
+    <text x="40" y="410" font-size="28" fill="#F5F0E6">residue, drought, cycle,</text>
+    <text x="40" y="450" font-size="28" fill="#F5F0E6">weighed by her choice</text></g>
+  <g id="n3" transform="translate(1280,290)"><rect width="520" height="470" rx="30" fill="#25342B"/><rect width="520" height="12" rx="6" fill="#D9902F"/>
+    <text x="40" y="90" font-size="52" font-weight="800" fill="#F5F0E6">Confidence</text>
+    <text x="40" y="140" font-size="28" fill="#C9D3C6">How much is measured?</text>
+    <circle cx="110" cy="260" r="62" fill="none" stroke="#3B4A40" stroke-width="20"/>
+    <circle id="confArc" cx="110" cy="260" r="62" fill="none" stroke="#D9902F" stroke-width="20" stroke-dasharray="0 400" transform="rotate(-90 110 260)"/>
+    <text id="confPct" x="110" y="272" text-anchor="middle" font-size="34" font-weight="800" fill="#F5F0E6">82%</text>
+    <text x="40" y="370" font-size="28" fill="#F5F0E6">A low number is shown,</text>
+    <text x="40" y="410" font-size="28" fill="#F5F0E6">not hidden. Gaps are</text>
+    <text x="40" y="450" font-size="28" fill="#F5F0E6">said out loud.</text></g>
+  <g id="arith" opacity="0" transform="translate(960,880)">
+    <rect x="-760" y="-50" width="1520" height="100" rx="50" fill="#F5F0E6"/>
+    <text text-anchor="middle" y="14" font-size="36" font-weight="700" fill="#1C2620">Plain arithmetic on named data · runs in the browser · no model guesses a number</text>
+  </g>
+</g>
+
+<!-- ===== SC9: same code ===== -->
+<g id="sc9" opacity="0">
+  <rect width="960" height="1080" fill="#DCEFD7"/><rect x="960" width="960" height="1080" fill="#F2E3C9"/>
+  <rect x="954" width="12" height="1080" fill="#F5F0E6"/>
+  <text x="960" y="120" text-anchor="middle" font-size="44" font-weight="800" fill="#1C2620">Same maize · same code · two places</text>
+  <g id="pA" transform="translate(480,0)">
+    <text text-anchor="middle" y="260" font-size="56" font-weight="800" fill="#1C2620">Cantá, Roraima</text>
+    <text text-anchor="middle" y="315" font-size="32" fill="#4A5148">planting in April · rains peak May–July</text>
+    <rect x="-350" y="420" width="700" height="80" rx="16" fill="#FFFDF6"/>
+    <rect id="barA" x="-350" y="420" width="0" height="80" rx="16" fill="#2E6A4C"/>
+    <line id="needA" x1="0" y1="400" x2="0" y2="520" stroke="#1C2620" stroke-width="5" stroke-dasharray="10 8"/>
+    <text id="needAt" x="0" y="555" text-anchor="middle" font-size="26" fill="#1C2620">500 mm needed</text>
+    <text text-anchor="middle" y="650" font-size="52" font-weight="800" fill="#2E6A4C">686 mm expected</text>
+    <text id="vA" text-anchor="middle" y="760" font-size="72" font-weight="800" fill="#2E6A4C">LOW RISK</text>
+  </g>
+  <g id="pB" transform="translate(1440,0)">
+    <text text-anchor="middle" y="260" font-size="56" font-weight="800" fill="#1C2620">Rio Verde, Goiás</text>
+    <text text-anchor="middle" y="315" font-size="32" fill="#4A5148">planting in September · seasons reversed</text>
+    <rect x="-350" y="420" width="700" height="80" rx="16" fill="#FFFDF6"/>
+    <rect id="barB" x="-350" y="420" width="0" height="80" rx="16" fill="#B5442E"/>
+    <line x1="0" y1="400" x2="0" y2="520" stroke="#1C2620" stroke-width="5" stroke-dasharray="10 8"/>
+    <text x="0" y="555" text-anchor="middle" font-size="26" fill="#1C2620">500 mm needed</text>
+    <text text-anchor="middle" y="650" font-size="52" font-weight="800" fill="#B5442E">386 mm expected</text>
+    <text id="vB" text-anchor="middle" y="760" font-size="72" font-weight="800" fill="#B5442E">HIGH RISK</text>
+  </g>
+  <text x="960" y="1072" text-anchor="middle" font-size="20" fill="#4A5148">Engine output, Nov 15, 2026: NASA POWER climatology adjusted by the last 3 months; maize cycle 110–145 days (MAPA group II)</text>
+</g>
+
+<!-- ===== SC10: limits + next ===== -->
+<g id="sc10" opacity="0">
+  <rect width="1920" height="1080" fill="#F5F0E6"/>
+  <g transform="translate(120,180)">
+    <text font-size="30" font-weight="700" fill="#B5442E" letter-spacing="3">WHAT IT SAYS IT CAN’T DO</text>
+    <g id="lim" font-size="44" font-weight="700" fill="#1C2620">
+      <g id="l1" transform="translate(0,110)"><circle cx="24" cy="-14" r="24" fill="#B5442E"/><path d="M14,-24 l20,20 M34,-24 l-20,20" stroke="#F5F0E6" stroke-width="5"/><text x="70" y="0">No rain forecast</text></g>
+      <g id="l2" transform="translate(0,200)"><circle cx="24" cy="-14" r="24" fill="#B5442E"/><path d="M14,-24 l20,20 M34,-24 l-20,20" stroke="#F5F0E6" stroke-width="5"/><text x="70" y="0">No prices, no labor data</text></g>
+      <g id="l3" transform="translate(0,290)"><circle cx="24" cy="-14" r="24" fill="#D9902F"/><text x="16" y="-2" font-size="30" fill="#1C2620">!</text><text x="70" y="0">14 crops so far, 4 with good data</text></g>
+    </g>
+  </g>
+  <g transform="translate(120,620)">
+    <text font-size="30" font-weight="700" fill="#2E6A4C" letter-spacing="3">NEXT</text>
+    <g id="nx1" transform="translate(0,90)"><rect width="520" height="150" rx="26" fill="#2E6A4C"/><text x="30" y="65" font-size="34" font-weight="800" fill="#F5F0E6">More ZARC windows</text><text x="30" y="110" font-size="26" fill="#DCEFD7">cowpea is already in</text></g>
+    <g id="nx2" transform="translate(570,90)"><rect width="520" height="150" rx="26" fill="#D9902F"/><text x="30" y="65" font-size="34" font-weight="800" fill="#1C2620">Field tests in Roraima</text><text x="30" y="110" font-size="26" fill="#1C2620">farmers + extension agents</text></g>
+    <g id="nx3" transform="translate(1140,90)"><rect width="540" height="150" rx="26" fill="#3A8DC1"/><text x="30" y="65" font-size="34" font-weight="800" fill="#F5F0E6">WhatsApp</text><text x="30" y="110" font-size="26" fill="#F5F0E6">same engine, thin adapter</text></g>
+  </g>
+</g>
+
+<!-- ===== SC11: end ===== -->
+<g id="sc11" opacity="0">
+  <rect width="1920" height="1080" fill="url(#endG)"/>
+  <g id="sp11"></g>
+  <text id="f1" x="960" y="300" text-anchor="middle" font-size="64" font-weight="700" fill="#C9D3C6">It won’t tell Rosa what to do.</text>
+  <text id="f2" x="960" y="390" text-anchor="middle" font-size="56" font-weight="700" fill="#F5F0E6">It shows what each choice does to her soil, this year.</text>
+  <text id="f3" x="960" y="560" text-anchor="middle" font-size="140" font-weight="800" fill="#F5F0E6">AgroDeal</text>
+  <text id="f4" x="960" y="650" text-anchor="middle" font-size="64" font-weight="700" fill="#E9B66A">What do I plant next?</text>
+  <text id="f5" x="960" y="760" text-anchor="middle" font-size="30" fill="#C9D3C6">NASA Space Apps 2026 · Field Shift: Adapting Farms with NASA Data</text>
+  <text id="f6" x="960" y="805" text-anchor="middle" font-size="28" fill="#C9D3C6">Welder Barroso · Boa Vista, Roraima, Brazil · github.com/WelderBM/NASA-SPACE-APPS-2026-BVB-Welder</text>
+</g>

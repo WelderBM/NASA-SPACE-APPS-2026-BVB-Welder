@@ -1,0 +1,275 @@
+{
+"lines": [
+[
+0.4,
+10.76
+],
+[
+10.76,
+17.79
+],
+[
+17.79,
+39.91
+],
+[
+39.91,
+51.54
+],
+[
+51.54,
+74.66
+],
+[
+74.66,
+91.39
+],
+[
+91.39,
+118.66
+],
+[
+118.66,
+135.95
+],
+[
+135.95,
+149.12
+],
+[
+149.12,
+158.95
+],
+[
+158.95,
+167.48
+]
+],
+"phrases": [
+[
+"This is Cant\u00e1, in Roraima, in the Brazilian Amazon.",
+0.4,
+3.57
+],
+[
+"Rosa just pulled up her cassava.",
+3.87,
+5.66
+],
+[
+"And after every harvest, she asks the same question...",
+5.96,
+8.78
+],
+[
+"What do I plant next?",
+9.03,
+10.16
+],
+[
+"AgroDeal helps her answer it.",
+10.76,
+12.43
+],
+[
+"The name says deal, but it sells nothing.",
+12.68,
+14.82
+],
+[
+"It lets the farmer choose what to optimize.",
+15.02,
+17.19
+],
+[
+"First, the problem, measured with NASA POWER.",
+17.79,
+20.28
+],
+[
+"From June to September, Cant\u00e1 got three hundred and thirty millimeters of rain.",
+20.58,
+24.97
+],
+[
+"The average is eight hundred and fifty-nine. The lowest since 1981.",
+25.17,
+29.89
+],
+[
+"The longest dry spell in the rainy season: twenty-four days. Normally, nine.",
+30.24,
+34.7
+],
+[
+"By September, the soil was as dry as in January. Five months early.",
+35.0,
+39.31
+],
+[
+"Will 2027 repeat it?",
+39.91,
+41.92
+],
+[
+"In El Ni\u00f1o years, that rain ranged from forty-eight percent below average, to seventeen above.",
+42.17,
+47.82
+],
+[
+"There is no rule. So we don't predict. We observe.",
+48.07,
+50.94
+],
+[
+"Second, the people.",
+51.54,
+52.56
+],
+[
+"In the last census, eighty-seven percent of Roraima's farms had no technical assistance.",
+52.81,
+58.1
+],
+[
+"Right now, the state extension agency tells families to choose crops suited to the dry period...",
+58.4,
+63.7
+],
+[
+"but it only reaches as far as an agent can drive.",
+63.85,
+66.56
+],
+[
+"In our survey, most families plant again right after harvest.",
+66.86,
+70.46
+],
+[
+"And a farmer in Goi\u00e1s told us many were afraid to invest.",
+70.66,
+74.06
+],
+[
+"Tools exist.",
+74.66,
+75.56
+],
+[
+"Brazil's official zoning tells you when to plant the crop you already chose.",
+75.76,
+79.96
+],
+[
+"And a peer-reviewed study found that almost all rotation tools optimize only profit, for big farms.",
+80.21,
+86.49
+],
+[
+"None we found starts from the harvest, and lets the small farmer pick the goal.",
+86.74,
+90.79
+],
+[
+"So, back to Rosa.",
+91.39,
+92.53
+],
+[
+"Better soil? Cowpea. It's not related to cassava, so the pest left in the ground won't take it.",
+92.78,
+98.41
+],
+[
+"Low risk, in July? Cowpea again, for another reason. Out of the ground in seventy days.",
+98.71,
+104.13
+],
+[
+"July is inside the official cowpea window, so the fit jumps from fifty-three to eighty-seven percent.",
+104.38,
+110.52
+],
+[
+"Ask for pasture: brachiaria. But it admits it doesn't know how long it takes.",
+110.82,
+115.3
+],
+[
+"Ask about income: it says it can't measure that.",
+115.55,
+118.06
+],
+[
+"Every option gets three numbers. Never mixed.",
+118.66,
+121.23
+],
+[
+"Risk: from NASA rain and soil moisture, adjusted to this year.",
+121.48,
+125.18
+],
+[
+"Fit: from crop traits, weighed by her choice.",
+125.38,
+127.71
+],
+[
+"And confidence: how much we could actually measure.",
+127.91,
+130.49
+],
+[
+"Plain arithmetic on named data, in the browser. No model guesses a number.",
+130.79,
+135.35
+],
+[
+"Same maize, same code, two places.",
+135.95,
+138.16
+],
+[
+"Cant\u00e1, in April: six hundred and eighty-six millimeters, against five hundred needed. Low risk.",
+138.41,
+144.35
+],
+[
+"Rio Verde, in September: three hundred and eighty-six. High risk.",
+144.6,
+148.52
+],
+[
+"What it can't do, it says. No rain forecast. No prices. Fourteen crops, so far.",
+149.12,
+154.2
+],
+[
+"Next: more official windows, field tests in Roraima, and WhatsApp.",
+154.5,
+158.35
+],
+[
+"AgroDeal won't tell Rosa what to do.",
+158.95,
+161.06
+],
+[
+"It shows what each choice does to her soil, this year.",
+161.31,
+163.75
+],
+[
+"What do I plant next?",
+164.15,
+165.28
+],
+[
+"Now, she can explore it.",
+165.53,
+166.88
+]
+]
+}
