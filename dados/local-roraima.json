@@ -120,14 +120,41 @@
     "praga_de_solo": "a praga que ficou na terra"
   },
   "moldes": {
-    "_regra": "Frase curta, uma ideia, no maximo 35 palavras. Sem termo tecnico. Numero so quando ele pedir.",
-    "indicacao": "Depois {de_colheu}, eu iria de {cultura}. {porque}. Quer saber o que pode dar errado?",
-    "indicacao_com_aviso": "Pelo que você quer, {cultura} seria a melhor, mas te aviso: pode faltar água pra ela. Quer ver uma que arrisca menos?",
-    "hipotese_boa": "{cultura} dá pra plantar, sim. A chuva desse tempo dá o que ela precisa. Quer comparar com as outras?",
-    "hipotese_ruim": "{cultura} dá pra plantar, mas pode faltar água pra ela. A chuva desse tempo fica abaixo do que ela precisa. Quer ver outra?",
-    "hipotese_parente": "{cultura} é parente {de_colheu}. Plantar uma atrás da outra deixa a praga que ficou na terra se multiplicar. Eu não iria por aí.",
-    "sem_dado": "Das que dão aí, eu conheço a parentada de {n}, mas não sei quanto tempo cada uma leva. Sem isso eu não arrisco te indicar.",
-    "nao_sei_prever": "Prever chuva eu não sei, não tenho isso. O que eu sei é que {mes} costuma dar {chuva} e a terra está {estado}. Pra previsão, olha a previsão do tempo.",
+    "_regra": "Frase curta, uma ideia, no maximo 35 palavras. Sem termo tecnico. Numero so quando ele pedir. CADA MOLDE E UMA LISTA: o motor gera todas as variantes e a pagina nunca repete a mesma frase duas vezes seguidas.",
+    "indicacao": [
+      "Depois {de_colheu}, eu iria de {cultura}. {porque}.",
+      "Olha, {de_colheu} pra {cultura} funciona bem. {porque}.",
+      "Se fosse eu, depois {de_colheu} eu botava {cultura}. {porque}."
+    ],
+    "indicacao_com_aviso": [
+      "Pelo que você quer, {cultura} seria a melhor, mas te aviso: pode faltar água pra ela.",
+      "{cultura} encaixa no que você quer, só que a água é apertada. Pode faltar.",
+      "Ia te dizer {cultura}, mas tem um porém: a chuva desse tempo fica curta pro que ela pede."
+    ],
+    "hipotese_boa": [
+      "{cultura} dá pra plantar, sim. A chuva desse tempo dá o que ela precisa.",
+      "Pode ir de {cultura}. A chuva do período cobre o que ela pede.",
+      "{cultura} serve. A chuva que vem dá conta dela."
+    ],
+    "hipotese_ruim": [
+      "{cultura} dá pra plantar, mas pode faltar água pra ela.",
+      "Dá, mas eu ficaria de olho: a chuva desse tempo fica abaixo do que {cultura} pede.",
+      "{cultura} aguenta, só que a água fica curta."
+    ],
+    "hipotese_parente": [
+      "{cultura} é parente {de_colheu}. Plantar uma atrás da outra deixa a praga que ficou na terra se multiplicar. Eu não iria por aí.",
+      "Essa é da mesma parentada {de_colheu}. A praga que ficou ia só engordar. Eu não faria.",
+      "{cultura} e {colheu} são parentes. Uma atrás da outra alimenta a praga do solo."
+    ],
+    "sem_dado": [
+      "Das que dão aí, eu conheço a parentada de {n}, mas não sei quanto tempo cada uma leva. Sem isso eu não arrisco te indicar.",
+      "Eu sei de quem {n} delas são parentes, mas o tempo de cada uma eu não tenho. Prefiro não chutar."
+    ],
+    "nao_sei_prever": [
+      "Prever chuva eu não sei, não tenho isso. O que eu sei é que {mes} costuma dar {chuva} e a terra está {estado}. Pra previsão, olha a previsão do tempo.",
+      "Essa eu não tenho: previsão não é comigo. Agora, {mes} normalmente dá {chuva}, e a terra está {estado}.",
+      "Adivinhar chuva eu não adivinho. Posso te dizer que {mes} costuma dar {chuva} e a terra está {estado}."
+    ],
     "porques": {
       "familia": "não é parente {de_colheu}, então a praga que ficou na terra não pega nela",
       "agua": "a chuva desse tempo dá o que ela precisa",
@@ -146,8 +173,44 @@
       "media": "chuva mediana",
       "pouca": "chuva fraca"
     },
-    "hipotese_mesma": "Isso é a mesma coisa que você acabou de tirar. Plantar de novo deixa a praga que ficou na terra se multiplicar. Eu não iria por aí.",
-    "hipotese_parente_sem_ciclo": "{cultura} é parente {de_colheu}, então eu não iria por aí. Do resto dela eu não sei, não tenho quanto tempo ela leva.",
-    "hipotese_sem_ciclo": "{cultura} não é parente {de_colheu}, isso já ajuda. Mas eu não sei quanto tempo ela leva pra dar, então não arrisco dizer mais."
+    "hipotese_mesma": [
+      "Isso é a mesma coisa que você acabou de tirar. Plantar de novo deixa a praga que ficou na terra se multiplicar.",
+      "Essa é a que acabou de sair da terra. Repetir só engorda a praga que ficou."
+    ],
+    "hipotese_parente_sem_ciclo": [
+      "{cultura} é parente {de_colheu}, então eu não iria por aí. Do resto dela eu não sei, não tenho quanto tempo ela leva.",
+      "Essa é da mesma parentada {de_colheu}, já não serve. E o tempo dela eu não sei."
+    ],
+    "hipotese_sem_ciclo": [
+      "{cultura} não é parente {de_colheu}, isso já ajuda. Mas eu não sei quanto tempo ela leva pra dar, então não arrisco dizer mais.",
+      "Parente {de_colheu} ela não é, o que já é bom. Só que o tempo dela eu não tenho."
+    ],
+    "fechos": [
+      "Quer saber o que pode dar errado?",
+      "Quer que eu diga o risco?",
+      "",
+      "Te falo o que pode atrapalhar, se quiser."
+    ],
+    "fechos_aviso": [
+      "Quer ver uma que arrisca menos?",
+      "Quer que eu procure outra?",
+      "Se quiser, eu vejo uma mais segura."
+    ],
+    "fechos_hipotese": [
+      "Quer comparar com as outras?",
+      "Quer ver se tem melhor?",
+      "",
+      "Se quiser eu comparo com as outras."
+    ],
+    "estado_da_terra": [
+      "A terra aí está {estado}. {mes} costuma dar {chuva}.",
+      "Pelo que eu vejo, a terra está {estado} pra época. {mes} normalmente dá {chuva}.",
+      "Está {estado}, a terra. E {mes} costuma vir com {chuva}."
+    ],
+    "fechos_terra": [
+      "Quer que eu diga o que plantar?",
+      "",
+      "Se quiser eu digo o que eu botaria."
+    ]
   }
 }

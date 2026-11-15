@@ -25,6 +25,11 @@ body{background:#0b141a;color:#e9edef;font:15px/1.5 system-ui,-apple-system,sans
 .chip{background:#1f2c33;color:#e9edef;border:1px solid #2a3942;border-radius:14px;
       padding:5px 11px;font-size:13px;cursor:pointer;font-family:inherit}
 .chip:hover{background:#2a3942}.chip.on{background:#005c4b;border-color:#00a884}
+.dig span{display:inline-block;width:6px;height:6px;border-radius:50%;background:#8696a0;margin:0 2px;animation:d 1.2s infinite}
+.dig span:nth-child(2){animation-delay:.2s}.dig span:nth-child(3){animation-delay:.4s}
+@keyframes d{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.hora{font-size:10.5px;color:#8696a0;margin-left:7px;float:right;margin-top:3px}
+.prow{display:flex;gap:6px;align-items:center;padding:7px 14px 0;flex-wrap:wrap;font-size:12px;color:#8696a0}
 .row{display:flex;gap:8px;padding:10px 14px;flex:0 0 auto;background:#1f2c33;align-items:center}
 .row input{flex:1;background:#2a3942;border:0;color:#e9edef;padding:10px 13px;border-radius:18px;
            font:inherit;outline:none}
@@ -54,6 +59,7 @@ select{width:100%;background:#2a3942;color:#e9edef;border:1px solid #2a3942;bord
     <div class="bar"><div class="av">🌱</div>
       <div><b>Assistente da roça</b><small id="sub">carregando…</small></div></div>
     <div class="msgs" id="msgs"></div>
+    <div class="prow"><span>o que você quer:</span><span id="prios"></span></div>
     <div class="chips" id="chips"></div>
     <div class="row">
       <button class="ic" id="mic" title="falar">🎤</button>
@@ -69,8 +75,6 @@ select{width:100%;background:#2a3942;color:#e9edef;border:1px solid #2a3942;bord
       <select id="lugar"></select>
       <div class="lab">O que acabou de colher</div>
       <select id="colheu"></select>
-      <div class="lab">O que ele quer</div>
-      <div class="chips" style="padding:0;border:0" id="prios"></div>
       <p class="note" id="regnote" style="margin-top:9px"></p>
       <div class="lab">Voz</div>
       <select id="voz"></select>
@@ -91,18 +95,39 @@ select{width:100%;background:#2a3942;color:#e9edef;border:1px solid #2a3942;bord
 <script>
 const PRIOS={solo:'a terra melhorar',risco:'arriscar pouco',comida:'comida em casa',pasto:'pasto pro gado'};
 const INTENT=[
- ['vai-chover',['vai chover','previsao','previsão','semana que vem','amanha','amanhã','chove']],
- ['e-se',['e se','sera que posso','será que posso','da pra plantar','dá pra plantar','posso plantar']],
- ['proximo-plantio',['colhi','tirei','acabei de','o que planto','o que plantar','depois da','depois do','que vem agora']],
- ['riscos',['o que pode dar errado','risco','perigo','errado']],
+ ['estado-do-solo',['a terra ta','a terra esta','como ta a terra','como esta a terra','terra boa',
+   'terra seca','ta seco','esta seco','molhad','umidade','como ta o solo','da pra mexer na terra','terra fraca']],
+ ['vai-chover',['vai chover','previs','semana que vem','amanha','chove','vai dar chuva','quando chove','tem chuva']],
+ ['e-se',['e se','sera que','posso plantar','posso botar','da pra plantar','da pra botar','que tal','e o ','vale a pena']],
+ ['riscos',['pode dar errado','risco','perigo','errado','problema','atrapalh','o que pode']],
+ ['proximo-plantio',['colhi','tirei','arranquei','acabei de','terminei','o que planto','o que plantar',
+   'o que vem','depois d','que eu boto','que planta agora','me indica','o que voce faria','o que fazer']],
 ];
-let DB=null,st={lugar:null,colheu:null,prio:'risco',falar:true,ultima:null,voz:null,rate:0.98};
+let DB=null,st={lugar:null,colheu:null,prio:'risco',falar:true,ultima:null,voz:null,rate:0.98,ctx:'inicio'};
 const $=i=>document.getElementById(i), msgs=$('msgs');
 
+function agora(){const d=new Date();return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')}
 function diz(t,quem='them',meta){
   if(meta){const m=document.createElement('div');m.className='meta';m.textContent=t;msgs.appendChild(m);}
-  else{const d=document.createElement('div');d.className='b '+quem;d.textContent=t;msgs.appendChild(d);}
+  else{const d=document.createElement('div');d.className='b '+quem;d.textContent=t;
+       const h=document.createElement('span');h.className='hora';h.textContent=agora();
+       d.appendChild(h);msgs.appendChild(d);}
   msgs.scrollTop=msgs.scrollHeight;
+}
+function digitando(){
+  const d=document.createElement('div');d.className='b them dig';
+  d.innerHTML='<span></span><span></span><span></span>';
+  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d;
+}
+// o motor manda VARIAS redacoes da mesma resposta. aqui sorteia sem repetir a
+// ultima, pra ele nao ouvir a mesma frase duas vezes seguidas.
+const _ult={};
+function escolhe(r,chave){
+  const fs=(r&&r.falas&&r.falas.length)?r.falas:[r&&r.fala].filter(Boolean);
+  if(!fs.length)return '';if(fs.length===1)return fs[0];
+  const livres=fs.filter(x=>x!==_ult[chave]);
+  const e=livres[Math.floor(Math.random()*livres.length)]||fs[0];
+  _ult[chave]=e;return e;
 }
 function nota(v){
   const n=(v.name||'').toLowerCase();let s=0;
@@ -120,17 +145,26 @@ function fala(t){
   if(!st.falar||!('speechSynthesis'in window))return;
   try{
     speechSynthesis.cancel();
-    // uma utterance por frase: falar o paragrafo inteiro de uma vez achata a
-    // prosodia e e o que faz soar de robo. frase a frase a pausa fica natural.
-    (t.match(/[^.!?]+[.!?]*/g)||[t]).map(p=>p.trim()).filter(Boolean).forEach(p=>{
+    (t.match(/[^.!?]+[.!?]*/g)||[t]).map(p=>p.trim()).filter(Boolean).forEach((p,i)=>{
       const u=new SpeechSynthesisUtterance(p);
-      u.lang='pt-BR';u.rate=st.rate;u.pitch=1.02;u.volume=1;
+      const perg=/\?\s*$/.test(p);
+      u.lang='pt-BR';u.volume=1;
       if(st.voz)u.voice=st.voz;
+      // a Web Speech nao tem SSML, entao a entonacao sai daqui: pergunta sobe no
+      // fim, afirmacao desce, e cada frase varia um fio. tudo no mesmo tom e
+      // metade do que faz soar de robo.
+      u.pitch=perg?1.14:(i===0?1.04:0.98);
+      u.rate=st.rate*(perg?1.05:1)+(i%2?0.02:-0.02);
       speechSynthesis.speak(u);
     });
   }catch(e){}
 }
-function responde(t){diz(t);fala(t);}
+function responde(t,r,ctx){
+  const d=digitando();
+  setTimeout(()=>{d.remove();diz(t);fala(t);
+    if(r!==undefined)painel(r);
+    if(ctx)chips(ctx);},Math.min(1500,420+t.length*11));
+}
 
 function classifica(s){
   const n=s.toLowerCase();
@@ -173,45 +207,64 @@ function painel(r){
 const kv=(a,b)=>`<div class="kv"><span>${a}</span><span>${b}</span></div>`;
 
 function mostraRiscos(){
-  if(!st.ultima){perguntaProximo();}            // ninguem perguntou ainda: pergunta por ele
+  if(!st.ultima)st.ultima=DB.lugares[st.lugar].proximo_plantio[st.colheu][st.prio];
   const r=st.ultima;
-  if(!r||!(r.opcoes||[]).length){responde('Dessa eu não tenho número pra te dar, me diz primeiro o que você colheu.');return;}
-  const o=r.opcoes[0],partes=[];
-  if(o.avisos&&o.avisos.length)partes.push(o.avisos.join('. '));
-  if(o.nao_sei&&o.nao_sei.length)partes.push('E tem coisa que eu não sei: '+o.nao_sei[0]);
-  responde(partes.length?partes.join('. ')+'.':'Nessa eu não vi problema com a chuva do período.');
-  if(r.opcoes.length>1)
-    diz('Outras opções: '+r.opcoes.slice(1,4).map(x=>x.cultura).join(', '),'them');
+  if(!r||!(r.opcoes||[]).length){
+    responde('Dessa eu não tenho número pra te dar. Me diz primeiro o que você colheu.',undefined,'inicio');return;}
+  const o=r.opcoes[0],p=[];
+  if(o.avisos&&o.avisos.length)p.push(o.avisos.join('. '));
+  if(o.nao_sei&&o.nao_sei.length)p.push('E tem coisa que eu não sei: '+o.nao_sei[0]);
+  responde(p.length?p.join('. ')+'.':'Nessa eu não vi problema com a chuva do período.',r,'risco');
 }
 function perguntaProximo(){
-  const L=DB.lugares[st.lugar],r=L.proximo_plantio[st.colheu][st.prio];
-  st.ultima=r;responde(r.fala);painel(r);
+  const r=DB.lugares[st.lugar].proximo_plantio[st.colheu][st.prio];
+  st.ultima=r;responde(escolhe(r,'ind-'+st.colheu+st.prio),r,'indicacao');
 }
 function perguntaESe(hip){
-  const L=DB.lugares[st.lugar],r=(L.e_se[st.colheu]||{})[hip];
-  if(!r){responde('Essa eu não conheço aqui nesse lugar.');return;}
-  st.ultima=r;responde(r.fala);painel(r);
+  const r=(DB.lugares[st.lugar].e_se[st.colheu]||{})[hip];
+  if(!r){responde('Essa eu não conheço aqui nesse lugar.',undefined,'inicio');return;}
+  st.ultima=r;responde(escolhe(r,'ese-'+st.colheu+hip),r,'hipotese');
 }
 function trata(s){
   diz(s,'me');
-  const id=classifica(s),cult=achaCultura(s);
-  if(id==='vai-chover'){const r=DB.lugares[st.lugar].vai_chover;st.ultima=r;responde(r.fala);painel(r);return;}
+  const id=classifica(s),cult=achaCultura(s),L=DB.lugares[st.lugar];
+  if(id==='estado-do-solo'){const r=L.estado_do_solo;st.ultima=st.ultima||r;
+    responde(escolhe(r,'terra'),r,'terra');return;}
+  if(id==='vai-chover'){const r=L.vai_chover;responde(escolhe(r,'chuva'),r,'chuva');return;}
   if(id==='riscos'){mostraRiscos();return;}
-  if(id==='e-se'&&cult){perguntaESe(cult);return;}
-  if(id==='proximo-plantio'){if(cult){st.colheu=cult;$('colheu').value=cult;}perguntaProximo();return;}
-  if(cult){st.colheu=cult;$('colheu').value=cult;perguntaProximo();return;}
-  responde('Não entendi. Pode dizer o que acabou de colher, ou perguntar "e se eu plantar milho".');
+  if(id==='e-se'){
+    if(cult){perguntaESe(cult);return;}
+    // texto de esclarecimento, nao de agronomia: isso a pagina pode escrever
+    responde('Plantar o quê? Me diz o nome que eu te falo.',undefined,'inicio');return;}
+  if(id==='proximo-plantio'||cult){
+    if(cult){st.colheu=cult;$('colheu').value=cult;}
+    perguntaProximo();return;}
+  responde('Não peguei. Me diz o que você acabou de colher, ou pergunta "e se eu plantar milho".',undefined,'inicio');
 }
 
-function chips(){
+function chips(ctx){
+  st.ctx=ctx||st.ctx||'inicio';
   const c=$('chips');c.innerHTML='';
   const add=(t,f)=>{const b=document.createElement('button');b.className='chip';b.textContent=t;b.onclick=f;c.appendChild(b)};
-  add('colhi '+nome(st.colheu),()=>trata('colhi '+nome(st.colheu)));
-  add('o que pode dar errado?',()=>{diz('o que pode dar errado?','me');mostraRiscos()});
-  const L=DB.lugares[st.lugar],outra=L.culturas.find(x=>x!==st.colheu);
-  if(outra)add('e se eu plantar '+nome(outra),()=>trata('e se eu plantar '+nome(outra)));
-  add('vai chover?',()=>trata('vai chover semana que vem?'));
-  add(st.falar?'🔊 voz ligada':'🔇 voz desligada',()=>{st.falar=!st.falar;if(!st.falar)speechSynthesis.cancel();chips()});
+  const L=DB.lugares[st.lugar];
+  const outra=()=>{const v=L.culturas.filter(x=>x!==st.colheu);return v[Math.floor(Math.random()*v.length)]};
+  const set={
+    inicio:    [['colhi '+nome(st.colheu),()=>trata('colhi '+nome(st.colheu))],
+                ['a terra tá boa?',()=>trata('a terra tá boa?')]],
+    indicacao: [['o que pode dar errado?',()=>{diz('o que pode dar errado?','me');mostraRiscos()}],
+                ['e se eu plantar '+nome(outra()),null],
+                ['a terra tá boa?',()=>trata('a terra tá boa?')]],
+    risco:     [['e se eu plantar '+nome(outra()),null],
+                ['vai chover?',()=>trata('vai chover semana que vem?')]],
+    hipotese:  [['então o que você faria?',()=>trata('o que você faria?')],
+                ['o que pode dar errado?',()=>{diz('o que pode dar errado?','me');mostraRiscos()}]],
+    terra:     [['o que eu planto agora?',()=>trata('o que eu planto agora?')],
+                ['vai chover?',()=>trata('vai chover semana que vem?')]],
+    chuva:     [['o que eu planto agora?',()=>trata('o que eu planto agora?')],
+                ['a terra tá boa?',()=>trata('a terra tá boa?')]],
+  }[st.ctx]||[];
+  set.forEach(([t,f])=>add(t,f||(()=>trata(t))));
+  add(st.falar?'🔊 voz':'🔇 sem voz',()=>{st.falar=!st.falar;if(!st.falar)speechSynthesis.cancel();chips()});
 }
 const nome=c=>(DB.nomes_culturas[c]||c).split(' (')[0].toLowerCase();
 
@@ -220,7 +273,8 @@ function prios(){
   for(const[k,v]of Object.entries(PRIOS)){
     const b=document.createElement('button');
     b.className='chip'+(k===st.prio?' on':'');b.textContent=v;
-    b.onclick=()=>{st.prio=k;prios();diz('Prioridade agora: '+v,null,true);perguntaProximo()};
+    b.onclick=()=>{if(k===st.prio)return;st.prio=k;prios();
+      diz('agora é '+v,'me');perguntaProximo()};
     p.appendChild(b);
   }
 }
@@ -233,9 +287,9 @@ function trocaLugar(){
     ? 'Fala no registro local, com as palavras dos produtores que responderam o formulário.'
     : 'Sem vocabulário levantado para este lugar: o motor cai em português neutro e declara isso.';
   msgs.innerHTML='';
-  diz('Trocou para '+L.nome+'. Mesmo motor, mesmo código.',null,true);
-  responde('Bom dia. Me diz o que você acabou de colher que eu te digo o que eu plantaria agora.');
-  chips();prios();
+  diz(L.nome+' · mesmo motor, mesmo código',null,true);
+  responde('Bom dia. Me diz o que você acabou de colher que eu te digo o que eu plantaria agora.',undefined,'inicio');
+  prios();
 }
 
 // microfone: so o ESCUTAR precisa de permissao. o FALAR funciona sempre.

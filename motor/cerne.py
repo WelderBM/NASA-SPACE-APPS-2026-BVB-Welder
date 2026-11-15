@@ -32,6 +32,8 @@ MOLDES_NEUTROS = {
   'hipotese_parente_sem_ciclo': "{cultura} é da mesma família {de_colheu}, então não recomendo. Do resto eu não sei: falta a duração do ciclo.",
   'hipotese_sem_ciclo': "{cultura} não é da mesma família {de_colheu}, o que já ajuda. Mas falta a duração do ciclo, então não posso dizer mais.",
   'sem_dado': "Das culturas da região eu sei a família de {n}, mas não sei a duração de nenhuma. Sem isso eu não indico.",
+  'estado_da_terra': "O solo está {estado}. {mes} costuma ter {chuva}.",
+  'fechos_terra': "",
   'nao_sei_prever': "Previsão de chuva eu não tenho. O que eu sei é que {mes} costuma ter {chuva} e o solo está {estado}. Para previsão, consulte a previsão do tempo.",
   'porques': {'familia': "é de outra família que a {colheu}, então as pragas de solo não se mantêm",
               'agua': "a chuva do período atende o que ela precisa",
@@ -46,6 +48,22 @@ MOLDES_NEUTROS = {
 
 def _moldes(loc):
     m = dict(MOLDES_NEUTROS); m.update(loc.get('moldes', {})); return m
+
+def _lista(v): return v if isinstance(v, list) else [v]
+
+def render_all(M, chave, fechos=None, **kw):
+    """devolve TODAS as variantes da frase. a pagina sorteia sem repetir, e o
+    bot deixa de soar gravado. a autoria continua sendo do molde, nunca da IA."""
+    corpos = _lista(M.get(chave, ''))
+    fs = _lista(M.get(fechos) or ['']) if fechos else ['']
+    out = []
+    for b in corpos:
+        for f in fs:
+            try: t = b.format(**kw)
+            except KeyError: continue
+            t = (t + ' ' + f).strip() if f else t.strip()
+            if t and t not in out: out.append(t)
+    return out[:8]
 
 # ---------------------------------------------------------------- observacao
 def _janela(m0, dias):
@@ -182,14 +200,24 @@ def atender(p):
         return ('da ' if a == 'a' else 'do ') + nome_curto(n)
     res = {'intencao': intencao, 'lugar': NASA[place]['nome'], 'mes_plantio': MES[m0],
            'registro': 'local' if loc.get('moldes') else 'português neutro',
-           'estado_observado': est, 'opcoes': [], 'sei_pouco': [], 'limites': [], 'fala': None}
+           'estado_observado': est, 'opcoes': [], 'sei_pouco': [], 'limites': [],
+           'fala': None, 'falas': []}
 
+    if intencao == 'estado-do-solo':
+        sr = est.get('solo_raiz')
+        res['falas'] = render_all(M, 'estado_da_terra', 'fechos_terra',
+            mes=est['mes'], chuva=M['chuva_qualitativa'][est['chuva_qualitativa']],
+            estado=M['estado_terra'][sr['situacao']] if sr else 'sem leitura')
+        res['fala'] = res['falas'][0]
+        if not sr: res['limites'].append('sem leitura de umidade do solo para este mês')
+        return res
     if intencao == 'vai-chover':
         res['limites'].append('não existe previsão de chuva nestes dados; a série é histórica')
         s = est.get('solo_raiz')
-        res['fala'] = M['nao_sei_prever'].format(
+        res['falas'] = render_all(M, 'nao_sei_prever',
             mes=est['mes'], chuva=M['chuva_qualitativa'][est['chuva_qualitativa']],
             estado=M['estado_terra'][s['situacao']] if s else 'sem leitura')
+        res['fala'] = res['falas'][0]
         return res
 
     colheu = p.get('colheu'); fam = CULT[colheu]['familia'] if colheu else None
@@ -221,29 +249,29 @@ def atender(p):
         h = p['hipotese']; alvo = nome_curto(h).capitalize()
         parente = CULT[h]['familia'] == fam
         avaliavel = bool(res['opcoes'])
-        if h == colheu:
-            res['fala'] = M['hipotese_mesma']
+        kw = dict(cultura=alvo, colheu=cn, de_colheu=dcn)
+        if h == colheu:          res['falas'] = render_all(M, 'hipotese_mesma', **kw)
         elif parente and not avaliavel:
-            res['fala'] = M['hipotese_parente_sem_ciclo'].format(cultura=alvo, de_colheu=dcn)
-        elif parente:
-            res['fala'] = M['hipotese_parente'].format(cultura=alvo, colheu=cn, de_colheu=dcn)
-        elif not avaliavel:
-            res['fala'] = M['hipotese_sem_ciclo'].format(cultura=alvo, de_colheu=dcn)
+                                 res['falas'] = render_all(M, 'hipotese_parente_sem_ciclo', **kw)
+        elif parente:            res['falas'] = render_all(M, 'hipotese_parente', **kw)
+        elif not avaliavel:      res['falas'] = render_all(M, 'hipotese_sem_ciclo', **kw)
         elif res['opcoes'][0]['risco'].get('agua', {}).get('nivel') == 'alto':
-            res['fala'] = M['hipotese_ruim'].format(cultura=alvo)
-        else:
-            res['fala'] = M['hipotese_boa'].format(cultura=alvo)
+                                 res['falas'] = render_all(M, 'hipotese_ruim', 'fechos_hipotese', **kw)
+        else:                    res['falas'] = render_all(M, 'hipotese_boa', 'fechos_hipotese', **kw)
     elif not res['opcoes'] and res['sei_pouco']:
-        res['fala'] = M['sem_dado'].format(n=len(res['sei_pouco']))
+        res['falas'] = render_all(M, 'sem_dado', n=len(res['sei_pouco']))
     elif res['opcoes']:
         o = res['opcoes'][0]
         if o['risco'].get('agua', {}).get('nivel') == 'alto':
-            res['fala'] = M['indicacao_com_aviso'].format(cultura=nome_curto(o['id']))
+            res['falas'] = render_all(M, 'indicacao_com_aviso', 'fechos_aviso',
+                                      cultura=nome_curto(o['id']))
             o['avisos'].insert(0, 'o encaixe é bom mas o lugar não dá a água que ela pede')
         else:
             pq, _ = render_porque(o['_pqs'], p['prioridade'], M, cn, dcn)
-            res['fala'] = M['indicacao'].format(colheu=cn, de_colheu=dcn, cultura=nome_curto(o['id']),
-                                                porque=pq[0].upper()+pq[1:] if pq else '')
+            res['falas'] = render_all(M, 'indicacao', 'fechos', colheu=cn, de_colheu=dcn,
+                                      cultura=nome_curto(o['id']),
+                                      porque=pq[0].upper()+pq[1:] if pq else '')
+    if res.get('falas'): res['fala'] = res['falas'][0]
     for o in res['opcoes']: o.pop('_pqs', None)
     res['limites'].append('a janela de plantio oficial do ZARC não está carregada; confirme com técnico')
     return res
