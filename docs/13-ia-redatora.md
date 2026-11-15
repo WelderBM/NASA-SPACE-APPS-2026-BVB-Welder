@@ -50,22 +50,26 @@ descarta e usa a frase conferida.**
 
 ## O que vai ao ar hoje, e por quê
 
-A redatora ao vivo precisa de chave de API. Chave em repositório público não
-existe, e montar um proxy antes das 18h tira tempo dos slides. Então hoje a
-demo roda com a saída **congelada**: as redações foram escritas antes e vão no
-arquivo que o motor gera.
+Mudou desde que escrevi isto, e para melhor. O **motor determinístico agora roda
+dentro do navegador** (`motor/cerne.js`), então a camada do meio não depende de
+rede nem de servidor: calcula no aparelho, para qualquer combinação.
 
-E isso não é só contorno. Para esta persona é vantagem, e vale dizer no slide:
+A redatora ao vivo é a única que precisaria de chave de API, e chave em
+repositório público não existe. Então hoje ela entra **congelada**: as redações
+foram escritas antes e vivem nos moldes que o motor preenche.
 
-- roda **sem internet** depois de carregada, e metade dos respondentes do nosso
-  formulário tem internet ruim ou só na cidade;
+O desenho que sobra é bom, e vale dizer no slide:
+
+- o cálculo roda **sem internet e sem servidor**, e metade dos respondentes do
+  nosso formulário tem internet ruim ou só na cidade;
 - **não custa por mensagem**, o que importa quando o alvo são dezenas de
   milhares de produtores sem assistência técnica;
 - a resposta é **a mesma toda vez** para o mesmo dado, que é o que um técnico
   precisa para conferir.
 
-Em produção a redatora roda ao vivo, e nos lugares com sinal ruim o aparelho
-cai na versão congelada. É degradação graciosa, não desculpa.
+Em produção a redatora roda ao vivo quando há sinal, e cai na versão congelada
+quando não há. Degradação graciosa: o produtor perde o acabamento da frase,
+nunca a resposta.
 
 ## Onde ela muda mais a conversa
 
