@@ -167,7 +167,7 @@
     "estado_terra": {
       "acima": "mais molhada que o normal",
       "abaixo": "mais seca que o normal",
-      "media": "na média pra época"
+      "media": "na média"
     },
     "chuva_qualitativa": {
       "muita": "chuva boa",
