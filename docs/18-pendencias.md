@@ -87,7 +87,54 @@ Não são dívidas escondidas, estão ditas no produto e nos documentos.
 
 ## 6. Numeração
 
-Não existe `docs/14`. O salto de 13 para 15 é histórico, não é documento perdido.
+**Correção, 14h50 (chat do dado):** o `docs/14` existiu. Era *ECOCROP: o que ele
+dá, o que ele não dá*, no branch `ecocrop-ciclo-15-11` (commit `6191dd0`), com o
+ciclo de melão, jerimum, batata-doce, arroz e cará já preenchido. O branch foi
+apagado do remoto; a cópia existe só no clone local do chat do dado. O
+`docs/05` ainda cita "(doc 14)". Decisão do Welder: restaurar no `main` ou
+declarar descartado.
+
+## 7. Inconsistências entre documentos, varredura de 14h50 (chat do dado)
+
+Conferido contra o `main` em `2bbd12b`. Só o que não estava acima.
+
+**Número que um jurado pode checar**
+
+| achado | onde | o que fazer |
+| --- | --- | --- |
+| Dois "normais" de junho a setembro: o slide usa **859 mm** (`media_serie_mm`), a climatologia que o motor usa soma **812 mm**. Com 812, 2026 dá −59%, não −62% | slides `problem-data`, README, doc 15 contra `nasa-power.json` `clim` | dizer no slide de que período é o 859, ou usar um só |
+| "Janeiro a outubro de 2026: 858 mm contra 1.428" não tem dado no repositório: a série de 2026 vai até **setembro** (outubro é nulo), e o próprio doc 04 diz na linha 131 que outubro a dezembro não estão na série | README, doc 04 linha 53 e tabela de outubro | tirar, ou gravar a leitura de outubro com data |
+| "O pior em 45 anos" com rodapé "1981 a 2026": a base é de 45 anos, e com 2026 a série tem 46 | slides EN e PT | "o pior desde 1981" |
+| Pesquisa: 5 de 8 plantam outra coisa em seguida, contagem conferida na planilha (`entregas/README.md`); ainda diz **6 de 8** | doc 11, `local-roraima.json` linha 70 | corrigir para 5 de 8 (4 de 7 pessoas). Doc 15 já corrigido |
+| "14 culturas, 4 com dado bom": o arquivo tem **3** marcadas como boa | doc 12, tabela comparativa | 3 boa, 4 parcial, 7 falta |
+
+| **Slide 4 desatualizado pelo `2bbd12b`:** a bolha diz "out of the ground in **60 days**"; a demo agora diz **70 dias** (caupi corrigido para 70 a 75 pela Embrapa). O jurado que repetir a conversa vê outro número | `slides-en/solution.html`, `slides-pt/solution.html`, `texto-de-estudo-do-pitch.md` linha 27; também docs 11 e 12 como exemplo | trocar 60 por 70 nos dois decks e no texto de estudo |
+| Linha do milho no doc 05: o título diz "ciclo corrigido para 110–145", a coluna ainda diz **100 a 140** | `docs/05`, linha 102 | trocar a coluna |
+
+**Promessa maior que a fonte**
+
+| achado | onde | o que fazer |
+| --- | --- | --- |
+| "Fill crop traits from FAO ECOCROP" e "o gargalo não é código, é preencher a tabela": o ECOCROP dá **ciclo** (e nem para a melancia, que vem 0/0). Não dá água do ciclo, não dá tolerância à seca (campo vazio até na mandioca), não dá fixa N nem resíduo | slides `next` EN e PT, `texto-de-estudo-do-pitch.md` | "crop cycles from FAO ECOCROP; water need per crop from Embrapa or FAO 56" |
+| `tmax_sofre_c` "o ECOCROP dá TMAX limpo": `TMAX` é a **máxima absoluta** de sobrevivência; a temperatura acima da qual a planta começa a sofrer é mais perto de `TOPMX`, a ótima máxima. É a quarta causa do doc 17 (semântica de campo externo) de novo | seção 3 acima | decidir qual dos dois é `tmax_sofre_c` antes de preencher, e escrever no `campos` do JSON |
+| A pendência no fim do `culturas.json` ainda manda preencher **água** pelo ECOCROP | `dados/culturas.json`, `pendencias[0]` | trocar pela conclusão da seção 3: só ciclo |
+| `agua_ciclo_mm` "fechado como impossível": é impossível **com ECOCROP e Embrapa**; o Kc do FAO 56 continua sendo caminho | seção 3 acima | "fechado para hoje" |
+
+**Regra do doc 11 quebrada**
+
+- O molde falado de `local-roraima.json` linha 244 diz "**veranico**". O doc 11
+  decidiu "estiagem" na fala. O `invariantes.py` não cobre vocabulário, por isso
+  passou.
+
+**Documento velho que contradiz o novo**
+
+- README, "O que está aberto" e "Próximos passos sugeridos para amanhã": ainda
+  listam a regra de comparação como o buraco mais bloqueante, os slides como não
+  escritos e o contrato com o Giuliano. E "site como hub (Giuliano)" contradiz o
+  doc 09, "sem site". O mapa não tem o doc 15 nem `entregas/`.
+- Doc 09, tabela de culturas por lugar: Roraima com 5 (o arquivo tem 11) e
+  Centro-Oeste com **sorgo**, que não existe no `culturas.json`; o arquivo tem
+  guandu e caupi.
 
 ## Como usar esta lista
 
