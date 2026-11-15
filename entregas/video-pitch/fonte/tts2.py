@@ -4,8 +4,8 @@ k=Kokoro('kokoro-v1.0.int8.onnx','voices-v1.0.bin')
 # each line = list of [phrase, pause_after_seconds]
 L=json.load(open('script.json'))
 voice=sys.argv[1]; speed=float(sys.argv[2])
-sr=24000; full=[]; t=0.25; timing=[];ph_t=[]
-full.append(np.zeros(int(sr*0.25)))
+sr=24000; full=[]; t=0.15; timing=[];ph_t=[]
+full.append(np.zeros(int(sr*0.15)))
 for li,line in enumerate(L):
     start=t
     for ph,pause in line:
