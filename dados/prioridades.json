@@ -1,0 +1,43 @@
+{
+  "comentario": "Esquema de prioridades. Prioridade e PESO sobre caracteristica da cultura. Trocar a prioridade reordena a lista: e assim que o explore funciona.",
+  "gerado_em": "2026-11-15",
+  "prioridades": {
+    "solo": {
+      "fala": "quero que a terra melhore",
+      "pesos": {"fixa_n": 3, "residuo_alto": 2, "familia_diferente": 3, "cobertura_meses": 2},
+      "servivel": true
+    },
+    "risco": {
+      "fala": "quero arriscar pouco",
+      "pesos": {"tolera_seca": 3, "ciclo_curto": 3, "agua_baixa": 2, "cabe_na_janela": 3},
+      "servivel": true
+    },
+    "comida": {
+      "fala": "quero comida em casa",
+      "pesos": {"espera_no_campo": 3, "ciclo_curto": 1, "tolera_seca": 2},
+      "servivel": true
+    },
+    "pasto": {
+      "fala": "quero pasto pro gado",
+      "pesos": {"forrageira": 3, "residuo_alto": 1, "tolera_seca": 2},
+      "servivel": true
+    },
+    "renda": {
+      "fala": "quero vender",
+      "pesos": {},
+      "servivel": false,
+      "resposta_honesta": "Sobre preco e comprador eu nao tenho dado. Posso te dizer o que a terra e a chuva permitem, e a decisao de mercado fica com voce."
+    },
+    "mao-de-obra": {
+      "fala": "tenho pouca gente pra trabalhar",
+      "pesos": {},
+      "servivel": false,
+      "resposta_honesta": "Quanta gente cada cultura precisa eu nao sei: nao achei fonte boa. O resto eu te falo."
+    }
+  },
+  "filtros_duros": [
+    "familia da candidata diferente da familia colhida",
+    "cultura existe no lugar (camada local)",
+    "ciclo cabe na janela que resta"
+  ]
+}

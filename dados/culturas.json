@@ -1,0 +1,164 @@
+{
+  "comentario": "Camada GLOBAL: caracteristica da especie, nao muda de lugar. O que varia por lugar (quais existem ali, janela de plantio, cultivar) fica nos arquivos local-*.json",
+  "gerado_em": "2026-11-15",
+  "campos": {
+    "familia": "familia botanica. E a regra central: nao seguir familia com a mesma familia",
+    "ciclo_dias": "[min, max] da duracao do ciclo",
+    "agua_ciclo_mm": "[min, max] de agua necessaria no ciclo; null quando nao levantado",
+    "fase_critica_dias": "[inicio, fim] em dias apos o plantio, quando falta de agua custa mais",
+    "fixa_n": "fixa nitrogenio no solo",
+    "residuo": "palha deixada na superficie: alto, medio, baixo",
+    "tolera_seca": "alta, media, baixa",
+    "espera_no_campo": "pode ser colhida com atraso sem perder: seguranca alimentar",
+    "forrageira": "serve de pasto",
+    "hospedeiro_nematoide": "multiplica nematoide; alerta quando empilha com outra hospedeira",
+    "tmax_sofre_c": "temperatura maxima acima da qual sofre",
+    "tfaixa_boa_c": "[min, max] de temperatura em que vai bem",
+    "qualidade": "boa, parcial, falta",
+    "fonte": "de onde vem o numero"
+  },
+  "culturas": {
+    "mandioca": {
+      "nome": "Mandioca (macaxeira)", "familia": "Euphorbiaceae",
+      "ciclo_dias": [180, 360], "ciclo_nota": "6 a 7 meses no tropico umido; 18 a 24 onde a seca e prolongada",
+      "agua_ciclo_mm": null, "fase_critica_dias": [30, 150],
+      "fixa_n": false, "residuo": "baixo", "tolera_seca": "alta",
+      "espera_no_campo": true, "forrageira": false, "hospedeiro_nematoide": null,
+      "tmax_sofre_c": null, "tfaixa_boa_c": null,
+      "qualidade": "boa",
+      "fonte": "Embrapa, Fisiologia da mandioca; Embrapa Cerrados CT51; Embrapa Mandioca e Fruticultura CT172",
+      "observacao": "Unica Euphorbiaceae da lista de Roraima: e o pivo que quebra as duas familias dominantes. Muito sensivel ao deficit nos 3 primeiros meses."
+    },
+    "feijao-caupi": {
+      "nome": "Feijao-caupi", "familia": "Fabaceae",
+      "ciclo_dias": [60, 75], "agua_ciclo_mm": [300, null], "fase_critica_dias": null,
+      "fixa_n": true, "residuo": "medio", "tolera_seca": "media",
+      "espera_no_campo": false, "forrageira": false, "hospedeiro_nematoide": null,
+      "tmax_sofre_c": null, "tfaixa_boa_c": [18, 34],
+      "qualidade": "boa",
+      "fonte": "ZARC caupi Roraima (portaria 2023/24); faixa de temperatura SEM FONTE ANOTADA, a conferir",
+      "observacao": "Ciclo curto: cabe no fim das chuvas. Perde mais com falta de agua na floracao."
+    },
+    "milho": {
+      "nome": "Milho", "familia": "Poaceae",
+      "ciclo_dias": [100, 140], "agua_ciclo_mm": [500, 800], "fase_critica_dias": null,
+      "fixa_n": false, "residuo": "alto", "tolera_seca": "baixa",
+      "espera_no_campo": false, "forrageira": false, "hospedeiro_nematoide": true,
+      "tmax_sofre_c": null, "tfaixa_boa_c": null,
+      "qualidade": "parcial",
+      "fonte": "Folha BV (jornal). FONTE FRACA: trocar por Embrapa ou ZARC antes do slide",
+      "observacao": "Hospedeiro e multiplicador de nematoide: alerta quando a sequencia empilha Poaceae."
+    },
+    "soja": {
+      "nome": "Soja", "familia": "Fabaceae",
+      "ciclo_dias": [100, 130], "agua_ciclo_mm": [450, 800], "fase_critica_dias": null,
+      "fixa_n": true, "residuo": "medio", "tolera_seca": "baixa",
+      "espera_no_campo": false, "forrageira": false, "hospedeiro_nematoide": true,
+      "tmax_sofre_c": 40, "tfaixa_boa_c": null,
+      "qualidade": "boa",
+      "fonte": "ZARC soja Roraima 2026/27. Limiar de 40 C e consumo de 7 a 8 mm/dia na floracao SEM FONTE ANOTADA",
+      "observacao": "Agronegocio, nao agricultura familiar. Entra na configuracao do Centro-Oeste."
+    },
+    "braquiaria": {
+      "nome": "Braquiaria", "familia": "Poaceae",
+      "ciclo_dias": null, "ciclo_nota": "perene",
+      "agua_ciclo_mm": null, "fase_critica_dias": null,
+      "fixa_n": false, "residuo": "alto", "tolera_seca": "alta",
+      "espera_no_campo": false, "forrageira": true, "hospedeiro_nematoide": null,
+      "tmax_sofre_c": null, "tfaixa_boa_c": null,
+      "qualidade": "parcial",
+      "fonte": "Embrapa Roraima, plantas de cobertura para plantio direto",
+      "observacao": "Cobertura e pasto. Reduz nematoide reniforme em rotacao, segundo a Embrapa."
+    },
+    "milheto": {
+      "nome": "Milheto", "familia": "Poaceae",
+      "ciclo_dias": null, "agua_ciclo_mm": null, "fase_critica_dias": null,
+      "fixa_n": false, "residuo": "alto", "tolera_seca": "alta",
+      "espera_no_campo": false, "forrageira": true, "hospedeiro_nematoide": true,
+      "tmax_sofre_c": null, "tfaixa_boa_c": null,
+      "qualidade": "parcial",
+      "fonte": "Embrapa Roraima, milheto como cobertura",
+      "observacao": "Hospedeiro de nematoide, mesmo usado como cobertura."
+    },
+    "feijao-guandu": {
+      "nome": "Feijao-guandu", "familia": "Fabaceae",
+      "ciclo_dias": null, "agua_ciclo_mm": null, "fase_critica_dias": null,
+      "fixa_n": true, "residuo": "alto", "tolera_seca": "alta",
+      "espera_no_campo": false, "forrageira": false, "hospedeiro_nematoide": null,
+      "tmax_sofre_c": null, "tfaixa_boa_c": null,
+      "qualidade": "parcial",
+      "fonte": "Embrapa Roraima, plantas de cobertura",
+      "observacao": "Cobertura e leguminosa."
+    },
+    "melancia": {
+      "nome": "Melancia", "familia": "Cucurbitaceae",
+      "ciclo_dias": null, "agua_ciclo_mm": null, "fase_critica_dias": null,
+      "fixa_n": false, "residuo": "baixo", "tolera_seca": null,
+      "espera_no_campo": false, "forrageira": false, "hospedeiro_nematoide": null,
+      "tmax_sofre_c": null, "tfaixa_boa_c": null,
+      "qualidade": "falta",
+      "fonte": "Embrapa Roraima cita como cultura principal; caracteristicas nao levantadas",
+      "observacao": "O bot deve dizer que sabe a familia e nao sabe o ciclo. ARMADILHA: mesma familia de melao e jerimum."
+    },
+    "melao": {
+      "nome": "Melao", "familia": "Cucurbitaceae",
+      "ciclo_dias": null, "agua_ciclo_mm": null, "fase_critica_dias": null,
+      "fixa_n": false, "residuo": "baixo", "tolera_seca": null,
+      "espera_no_campo": false, "forrageira": false, "hospedeiro_nematoide": null,
+      "tmax_sofre_c": null, "tfaixa_boa_c": null,
+      "qualidade": "falta", "fonte": "Embrapa Roraima",
+      "observacao": "Mesma familia de melancia e jerimum."
+    },
+    "jerimum": {
+      "nome": "Jerimum (abobora)", "familia": "Cucurbitaceae",
+      "ciclo_dias": null, "agua_ciclo_mm": null, "fase_critica_dias": null,
+      "fixa_n": false, "residuo": "baixo", "tolera_seca": null,
+      "espera_no_campo": false, "forrageira": false, "hospedeiro_nematoide": null,
+      "tmax_sofre_c": null, "tfaixa_boa_c": null,
+      "qualidade": "falta", "fonte": "Embrapa Roraima 2004",
+      "observacao": "Mesma familia de melancia e melao."
+    },
+    "batata-doce": {
+      "nome": "Batata-doce", "familia": "Convolvulaceae",
+      "ciclo_dias": null, "agua_ciclo_mm": null, "fase_critica_dias": null,
+      "fixa_n": false, "residuo": "baixo", "tolera_seca": null,
+      "espera_no_campo": null, "forrageira": false, "hospedeiro_nematoide": null,
+      "tmax_sofre_c": null, "tfaixa_boa_c": null,
+      "qualidade": "falta", "fonte": "Embrapa Roraima 2004; programa municipal de Boa Vista",
+      "observacao": "Unica Convolvulaceae: quebra familia sozinha."
+    },
+    "cara": {
+      "nome": "Cara", "familia": "Dioscoreaceae",
+      "ciclo_dias": null, "agua_ciclo_mm": null, "fase_critica_dias": null,
+      "fixa_n": false, "residuo": "baixo", "tolera_seca": null,
+      "espera_no_campo": null, "forrageira": false, "hospedeiro_nematoide": null,
+      "tmax_sofre_c": null, "tfaixa_boa_c": null,
+      "qualidade": "falta", "fonte": "Embrapa Roraima 2004",
+      "observacao": "Unica Dioscoreaceae: quebra familia sozinha."
+    },
+    "arroz": {
+      "nome": "Arroz", "familia": "Poaceae",
+      "ciclo_dias": null, "agua_ciclo_mm": null, "fase_critica_dias": null,
+      "fixa_n": false, "residuo": "alto", "tolera_seca": "baixa",
+      "espera_no_campo": false, "forrageira": false, "hospedeiro_nematoide": null,
+      "tmax_sofre_c": null, "tfaixa_boa_c": null,
+      "qualidade": "falta", "fonte": "tem ZARC em Roraima; caracteristicas nao levantadas"
+    },
+    "banana": {
+      "nome": "Banana", "familia": "Musaceae",
+      "ciclo_dias": null, "ciclo_nota": "perene",
+      "agua_ciclo_mm": null, "fase_critica_dias": null,
+      "fixa_n": false, "residuo": "alto", "tolera_seca": "baixa",
+      "espera_no_campo": false, "forrageira": false, "hospedeiro_nematoide": null,
+      "tmax_sofre_c": null, "tfaixa_boa_c": null,
+      "qualidade": "falta",
+      "fonte": "IBGE PAM (2.350 ha em Caroebe); Embrapa Roraima com 6 cultivares BRS",
+      "observacao": "Perene: ocupa a area por anos. Sensivel a vento."
+    }
+  },
+  "pendencias": [
+    "Baixar o EcoCrop_DB.csv da FAO (2.568 especies) e preencher ciclo, agua, faixa de temperatura e pH das culturas marcadas como falta",
+    "Trocar a fonte do milho: jornal nao serve para o critério de Validade",
+    "Achar fonte para os limiares de caupi (18 a 34 C) e soja (40 C, 7 a 8 mm/dia)"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "comentario": "Camada LOCAL do Centro-Oeste. Existe para PROVAR que o motor e generico: mesma pergunta, outro lugar, resposta diferente, sem mexer no codigo. A lista de culturas aqui e a que o Claude usou errado para Roraima em 14/11: nao estava errada, estava no arquivo errado.",
+  "id": "centro-oeste",
+  "nome": "Centro-Oeste",
+  "gerado_em": "2026-11-15",
+  "lugares": ["rioverde-go"],
+  "inicio_da_safra": "setembro a dezembro",
+  "nota_safra": "Estacao chuvosa de novembro a marco. Soja na agua, milho na safrinha depois. E o inverso de Roraima.",
+  "culturas_disponiveis": ["soja", "milho", "braquiaria", "milheto", "feijao-guandu", "feijao-caupi"],
+  "janelas_zarc": {
+    "soja": {"inicio": null, "fim": null, "qualidade": "falta", "nota": "ZARC existe por municipio; nao baixamos"},
+    "milho": {"inicio": null, "fim": null, "qualidade": "falta"}
+  },
+  "contexto": {
+    "nota": "Rio Verde foi escolhido por ser polo agricola de Goias, mesmo estado do produtor entrevistado em 14/11. NAO e o municipio dele.",
+    "contraste_com_roraima": "Veranico normal de abril a setembro: 64 dias em Rio Verde contra 9 no Canta. Minima de julho: 5,35 C contra 19,8 C. Um veranico de 24 dias e catastrofe no Canta e rotina em Rio Verde."
+  }
+}

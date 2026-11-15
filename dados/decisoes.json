@@ -1,0 +1,167 @@
+{
+  "comentario": "Catalogo de decisoes. Em vez de 'uma IA que responde sobre agricultura', que e ilimitado e impossivel de validar, sao estas decisoes, cada uma respondida com dado nomeado. Tem borda, e borda e o que se defende na banca. O campo 'decide' faz o trabalho: se nao da para escrever uma acao ali, nao e decisao, e curiosidade, e sai do catalogo.",
+  "gerado_em": "2026-11-15",
+  "forma_da_resposta": [
+    "1. o numero: o que o dado diz",
+    "2. a comparacao: contra o normal, ou contra o que ele colheu",
+    "3. a acao ou o limite: o que fazer, ou o que falta validar"
+  ],
+  "regras_de_voz": {
+    "limite_palavras": 35,
+    "uma_ideia_por_vez": true,
+    "max_itens_por_lista": 3,
+    "revelacao_progressiva": "dar a manchete e OFERECER o detalhe; 'quer saber por que?' mantem o turno vivo",
+    "nunca_inventa_texto": "frase fixa preenchida com numero do motor",
+    "transcricao_na_tela": "o que ele falou e a resposta aparecem escritos em balao, para o GIF do slide se ler sem som"
+  },
+  "decisoes": [
+    {
+      "id": "proximo-plantio",
+      "no_mvp": true,
+      "como_ele_fala": ["o que eu planto agora", "acabei de colher", "tirei a mandioca", "depois da mandioca o que vai", "o que plantar"],
+      "decide": "qual cultura semear na proxima janela, nesta area",
+      "quando_aparece": "logo apos a colheita",
+      "dados": ["PRECTOTCORR na janela", "GWETROOT no plantio", "janela do ZARC"],
+      "caracteristicas": ["familia", "ciclo_dias", "agua_ciclo_mm", "fixa_n", "residuo", "tolera_seca"],
+      "prioridades": ["solo", "risco", "comida", "pasto"],
+      "saida": "lista ordenada de 3 opcoes, com razao, evidencia, risco e o que falta validar",
+      "status": "nucleo do MVP"
+    },
+    {
+      "id": "e-se",
+      "no_mvp": true,
+      "como_ele_fala": ["e se eu plantar", "e se fosse", "da pra plantar", "posso plantar"],
+      "decide": "avaliar uma hipotese que ELE propos, em vez de receber veredito",
+      "quando_aparece": "enquanto explora",
+      "dados": ["os mesmos do proximo-plantio"],
+      "caracteristicas": ["todas"],
+      "prioridades": ["todas"],
+      "saida": "consequencia daquela escolha: o que ganha, o que arrisca, e como fica contra as outras",
+      "status": "E A INTENCAO PRINCIPAL. O enunciado pede 'explore', nao 'recommend'. Quem dirige e ele."
+    },
+    {
+      "id": "estado-do-solo",
+      "no_mvp": true,
+      "como_ele_fala": ["a terra esta boa", "o solo esta seco", "esta molhado", "da pra mexer na terra"],
+      "decide": "plantar agora ou esperar a terra receber agua",
+      "quando_aparece": "antes do plantio",
+      "dados": ["GWETTOP", "GWETROOT", "GWETPROF", "contra a climatologia do mes"],
+      "saida": "o numero, o normal do mes, e se esta acima ou abaixo",
+      "status": "pronto: dado em dados/nasa-power.json"
+    },
+    {
+      "id": "chuva-e-veranico",
+      "no_mvp": true,
+      "como_ele_fala": ["choveu quanto", "quantos dias sem chover", "a chuva esta fraca"],
+      "decide": "confiar na janela ou encurtar o ciclo escolhido",
+      "dados": ["PRECTOTCORR do mes", "maior veranico do mes contra a media de 45 anos"],
+      "saida": "milimetros do mes, normal do mes, e o veranico",
+      "status": "pronto"
+    },
+    {
+      "id": "esse-ano-esta-ruim",
+      "no_mvp": true,
+      "como_ele_fala": ["esse ano esta pior", "comparado com ano passado", "esta normal"],
+      "decide": "quanto peso dar a propria memoria contra a serie longa",
+      "dados": ["serie de 1981 a 2026"],
+      "saida": "o ano atual contra 45 anos, em porcentagem",
+      "status": "pronto"
+    },
+    {
+      "id": "secar-farinha",
+      "no_mvp": true,
+      "como_ele_fala": ["da pra secar", "secar farinha", "esta dando sol", "por no sol"],
+      "decide": "secar a farinha hoje ou esperar",
+      "quando_aparece": "depois de raspar a mandioca",
+      "dados": ["ALLSKY_SFC_SW_DWN", "CLOUD_AMT", "RH2M"],
+      "saida": "condicao de secagem do mes, contra o normal",
+      "status": "ACHADO LOCAL: a farinha e a maior saida de Canta e Iracema. Essa pergunta nao sai da literatura de soja nem de dataset americano. Só existe aqui, e a NASA responde."
+    },
+    {
+      "id": "pulverizar",
+      "no_mvp": true,
+      "como_ele_fala": ["pulverizar", "jogar veneno", "o vento esta forte"],
+      "decide": "aplicar hoje ou esperar o vento baixar",
+      "dados": ["WS2M"],
+      "saida": "vento do mes contra o normal",
+      "status": "dado pronto; falta o limiar de deriva, que precisa de fonte"
+    },
+    {
+      "id": "vai-chover",
+      "no_mvp": true,
+      "como_ele_fala": ["vai chover", "semana que vem", "amanha", "previsao"],
+      "decide": "nada: o bot nao sabe",
+      "dados": [],
+      "saida": "Eu nao sei prever chuva, nao tenho essa informacao. O que eu sei e [chuva do mes] contra [normal], e a terra esta [estado]. Para previsao, olhe o boletim do INMET.",
+      "status": "O LIMITE DECLARADO E RECURSO. Um assistente que admite o limite vale mais que um que adivinha, e isso e slide."
+    },
+    {
+      "id": "colher-ou-esperar",
+      "no_mvp": false,
+      "como_ele_fala": ["colho agora", "deixo na terra", "espero mais"],
+      "decide": "arrancar a raiz agora ou deixar no campo como estoque",
+      "quando_aparece": "quando a raiz esta no ponto",
+      "dados": ["GWETROOT", "PRECTOTCORR a frente"],
+      "caracteristicas": ["espera_no_campo"],
+      "saida": "o que ganha e o que arrisca em cada caso",
+      "status": "proximo passo. So existe porque a raiz de mandioca espera no campo: e decisao real de seguranca alimentar"
+    },
+    {
+      "id": "queimar-ou-nao",
+      "no_mvp": false,
+      "como_ele_fala": ["posso queimar", "botar fogo", "limpar o roçado"],
+      "decide": "atear fogo hoje ou esperar, pelo risco de escapar",
+      "dados": ["FIRMS", "RH2M", "WS2M", "GWETTOP"],
+      "saida": "focos proximos, vento e secura do material",
+      "status": "proximo passo; FIRMS precisa de chave gratuita. Decisao muito de Roraima."
+    },
+    {
+      "id": "plantar-junto",
+      "no_mvp": false,
+      "como_ele_fala": ["plantar junto", "no meio do", "consorcio"],
+      "decide": "duas culturas na mesma area e no mesmo tempo",
+      "caracteristicas": ["familia", "ciclo_dias", "forrageira"],
+      "status": "proximo passo"
+    },
+    {
+      "id": "deixar-descansar",
+      "no_mvp": false,
+      "como_ele_fala": ["deixar descansar", "pousio", "cobrir a terra"],
+      "decide": "nao plantar e cobrir, para recuperar",
+      "caracteristicas": ["residuo", "fixa_n"],
+      "status": "proximo passo; liga direto com saude do solo"
+    },
+    {
+      "id": "quanto-da-area",
+      "no_mvp": false,
+      "como_ele_fala": ["quanto plantar", "quantos hectares", "divido a area"],
+      "decide": "como repartir a area entre as opcoes",
+      "status": "proximo passo: depende da area dele, que nao temos"
+    },
+    {
+      "id": "comprar-semente",
+      "no_mvp": false,
+      "como_ele_fala": ["compro semente", "o preco esta bom"],
+      "decide": "comprar agora ou esperar",
+      "status": "FORA: nao temos dado de preco, e o bot diz que nao sabe"
+    },
+    {
+      "id": "vale-irrigar",
+      "no_mvp": false,
+      "como_ele_fala": ["vale irrigar", "ligar a bomba"],
+      "decide": "investir em irrigacao",
+      "dados": ["balanco hidrico"],
+      "status": "FORA do MVP: depende de infraestrutura que nao conhecemos"
+    }
+  ],
+  "cruzamentos_disponiveis": [
+    "chuva do ano contra climatologia",
+    "umidade do solo contra climatologia",
+    "veranico do mes contra veranico medio do mes",
+    "radiacao com nuvem e umidade relativa, para secagem",
+    "vento, para pulverizacao",
+    "familia colhida contra familia candidata, para quebra de ciclo",
+    "ciclo da cultura contra chuva restante na janela",
+    "temperatura maxima contra o limiar da cultura"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comentario": "Camada LOCAL de Roraima: quais culturas estao em jogo aqui, janela de plantio e o que e tipico. As caracteristicas das especies ficam em culturas.json (global).",
+  "id": "roraima",
+  "nome": "Roraima",
+  "gerado_em": "2026-11-15",
+  "lugares": ["canta-rr"],
+  "inicio_da_safra": "abril",
+  "nota_safra": "A estacao chuvosa vai de maio a agosto no Canta; o plantio principal comeca em abril.",
+  "culturas_disponiveis": [
+    "mandioca", "feijao-caupi", "milho", "arroz",
+    "melancia", "melao", "jerimum", "batata-doce", "cara",
+    "banana", "braquiaria"
+  ],
+  "culturas_excluidas": {
+    "soja": "existe no estado mas e agronegocio, nao agricultura familiar",
+    "milheto": "cobertura do sistema de graos, nao aparece na agricultura familiar de Roraima",
+    "feijao-guandu": "idem"
+  },
+  "janelas_zarc": {
+    "feijao-caupi": {"inicio": "fim de junho", "fim": "meados de agosto", "qualidade": "aproximada: a tabela do PDF veio desalinhada", "fonte": "portaria ZARC caupi Roraima, safra 2023/24"},
+    "mandioca": {"inicio": null, "fim": null, "qualidade": "falta", "nota": "Roraima tem ZARC para mandioca; nao baixamos a janela ainda"},
+    "milho": {"inicio": null, "fim": null, "qualidade": "falta"},
+    "arroz": {"inicio": null, "fim": null, "qualidade": "falta"}
+  },
+  "contexto": {
+    "produtores_atendidos_iater": 50192,
+    "agricultores_familiares_iater": 43192,
+    "sem_assistencia_tecnica_pct": 87,
+    "fonte_contexto": "IATER via Assembleia Legislativa de Roraima (set/2026) e proposta de convenio (mar/2024)",
+    "produto_de_maior_saida": "farinha de mandioca, em Canta e Iracema",
+    "nota_farinha": "A farinha precisa secar: sol, pouca nuvem e ar seco. Decisao propria, respondida por radiacao, nuvem e umidade relativa."
+  },
+  "pendencias": [
+    "Baixar as janelas do ZARC no Painel de Indicacao de Riscos ou no app Plantio Certo, para Canta e Boa Vista",
+    "Conferir se a portaria do caupi tem versao mais nova que 2023/24",
+    "Tabela 6778 do SIDRA: estabelecimentos de agricultura familiar por municipio"
+  ]
+}
