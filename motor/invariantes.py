@@ -61,6 +61,9 @@ def numeros_da_resposta(r):
     return vistos
 
 def checa(r, caso):
+    """Os numeros dos invariantes sao IDENTIFICADORES, nao ordem de leitura: os
+    docs e os commits citam "invariante 7", "8", "9", "10", entao renumerar para
+    ficar bonito quebraria as referencias. Sao dez, de 1 a 10."""
     erros = []
     falas = (r.get('falas') or []) + ([r['aviso_do_ano']] if r.get('aviso_do_ano') else [])
     o = (r.get('opcoes') or [None])[0]

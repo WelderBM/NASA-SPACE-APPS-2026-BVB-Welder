@@ -8,7 +8,74 @@ Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift:
 
 ## ⏰ Prazo
 
-**A submissão fecha domingo, 15/11, às 22h59 de Boa Vista.**
+**A página do formulário diz 23h59 de Boa Vista, domingo 15/11** (lido na própria
+página em 15/11 às 16h40, registrado em `entregas/docs/formulario-submissao.md`).
+**Trabalhamos para 22h59**, uma hora de margem, até o líder local confirmar. O que
+vale é o último clique em "Submit for Judging": "Save Progress" deixa a página
+pública mas não envia.
+
+---
+
+## A proposta, e o que ela não é
+
+Nada aqui vai ficar perfeito até o prazo. Então está escrito o que é **escolha**,
+o que é **limite declarado** e o que é **dívida** — e cada linha dá para conferir
+abrindo um arquivo ou rodando um teste.
+
+### O que isto é
+
+- **Uma conversa de WhatsApp.** Na nossa pesquisa, 4 de 8 respostas disseram que
+  querem ser alcançadas por mensagem escrita no WhatsApp (`dados/local-roraima.json`,
+  campo `canal_preferido`). O canal não é palpite.
+- Responde **uma** pergunta: o que plantar agora que eu colhi. Um ciclo à frente.
+- Cruza observação do NASA POWER (chuva, umidade do solo em três profundidades,
+  temperatura do solo, estiagem) com característica da cultura e **a prioridade que
+  o produtor escolheu**.
+- **Três números que nunca se misturam:** risco, encaixe e confiança.
+- **Diz o que não conseguiu medir, na própria resposta.** Dez invariantes sobre
+  2.748 casos reprovam se uma resposta afirma sem lastro (`motor/invariantes.py`).
+- O mesmo motor em Python e em JavaScript, idênticos nos 2.748 casos
+  (`motor/conformidade.py`). A página **calcula no navegador**; não é tabela pronta.
+- **Todas as 816 indicações dizem ao menos uma razão medida** antes de dizer o que
+  falta. Conferido pelo molde que o motor escolheu, não por palavra-chave: 442 pela
+  indicação simples, 242 pela indicação com aviso de água, 132 pela cultura que ele
+  não consegue avaliar — e **zero** caíram no molde de reserva que existe para quando
+  não há razão nenhuma a dar.
+- Família botânica é filtro duro, não peso: nematoide é parasita obrigatório.
+
+### O que isto não é, de propósito
+
+- **Não é integração com o WhatsApp.** A conversa é simulada para a ideia ficar
+  visivelmente independente de canal: o motor devolve estrutura, e qualquer canal
+  carrega. Viabilidade explicada, não implementada ([9](docs/09-mvp-decisoes-15-11.md)).
+- **Não prevê chuva.** O enunciado pede observação e adaptação. O bot responde
+  "prever chuva eu não sei, não tenho isso", e o ZARC Plantio Certo, que é oficial,
+  já tem previsão: fomos feitos para ficar do lado dele, não no lugar.
+- **Não otimiza renda.** É a única prioridade que declaramos não servir, e isso é a
+  posição, não o buraco: as ferramentas que existem otimizam lucro para fazenda
+  grande ([12](docs/12-alinhamento-pos-benchmark.md)).
+- **Não dimensiona a área.** Uma área, uma resposta. Quem tem três roçados tem três
+  respostas.
+- **Não tem preço, crédito, mão de obra nem maquinário.** A resposta diz isso em voz
+  alta, em todo `limites`.
+- **Não tem IA rodando dentro da demo.** Compreensão por palavra-chave, aritmética
+  determinística sobre dado nomeado, frase de molde fixo. A voz é a do navegador.
+- **Não manda no produtor.** Compara, e mostra o que cada escolha faz com a terra
+  neste ano.
+
+### O que está incompleto, e declarado
+
+| o que falta | tamanho | o que o bot faz hoje |
+| --- | --- | --- |
+| `agua_ciclo_mm` | 11 de 14 culturas | diz "quanta água ela pede eu não sei" e cruza o resto |
+| `tmax_sofre_c` | 13 de 14 | o cruzamento de calor existe e **nunca dispara** nestes dois lugares |
+| janela do ZARC | 1 de 11 em Roraima | onde está carregada **muda a resposta**: caupi de 0,53 em abril para 0,87 em julho |
+| ciclo da braquiária | 1 cultura | é a única forrageira, e a única lacuna que trava uma prioridade inteira |
+| espécie do cará | 1 cultura | *Dioscorea trifida* é suposição nossa; a linha carrega `validar_com_tecnico` e o painel mostra |
+| a confiança mede **cobertura** de critério, não **qualidade** de fonte | desenho | `qualidade_do_dado` carrega a diferença e o painel mostra; a fala não diz |
+| pesquisa de campo | n=1, em Goiás | três ligações em Roraima, roteiro pronto e não feitas ([19](docs/19-roteiro-das-ligacoes.md)) |
+
+A lista completa, com dono de cada item, é [18. Pendências](docs/18-pendencias.md).
 
 ---
 
