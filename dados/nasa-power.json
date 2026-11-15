@@ -342,7 +342,7 @@
     "media_decaimento_pct": -2,
     "aviso": "lista de anos de El Nino escrita de memoria; conferir contra o indice ONI da NOAA",
     "ALERTA_LISTA_INCOMPLETA": "Conferido em 15/11 contra tabelas publicas de ONI: faltam pelo menos 1994, 2018 e 2019, cerca de um quarto da amostra. NAO usar a media de -10% em slide.",
-    "o_que_sobrevive": "Nos anos de El Nino desta serie o desvio de chuva de junho a setembro vai de -33% a +17%, e varios vieram ACIMA da media. Isso derruba 'ano de El Nino e ano seco' sem depender de a lista estar completa, porque acrescentar anos so aumenta a dispersao. Usar a FAIXA, nunca a media."
+    "o_que_sobrevive": "Nos anos de El Nino desta serie o desvio de chuva de junho a setembro vai de -48% a +17% sem contar 2026 (o minimo e 2015, com -48%; com 2026 a faixa vai a -62%). Corrigido em 15/11/2026 15h45: dizia -33%, que e o 1982 e nao o minimo, e varios vieram ACIMA da media. Isso derruba 'ano de El Nino e ano seco' sem depender de a lista estar completa, porque acrescentar anos so aumenta a dispersao. Usar a FAIXA, nunca a media."
    }
   },
   "rioverde-go": {

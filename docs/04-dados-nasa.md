@@ -114,7 +114,7 @@ Anos de decaimento (o ano seguinte ao pico): 1983 -38%, 1988 +29%, 1992 -9%, 199
 
 ### Conclusão do teste 1
 
-**A regra simples "ano de El Niño é ano seco" não se sustenta.** O desvio nesses anos vai de **−33% a +17%** e três deles vieram acima da média.
+**A regra simples "ano de El Niño é ano seco" não se sustenta.** O desvio nesses anos vai de **−48% a +17%** sem contar 2026, e três deles vieram acima da média. O mínimo é 2015, com −48%; com 2026 a faixa vai a −62%.
 
 > **Ressalva de 15/11, 15h — leia antes de citar a média.** A lista de anos
 > acima está incompleta: faltam ao menos **1994, 2018 e 2019**, cerca de um

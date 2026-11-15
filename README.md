@@ -97,7 +97,7 @@ Medidos no NASA POWER em 14/11/2026, ponto do Cantá (lat 2,61, lon -60,60). Det
 
 E o que **não** se confirmou, igualmente importante:
 
-- "Ano de El Niño é ano seco" não se sustenta: nos anos de El Niño da nossa série o desvio de chuva de junho a setembro vai de **−33% a +17%**, e vários vieram acima da média. **Usamos a faixa, nunca a média:** a lista de anos está incompleta (faltam ao menos 1994, 2018 e 2019, cerca de um quarto da amostra), e acrescentar anos só aumenta a dispersão — o que torna a faixa mais forte que a média, não mais fraca. ([18 §2.1](docs/18-pendencias.md))
+- "Ano de El Niño é ano seco" não se sustenta: nos anos de El Niño da nossa série o desvio de chuva de junho a setembro vai de **−48% a +17%** sem contar 2026, e vários vieram acima da média (o mínimo é 2015; com 2026 a faixa vai a −62%). **Usamos a faixa, nunca a média:** a lista de anos está incompleta (faltam ao menos 1994, 2018 e 2019, cerca de um quarto da amostra), e acrescentar anos só aumenta a dispersão — o que torna a faixa mais forte que a média, não mais fraca. ([18 §2.1](docs/18-pendencias.md))
 - **Não há base para prever repetição de 2026.** A frase sobre anos de decaimento dar −2% saiu daqui em 15/11: dependia da mesma lista não conferida.
 - Chuva mais forte não aconteceu em 2026: o maior dia foi 35,5 mm, abaixo da média de 44,4 mm.
 

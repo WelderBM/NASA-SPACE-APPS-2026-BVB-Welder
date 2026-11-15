@@ -61,6 +61,12 @@ lista estar completa, porque acrescentar anos só aumenta a dispersão.
 > −48%**, então a faixa é −48% a +17%. O campo `o_que_sobrevive` do
 > `nasa-power.json` ainda diz −33% e precisa da mesma troca (dono: chat do
 > dado). Vídeo de 3 min, slides e texto de estudo já usam −48%.
+>
+> **FEITO 15/11, 15h45 (chat do motor):** conferido na própria lista antes de
+> aceitar — `anos_desenvolvimento` traz 2015 com −48%, e o −33% era o 1982, não
+> o mínimo. Trocado no `nasa-power.json`, no README e no `docs/04`, que é onde
+> o número nasceu. Com 2026 na conta a faixa vai a −62%, então **a frase tem
+> que dizer se 2026 entra ou não.**
 
 ### 2.2 Limiares sem fonte anotada — ~~RESOLVIDO 15/11, 14h45~~
 
