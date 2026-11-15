@@ -11,14 +11,15 @@
 | --- | --- | --- |
 | `slides-en/` | Os 7 slides em inglês, a versão que vai para o campo Project Demo. Arquivos-fonte do deck (deck.json, deck.css, um HTML por slide, roteiro de fala no `<aside>`) | https://claude.ai/artifact/8vgM1J3M8Jqo4XzjMNhPzV |
 | `slides-pt/` | Os mesmos 7 slides em português, só para treino | https://claude.ai/artifact/B5c7gXQRWfndrpbuSnDDt2 |
-| `animacao/` | Animação de 29,5 s em inglês, com marca d'água de IA (`field-shift-roraima-30s.mp4`) e o script que a gera (`make.py`, Python + PIL + ffmpeg) | — |
+| `video-pitch/` | **Vídeo-pitch de 29,9 s com história, narração e legenda em inglês.** Roteiro, fontes de cada afirmação e como foi feito no README da pasta | — |
+| `animacao/` | (Substituída pelo `video-pitch/`.) Animação de 29,5 s em inglês, com marca d'água de IA (`field-shift-roraima-30s.mp4`) e o script que a gera (`make.py`, Python + PIL + ffmpeg) | — |
 | `docs/benchmark-e-proposta-de-valor.md` | Benchmark contra Plantio Certo, RAImundo, JoIA, Plantix, FieldView, Cropwise, Agrolink, Climatempo, vencedores do Space Apps; teste da hipótese | Drive: 1LD9KpiqjeojsQaKOg7nLG9ZgDTJQXoCdTFfOt6ueYhQ |
 | `docs/texto-de-estudo-do-pitch.md` | Texto longo em português para estudar antes de apresentar, com perguntas difíceis da banca | Drive: 1t7iDUxvjZeTRKCQGOipAoEyJHT-EjVL6WwXTMT7oHwo |
 
 ## Onde cada coisa entra na submissão
 
 - **Project Demo:** só os 7 slides em inglês, exportados em PDF com link público. O guia aceita vídeo de até 30 s **ou** até 7 slides, e passar do limite tira do julgamento global.
-- **Animação:** como material de apoio, com link público na Detailed Project Description. Nunca no campo de demo.
+- **Vídeo-pitch:** pode ir no Project Demo no lugar dos slides (vídeo **ou** slides, nunca os dois). Se o demo for os slides, o vídeo vai, com link público na Detailed Project Description. Nunca no campo de demo.
 
 ## Ressalvas, para não repetir o que já foi corrigido
 
