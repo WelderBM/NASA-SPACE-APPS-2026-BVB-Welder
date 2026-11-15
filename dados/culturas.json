@@ -218,12 +218,17 @@
       "qualidade": "falta",
       "fonte": "Embrapa Roraima cita como cultura principal; caracteristicas nao levantadas",
       "observacao": "O bot deve dizer que sabe a familia e nao sabe o ciclo. ARMADILHA: mesma familia de melao e jerimum.",
-      "artigo": "a"
+      "artigo": "a",
+      "agua_motivo": "ECOCROP so traz chuva ANUAL (ficha FAO: 'Rainfall (annual)'), nao agua do ciclo. Usar RMIN/ROPMN aqui e o mesmo erro de unidade do mm/dia. Ver docs/14.",
+      "ciclo_motivo": "ECOCROP nao tem ciclo para Citrullus lanatus (EcoPort 708): GMIN e GMAX vem 0. Continua sem ciclo. Lido em 15/11/2026."
     },
     "melao": {
       "nome": "Melão",
       "familia": "Cucurbitaceae",
-      "ciclo_dias": null,
+      "ciclo_dias": [
+        50,
+        120
+      ],
       "agua_ciclo_mm": null,
       "fase_critica_dias": null,
       "fixa_n": false,
@@ -234,15 +239,21 @@
       "hospedeiro_nematoide": null,
       "tmax_sofre_c": null,
       "tfaixa_boa_c": null,
-      "qualidade": "falta",
+      "qualidade": "parcial",
       "fonte": "Embrapa Roraima",
       "observacao": "Mesma familia de melancia e jerimum.",
-      "artigo": "o"
+      "artigo": "o",
+      "ciclo_fonte": "FAO ECOCROP, EcoCrop_DB.csv (copia em github.com/OpenCLIM/ecocrop), campos GMIN/GMAX, lido em 15/11/2026; especie Cucumis melo (EcoPort 815): GMIN 50, GMAX 120",
+      "ciclo_qualidade": "parcial: faixa global de variedades, nao cultivar de Roraima",
+      "agua_motivo": "ECOCROP so traz chuva ANUAL (ficha FAO: 'Rainfall (annual)'), nao agua do ciclo. Usar RMIN/ROPMN aqui e o mesmo erro de unidade do mm/dia. Ver docs/14."
     },
     "jerimum": {
       "nome": "Jerimum (abóbora)",
       "familia": "Cucurbitaceae",
-      "ciclo_dias": null,
+      "ciclo_dias": [
+        80,
+        140
+      ],
       "agua_ciclo_mm": null,
       "fase_critica_dias": null,
       "fixa_n": false,
@@ -253,15 +264,22 @@
       "hospedeiro_nematoide": null,
       "tmax_sofre_c": null,
       "tfaixa_boa_c": null,
-      "qualidade": "falta",
+      "qualidade": "parcial",
       "fonte": "Embrapa Roraima 2004",
       "observacao": "Mesma familia de melancia e melao.",
-      "artigo": "o"
+      "artigo": "o",
+      "ciclo_fonte": "FAO ECOCROP, EcoCrop_DB.csv (copia em github.com/OpenCLIM/ecocrop), campos GMIN/GMAX, lido em 15/11/2026; especie Cucurbita moschata (EcoPort 820): GMIN 80, GMAX 140",
+      "ciclo_qualidade": "parcial: faixa global de variedades, nao cultivar de Roraima",
+      "agua_motivo": "ECOCROP so traz chuva ANUAL (ficha FAO: 'Rainfall (annual)'), nao agua do ciclo. Usar RMIN/ROPMN aqui e o mesmo erro de unidade do mm/dia. Ver docs/14.",
+      "especie": "Cucurbita moschata (jerimum caboclo do Norte), escolha do Welder em 15/11/2026"
     },
     "batata-doce": {
       "nome": "Batata-doce",
       "familia": "Convolvulaceae",
-      "ciclo_dias": null,
+      "ciclo_dias": [
+        80,
+        170
+      ],
       "agua_ciclo_mm": null,
       "fase_critica_dias": null,
       "fixa_n": false,
@@ -272,15 +290,21 @@
       "hospedeiro_nematoide": null,
       "tmax_sofre_c": null,
       "tfaixa_boa_c": null,
-      "qualidade": "falta",
+      "qualidade": "parcial",
       "fonte": "Embrapa Roraima 2004; programa municipal de Boa Vista",
       "observacao": "Unica Convolvulaceae: quebra familia sozinha.",
-      "artigo": "a"
+      "artigo": "a",
+      "ciclo_fonte": "FAO ECOCROP, EcoCrop_DB.csv (copia em github.com/OpenCLIM/ecocrop), campos GMIN/GMAX, lido em 15/11/2026; especie Ipomoea batatas (EcoPort 1265): GMIN 80, GMAX 170",
+      "ciclo_qualidade": "parcial: faixa global de variedades, nao cultivar de Roraima",
+      "agua_motivo": "ECOCROP so traz chuva ANUAL (ficha FAO: 'Rainfall (annual)'), nao agua do ciclo. Usar RMIN/ROPMN aqui e o mesmo erro de unidade do mm/dia. Ver docs/14."
     },
     "cara": {
       "nome": "Cará",
       "familia": "Dioscoreaceae",
-      "ciclo_dias": null,
+      "ciclo_dias": [
+        280,
+        330
+      ],
       "agua_ciclo_mm": null,
       "fase_critica_dias": null,
       "fixa_n": false,
@@ -291,15 +315,26 @@
       "hospedeiro_nematoide": null,
       "tmax_sofre_c": null,
       "tfaixa_boa_c": null,
-      "qualidade": "falta",
+      "qualidade": "parcial",
       "fonte": "Embrapa Roraima 2004",
       "observacao": "Unica Dioscoreaceae: quebra familia sozinha.",
-      "artigo": "o"
+      "artigo": "o",
+      "ciclo_fonte": "FAO ECOCROP, EcoCrop_DB.csv (copia em github.com/OpenCLIM/ecocrop), campos GMIN/GMAX, lido em 15/11/2026; especie Dioscorea trifida (EcoPort 5429): GMIN 280, GMAX 330",
+      "ciclo_qualidade": "parcial: faixa global de variedades, nao cultivar de Roraima",
+      "agua_motivo": "ECOCROP so traz chuva ANUAL (ficha FAO: 'Rainfall (annual)'), nao agua do ciclo. Usar RMIN/ROPMN aqui e o mesmo erro de unidade do mm/dia. Ver docs/14.",
+      "especie": "Dioscorea trifida: SUPOSICAO. E a nativa e tradicional entre familias indigenas e ribeirinhas do Amazonas e Roraima; a alata e introduzida. Nao temos fonte de qual se planta no interior de Roraima.",
+      "especie_alternativa": "Dioscorea alata (EcoPort 936): GMIN 220, GMAX 300",
+      "validar_com_tecnico": [
+        "qual especie de cara se planta na regiao: Dioscorea trifida ou Dioscorea alata"
+      ]
     },
     "arroz": {
       "nome": "Arroz",
       "familia": "Poaceae",
-      "ciclo_dias": null,
+      "ciclo_dias": [
+        80,
+        180
+      ],
       "agua_ciclo_mm": null,
       "fase_critica_dias": null,
       "fixa_n": false,
@@ -310,9 +345,12 @@
       "hospedeiro_nematoide": null,
       "tmax_sofre_c": null,
       "tfaixa_boa_c": null,
-      "qualidade": "falta",
+      "qualidade": "parcial",
       "fonte": "tem ZARC em Roraima; caracteristicas nao levantadas",
-      "artigo": "o"
+      "artigo": "o",
+      "ciclo_fonte": "FAO ECOCROP, EcoCrop_DB.csv (copia em github.com/OpenCLIM/ecocrop), campos GMIN/GMAX, lido em 15/11/2026; especie Oryza sativa (EcoPort 1574): GMIN 80, GMAX 180",
+      "ciclo_qualidade": "parcial: faixa global de variedades, nao cultivar de Roraima",
+      "agua_motivo": "ECOCROP so traz chuva ANUAL (ficha FAO: 'Rainfall (annual)'), nao agua do ciclo. Usar RMIN/ROPMN aqui e o mesmo erro de unidade do mm/dia. Ver docs/14."
     },
     "banana": {
       "nome": "Banana",
@@ -332,12 +370,16 @@
       "qualidade": "falta",
       "fonte": "IBGE PAM (2.350 ha em Caroebe); Embrapa Roraima com 6 cultivares BRS",
       "observacao": "Perene: ocupa a area por anos. Sensivel a vento.",
-      "artigo": "a"
+      "artigo": "a",
+      "agua_motivo": "ECOCROP so traz chuva ANUAL (ficha FAO: 'Rainfall (annual)'), nao agua do ciclo. Usar RMIN/ROPMN aqui e o mesmo erro de unidade do mm/dia. Ver docs/14.",
+      "ciclo_motivo": "Fora de ciclo_dias de proposito: ciclo de perene nao e ciclo de rotacao. A banana ocupa a area por anos, entao nao entra como 'o que plantar depois da colheita' do mesmo jeito que uma anual. O ECOCROP traz 180 a 365 dias para Musa acuminata, e nao usamos."
     }
   },
   "pendencias": [
-    "Baixar o EcoCrop_DB.csv da FAO (2.568 especies) e preencher ciclo, agua, faixa de temperatura e pH das culturas marcadas como falta",
     "Trocar a fonte do milho: jornal nao serve para o critério de Validade",
-    "Achar fonte para os limiares de caupi (18 a 34 C) e soja (40 C, 7 a 8 mm/dia)"
+    "Achar fonte para os limiares de caupi (18 a 34 C) e soja (40 C, 7 a 8 mm/dia)",
+    "Agua por ciclo continua faltando em melao, jerimum, batata-doce, cara, arroz, melancia, banana e mandioca. O ECOCROP nao serve para isso (docs/14). Fonte certa: Embrapa por cultura ou Kc do FAO 56",
+    "Ciclo da melancia: o ECOCROP nao tem",
+    "Ciclo do ECOCROP e faixa global; o motor usa o minimo, entao o ciclo curto sai otimista ate trocar por cultivar de Roraima"
   ]
 }
