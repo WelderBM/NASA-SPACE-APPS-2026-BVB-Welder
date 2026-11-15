@@ -15,8 +15,8 @@ Cuidado de método que vale saber de cor: nos três endpoints do POWER (climatol
 
 ## **3\. Quem decide, e por que agora (slide 3\)**
 
-A decisão não é inventada pelo projeto. O IATER está organizando ação contra os efeitos do El Niño 2026/27 e orientando a agricultura familiar para a estiagem, e uma das orientações é a escolha de culturas mais adaptadas ao período seco (Diário RR, out/2026). É o nosso produto, entregue hoje por extensionista humano. Não é concorrência: é prova de que a decisão existe, é oficial e é deste momento. O limite é de alcance, porque só chega a quem o extensionista chega.  
-O 87% precisa ser dito do jeito certo: dos 16.850 estabelecimentos agropecuários de Roraima no Censo Agropecuário do IBGE de 2017, 87% não recebiam assistência técnica. Não é "87% dos agricultores familiares de hoje". O IATER foi criado em 2022 e expandiu desde então, por isso o ano vai junto.  
+A decisão não é inventada pelo projeto. O IATER está organizando ação contra os efeitos do El Niño 2026/27 e orientando a agricultura familiar para a estiagem, e uma das orientações é a escolha de culturas mais adaptadas ao período seco (Folha BV, 08/09/2026, folhabv.com.br/?p=667353). É o nosso produto, entregue hoje por extensionista humano. Não é concorrência: é prova de que a decisão existe, é oficial e é deste momento. O limite é de alcance, porque só chega a quem o extensionista chega.  
+O 87% precisa ser dito do jeito certo: dos 16.850 estabelecimentos agropecuários de Roraima em 2017, 87% não recebiam assistência técnica. Quem diz é o próprio IATER, numa proposta de convênio de março de 2024, citando "dados do IBGE" de 2017 sem nomear a pesquisa; o ano bate com o Censo Agropecuário, mas o documento não escreve isso. Não é "87% dos agricultores familiares de hoje". O IATER foi criado em 2022 e expandiu desde então, por isso o ano vai junto.  
 A pesquisa do time teve 8 respostas de 7 pessoas, em 14/11, em Caracaraí, Boa Vista, Rorainópolis e Cantá. Seca foi a perda mais citada (5 de 7). 4 de 7 plantam outra coisa logo depois da colheita, e 2 deixam a área parada até a próxima chuva. 4 de 7 preferem receber aviso por WhatsApp escrito. 3 de 7 só confiariam numa recomendação por satélite se um técnico confirmasse, e é por isso que toda resposta termina com o que conferir com o técnico. É uma amostra pequena, de quem preencheu um formulário online, e deve ser apresentada assim.  
 A entrevista com o produtor de Goiás (n=1, via Giuliano) trouxe o achado comportamental: muita gente ficou com medo de investir por causa do El Niño. O prejuízo de um ano ruim não é só a safra perdida, é a paralisia. Uma ferramenta que não prevê nada ainda ajuda se mostra o que continua razoável fazer.
 
@@ -68,5 +68,5 @@ O guia de submissão aceita vídeo de até 30 segundos **ou** deck de até 7 sli
 > * RAImundo: [Agrolink](https://www.agrolink.com.br/noticias/ia-com-sotaque-do-campo-conecta-pequenos-produtores_504336.html)  
 > * JoIA: [CNA](https://cnabrasil.org.br/noticias/joia-sistema-cna-senar-leva-inovacao-para-ajudar-produtor-a-tomar-decisoes)  
 > * Guia de submissão do Space Apps: [spaceappschallenge.org](https://www.spaceappschallenge.org/resources/project-submission-guide/)  
-> * IATER e El Niño 2026/27: Diário RR, out/2026 (conforme doc 12 do repositório)  
-> * Censo Agropecuário 2017 (IBGE), via documento do IATER citado no doc 03 do repositório
+> * IATER e El Niño 2026/27: Folha BV, 08/09/2026, "Inscrições para Projetos de Grãos do IATER vão até 15/10" (a matéria do Diário RR citada no doc 12 não foi encontrada)  
+> * IATER, proposta de convênio, mar/2024 (dados do IBGE de 2017), prda.sudam.gov.br/pdf/80bff30c20fcfd50e68aaebbd52cdf26.pdf

@@ -1,5 +1,7 @@
 # 15 — Os campos da submissão, rascunho em inglês
 
+> **Superado em 15/11, 16h40** por `entregas/docs/formulario-submissao.md`, escrito a partir da página real do formulário e com os números do main daquela hora (milho 686/386, culturas 4/8/2, 5 sem ciclo, janela do caupi carregada, fonte do 87% corrigida). Este fica como histórico.
+
 > 15/11/2026, 13h30, revisto às 14h45 (pesquisa: 5 de 8, conferido na planilha segundo `entregas/README.md`; frase do decaimento do El Niño cortada porque a lista de anos foi escrita de memória e não foi conferida no ONI). Rascunho dos campos listados no doc 09, escrito a partir
 > do `main` no commit `677c22b`. Os textos de cada campo estão em texto puro,
 > sem markdown e sem travessão, prontos para colar. **Tudo o que está entre

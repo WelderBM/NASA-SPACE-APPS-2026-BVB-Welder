@@ -81,7 +81,7 @@
   <g id="waffle" transform="translate(120,170)"></g>
   <text id="w87" x="120" y="790" font-size="110" font-weight="800" fill="#B5442E" opacity="0">87%</text>
   <text id="w87b" x="120" y="850" font-size="32" fill="#1C2620" opacity="0">of Roraima’s 16,850 farms: no technical assistance</text>
-  <text id="w87c" x="120" y="895" font-size="26" fill="#4A5148" opacity="0">IBGE Agricultural Census, 2017</text>
+  <text id="w87c" x="120" y="895" font-size="26" fill="#4A5148" opacity="0">IBGE data for 2017, cited by IATER (2024)</text>
   <!-- road + truck -->
   <g id="road" opacity="0">
     <path d="M900,700 C1100,640 1300,760 1500,690 C1650,640 1760,700 1900,660" stroke="#C9A066" stroke-width="40" fill="none"/>
@@ -95,13 +95,13 @@
       <text text-anchor="middle" y="-50" font-size="30" font-weight="700" fill="#2E6A4C">Roraima’s extension agency, this season:</text>
       <text text-anchor="middle" y="0" font-size="34" font-weight="700" fill="#1C2620">“choose crops better adapted</text>
       <text text-anchor="middle" y="44" font-size="34" font-weight="700" fill="#1C2620">to the dry period”</text>
-      <text text-anchor="middle" y="90" font-size="24" fill="#4A5148">IATER, El Niño 2026/27 action (Diário RR, Oct 2026)</text>
+      <text text-anchor="middle" y="90" font-size="24" fill="#4A5148">IATER, El Niño 2026/27 action (Folha BV, Sep 8, 2026)</text>
     </g>
   </g>
-  <g id="survey" opacity="0" transform="translate(1340,930)">
-    <rect x="-470" y="-62" width="940" height="124" rx="30" fill="#1C2620"/>
-    <text text-anchor="middle" y="-10" font-size="32" font-weight="700" fill="#F5F0E6">4 of 7 surveyed families plant again right after harvest</text>
-    <text text-anchor="middle" y="36" font-size="28" fill="#E9B66A">“Many were afraid to invest.” · farmer, Goiás (interview)</text>
+  <g id="survey" opacity="0" transform="translate(1400,858)">
+    <rect x="-445" y="-46" width="890" height="92" rx="26" fill="#1C2620"/>
+    <text text-anchor="middle" y="-6" font-size="28" font-weight="700" fill="#F5F0E6">4 of 7 surveyed families plant again right after harvest</text>
+    <text text-anchor="middle" y="30" font-size="24" fill="#E9B66A">“Many were afraid to invest.” · farmer, Goiás (interview)</text>
   </g>
 </g>
 

@@ -158,7 +158,7 @@ Medidos no NASA POWER em 14/11/2026, ponto do Cantá (lat 2,61, lon -60,60). Det
 | --- | --- |
 | Estiagem mais longa na estação chuvosa de 2026 | **24 dias**, contra 9 de média. Vem da série **diária**, que está no [4](docs/04-dados-nasa.md) e não no repositório: não dá para recalcular daqui |
 | Dias com chuva, abril a setembro de 2026 | 92, contra 142 de média |
-| Chuva de junho a setembro de 2026 | **330 mm contra 812 mm da climatologia: −59%**, o pior desde 1981. Contra os 859 mm da média da série de anos de El Niño dá −62%; os dois números estão no `nasa-power.json`, então **cite qual** |
+| Chuva de junho a setembro de 2026 | **330 mm contra 812 mm da climatologia: −59%**, o pior desde 1981. Contra os 859 mm da média da série inteira 1981–2026 (campo `media_serie_mm`, guardado no bloco do El Niño; inclui 2026, e sem 2026 a média é ~871 mm) dá −62%; os dois números estão no `nasa-power.json`, então **cite qual** |
 | Umidade do solo no perfil, setembro de 2026 | 0,51 contra 0,76 do normal, nível que ali só aparece em janeiro |
 | Chuva de janeiro a **setembro** de 2026 | **805 mm contra 1.358 mm: −41%.** Dizia "janeiro a outubro, 858 contra 1.428" até 15/11: outubro a dezembro não estão na série e nenhum dos dois números existia no repositório |
 
