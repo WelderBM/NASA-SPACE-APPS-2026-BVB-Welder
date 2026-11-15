@@ -32,17 +32,27 @@ lista estar completa, porque acrescentar anos só aumenta a dispersão.
 
 **Recomendação:** usar a faixa, nunca a média. Está corrigido no `nasa-power.json`.
 
-### 2.2 Limiares sem fonte anotada
+### 2.2 Limiares sem fonte anotada — ~~RESOLVIDO 15/11, 14h45~~
 
-- **Caupi** entre 18 °C e 34 °C: fonte não anotada
-- **Soja** acima de 40 °C e 7 a 8 mm por dia: fonte não anotada, e o limiar de
-  40 °C agora é usado no motor, no aviso de calor
-- **Limiar de veranico**: não existe. O motor reporta o número e não classifica
-- **Limiar de deriva de vento**: não existe. A decisão de pulverizar está fora do MVP
+- ~~**Caupi** entre 18 °C e 34 °C~~ → Embrapa Meio-Norte, *Cultivo de
+  Feijão-Caupi*, cap. Clima. **E achou um erro:** o ciclo estava em 60 dias sem
+  fonte; a Embrapa dá 70 a 75 nas variedades recomendadas. O motor usa o mínimo
+  do ciclo para somar a chuva da janela, então 60 fazia a cultura parecer mais
+  segura do que é. Corrigido
+- ~~**Soja** acima de 40 °C e 7 a 8 mm/dia~~ → Embrapa Soja, *SECA — Soja em
+  Carência de Água*. A mesma fonte confirma 450 a 800 mm por ciclo e a faixa de
+  20 a 30 °C. O limiar de 40 °C está em uso no aviso de calor
+- **Limiar de veranico**: continua sem fonte. O motor reporta o número e não
+  classifica, que é o comportamento honesto
+- **Limiar de deriva de vento**: continua sem. A decisão de pulverizar está fora
+  do MVP
 
-### 2.3 Fonte fraca
+### 2.3 Fonte fraca — ~~RESOLVIDO 15/11, 14h45~~
 
-- O ciclo do **milho** veio de jornal (Folha BV). Trocar por Embrapa ou ZARC
+- ~~O ciclo do **milho** veio de jornal~~ → classificação oficial do MAPA via
+  Embrapa Milho e Sorgo: Grupo I abaixo de 110 dias, Grupo II de 110 a 145,
+  Grupo III acima de 145, contados da emergência à maturação fisiológica.
+  Adotado o Grupo II. A qualidade do dado do milho subiu de *parcial* para *boa*
 
 ## 3. Deixa a resposta mais rasa, não trava nada
 

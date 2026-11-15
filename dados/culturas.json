@@ -67,7 +67,7 @@
       "nome": "Feijão-caupi",
       "familia": "Fabaceae",
       "ciclo_dias": [
-        60,
+        70,
         75
       ],
       "agua_ciclo_mm": [
@@ -87,16 +87,17 @@
         34
       ],
       "qualidade": "boa",
-      "fonte": "ZARC caupi Roraima (portaria 2023/24); faixa de temperatura SEM FONTE ANOTADA, a conferir",
+      "fonte": "Ciclo e faixa termica: Embrapa Meio-Norte, Sistema de Producao 'Cultivo de Feijao-Caupi', capitulo Clima (18 a 34 C para bom desenvolvimento) e '500 perguntas 500 respostas - Feijao-caupi' cap. 18 (variedades recomendadas com ciclo curto, 70 a 75 dias). Janela: portaria ZARC caupi Roraima 2023/24.",
       "observacao": "Ciclo curto: cabe no fim das chuvas. Perde mais com falta de agua na floracao.",
-      "artigo": "o"
+      "artigo": "o",
+      "correcao_15_11": "ciclo era [60, 75], de fonte nao anotada. A Embrapa da 70 a 75 nas variedades recomendadas. O motor usa o MINIMO do ciclo para somar a chuva da janela, entao 60 fazia a cultura parecer mais segura do que e. Corrigido para o numero com fonte."
     },
     "milho": {
       "nome": "Milho",
       "familia": "Poaceae",
       "ciclo_dias": [
-        100,
-        140
+        110,
+        145
       ],
       "agua_ciclo_mm": [
         500,
@@ -111,10 +112,11 @@
       "hospedeiro_nematoide": true,
       "tmax_sofre_c": null,
       "tfaixa_boa_c": null,
-      "qualidade": "parcial",
-      "fonte": "Folha BV (jornal). FONTE FRACA: trocar por Embrapa ou ZARC antes do slide",
+      "qualidade": "boa",
+      "fonte": "Embrapa Milho e Sorgo, Sistema de Producao 'Cultivo do Milho', capitulo Plantio: o MAPA classifica as cultivares em Grupo I (menos de 110 dias), Grupo II (110 a 145) e Grupo III (mais de 145), contados da emergencia a maturacao fisiologica. Adotado o Grupo II, ciclo medio.",
       "observacao": "Hospedeiro e multiplicador de nematoide: alerta quando a sequencia empilha Poaceae.",
-      "artigo": "o"
+      "artigo": "o",
+      "correcao_15_11": "ciclo era [100, 140], vindo de materia de jornal (Folha BV). Trocado pela classificacao oficial do MAPA via Embrapa Milho e Sorgo. Existe o Grupo I, abaixo de 110 dias; se a cultivar local for precoce, o numero muda."
     },
     "soja": {
       "nome": "Soja",
@@ -137,8 +139,8 @@
       "tmax_sofre_c": 40,
       "tfaixa_boa_c": null,
       "qualidade": "boa",
-      "fonte": "ZARC soja Roraima 2026/27. Limiar de 40 C e consumo de 7 a 8 mm/dia na floracao SEM FONTE ANOTADA",
-      "observacao": "Agronegocio, nao agricultura familiar. Entra na configuracao do Centro-Oeste.",
+      "fonte": "ZARC soja Roraima 2026/27 para a janela. Limiar de 40 C e consumo de 7 a 8 mm/dia na floracao e enchimento: Embrapa Soja, 'SECA - Soja em Carencia de Agua' (bioinfo.cnpso.embrapa.br/seca) e Recomendacoes Tecnicas para a Regiao Central do Brasil. Faixa de 450 a 800 mm por ciclo: mesma fonte.",
+      "observacao": "Agronegocio, nao agricultura familiar. Entra na configuracao do Centro-Oeste. Embrapa: se adapta entre 20 e 30 C, otimo em torno de 30; acima de 40 C ha dano a floracao e queda na retencao de vagens. Consumo maximo de 7 a 8 mm/dia na floracao-enchimento.",
       "artigo": "a"
     },
     "braquiaria": {

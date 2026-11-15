@@ -99,7 +99,7 @@ Nove famílias, contra as três do sistema de grãos. **A regra de quebrar famí
 | --- | --- | --- | --- | --- | --- | --- |
 | Mandioca | Euphorbiaceae | 8 a 12 meses; 6 a 7 no trópico úmido; 18 a 24 em seca prolongada | tolerante à seca, crítica nos 3 primeiros meses | segurança alimentar, raiz espera no campo, quebra as duas famílias dominantes | [Embrapa](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1152564/1/Fisiologia-da-mandioca.pdf) | boa |
 | Feijão-caupi | Fabaceae | até 75 dias | mínimo de 300 mm | fixa nitrogênio, ciclo curto, cabe no fim das chuvas | [ZARC caupi](https://www.gov.br/agricultura/pt-br/assuntos/riscos-seguro/programa-nacional-de-zoneamento-agricola-de-risco-climatico/portarias/safra-vigente/roraima/PORTN291FEIJOCAUPIRR.pdf) | boa, mas a portaria é 2023/24 |
-| Milho | Poaceae | 100 a 140 dias | 500 a 800 mm | cereal; hospedeiro de nematoide | [Folha BV](https://www.folhabv.com.br/?p=450615) | **fraca: fonte é jornal** |
+| Milho (ciclo corrigido em 15/11 para 110–145 dias, Grupo II do MAPA via Embrapa Milho e Sorgo; saiu a fonte de jornal) | Poaceae | 100 a 140 dias | 500 a 800 mm | cereal; hospedeiro de nematoide | [Folha BV](https://www.folhabv.com.br/?p=450615) | **fraca: fonte é jornal** |
 | Soja | Fabaceae | 100 a 130 dias | 450 a 800 mm | fixa nitrogênio; agronegócio, não agricultura familiar | [ZARC soja 2026/27](https://www.gov.br/agricultura/pt-br/assuntos/riscos-seguro/programa-nacional-de-zoneamento-agricola-de-risco-climatico/portarias/safra-vigente/roraima/PORTN208SOJARR.ret.pdf) | boa |
 | Arroz | Poaceae | a levantar | a levantar | tem ZARC em RR | — | **falta** |
 | Feijão comum | Fabaceae | a levantar | a levantar | único com importância econômica na AF segundo a Embrapa | Embrapa 2004 | **falta** |
@@ -125,9 +125,9 @@ Nove famílias, contra as três do sistema de grãos. **A regra de quebrar famí
 
 Todos marcados como "a validar com agrônomo".
 
-**Caupi:** vai bem entre 18 °C e 34 °C e perde mais com falta de água na floração. **Fonte não anotada: a conferir.**
+**Caupi:** vai bem entre 18 °C e 34 °C e perde mais com falta de água na floração. **Fonte confirmada em 15/11:** Embrapa Meio-Norte, Sistema de Produção *Cultivo de Feijão-Caupi*, capítulo Clima. E o **ciclo foi corrigido de 60 para 70 dias**: as variedades recomendadas têm 70 a 75 dias (*500 perguntas 500 respostas — Feijão-caupi*, cap. 18). O motor usa o mínimo do ciclo para somar a chuva da janela, então 60 fazia a cultura parecer mais segura do que é.
 
-**Soja:** sofre acima de 40 °C e consome 7 a 8 mm por dia na floração e no enchimento de grãos. **Fonte não anotada: a conferir.**
+**Soja:** sofre acima de 40 °C e consome 7 a 8 mm por dia na floração e no enchimento de grãos. **Fonte confirmada em 15/11:** Embrapa Soja, *SECA — Soja em Carência de Água*, e *Recomendações Técnicas para a Região Central do Brasil*. A mesma fonte dá a faixa ideal de 20 a 30 °C e os 450 a 800 mm por ciclo. O limiar de 40 °C está em uso no motor, no aviso de calor.
 
 **Mandioca:** resiste a períodos de seca, mas é muito sensível ao déficit de água no solo nos três primeiros meses depois do plantio ([Embrapa Cerrados, Circular técnica 51](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1133613/1/Recomendacao-tecnica-do-manejo-de-irrigacao-Circular-tecnica-51.pdf)), e os efeitos negativos seguem altos nos quatro meses seguintes, quando o crescimento vegetativo é mais intenso; em ciclo de 12 meses a fase crítica vai do dia 30 ao dia 150 ([Embrapa Mandioca e Fruticultura, Comunicado técnico 172](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1121941/1/ComunicadoTecnico172-Mauricio-Coelho-AINFO-2.pdf)). No trópico úmido as raízes podem ser colhidas entre 6 e 7 meses, e podem ficar no campo sem colher por muito tempo, o que faz da mandioca um cultivo de segurança contra a fome ([Embrapa, Fisiologia da mandioca](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1152564/1/Fisiologia-da-mandioca.pdf)). A literatura registra o uso de cultivar precoce para fechar o ciclo antes de a seca se estabelecer.
 
