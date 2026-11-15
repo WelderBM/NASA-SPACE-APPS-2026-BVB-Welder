@@ -173,7 +173,12 @@ function painel(r){
   const e=r.estado_observado||{},o=(r.opcoes||[])[0];
   let h=`<div class="lab">Observado, ${e.mes||''}</div>`;
   h+=kv('Chuva normal do mês',(e.chuva_normal_do_mes_mm??'—')+' mm');
-  if(e.solo_raiz)h+=kv('Umidade da raiz',e.solo_raiz.observado+' (normal '+e.solo_raiz.normal+')');
+  const camadas=[['Umidade na superfície','solo_superficie'],['Umidade na raiz','solo_raiz'],
+                 ['Umidade no perfil','solo_profundo']];
+  camadas.forEach(([rot,k])=>{const c=e[k];
+    if(c)h+=kv(rot,c.observado+' (normal '+c.normal+')')});
+  if(e.tsolo_c!=null)h+=kv('Temperatura do solo',e.tsolo_c+' °C');
+  if(e.anos_de_serie)h+=kv('Série',e.anos_de_serie+' anos');
   if(e.fator_do_ano)h+=kv('O ano até aqui',Math.round(e.fator_do_ano.razao*100)+'% do normal');
   h+=kv('Estiagem normal do mês',(e.veranico_normal_do_mes_dias??'—')+' dias');
   if(o){h+=`<div class="lab">${o.cultura}</div>`;

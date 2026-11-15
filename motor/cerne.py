@@ -50,6 +50,7 @@ MOLDES_NEUTROS = {
   'nao_sei_prever': "Previsão de chuva eu não tenho. {mes} costuma ter {chuva}, com estiagem máxima de {estiagem} dias, e o solo está {estado}.",
   'hipotese_sem_agua': "{cultura} não é da mesma família {de_colheu}. A exigência de água dela não está registrada; a janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
   'indicacao_pouca_confianca': "Depois {de_colheu}, a melhor opção é {cultura}, mas só {pct}% dos critérios dessa prioridade puderam ser avaliados nela.",
+  'solo_fundo': "Camada superficial {sup}; camada profunda {fundo}. A reserva profunda é a que sustenta no veranico.",
   'aviso_calor': "A máxima de {mes} chega a {pico} °C, acima do limite de {limite} °C dessa cultura.",
   'agua_sem_numero': "A exigência de água dela não está registrada. A janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
   'porques': {'familia': "é de outra família {de_colheu}, então as pragas de solo não se mantêm",
@@ -119,6 +120,18 @@ def estado_observado(place, m0):
         dif = (o - n)/n if n else 0.0
         e['solo_raiz'] = {'observado': o, 'normal': n, 'diferenca': _r(dif, 3),
             'situacao': 'media' if abs(dif) < 0.03 else ('acima' if dif > 0 else 'abaixo')}
+    # o solo tem TRES profundidades no POWER e o motor lia uma. a de cima engana:
+    # chuva recente molha a superficie e a reserva de baixo pode estar vazia.
+    for chave, campo in (('solo_superficie','solo_sup'), ('solo_profundo','solo_perfil')):
+        ob, no = an[campo][m0], cl[campo][m0]
+        if ob is None: continue
+        d = (ob - no)/no if no else 0.0
+        e[chave] = {'observado': ob, 'normal': no, 'diferenca': _r(d, 3),
+                    'situacao': 'media' if abs(d) < 0.03 else ('acima' if d > 0 else 'abaixo')}
+    sup, fun = e.get('solo_superficie'), e.get('solo_profundo')
+    if sup and fun and fun['situacao'] == 'abaixo' and sup['situacao'] != 'abaixo' and (sup['diferenca'] - fun['diferenca']) >= 0.08:
+        e['superficie_engana'] = True
+    e['tsolo_c'] = cl['tsolo'][m0]
     if f: e['fator_do_ano'] = {'razao': _r(f,2), **det}
     return e
 
@@ -249,6 +262,10 @@ def atender(p):
             mes=est['mes'], chuva=M['chuva_qualitativa'][est['chuva_qualitativa']],
             estado=M['estado_terra'][sr['situacao']] if sr else 'sem leitura')
         res['fala'] = res['falas'][0]
+        if est.get('superficie_engana'):
+            sup, fun = est['solo_superficie'], est['solo_profundo']
+            res['aviso_do_ano'] = _lista(M.get('solo_fundo',''))[0].format(
+                sup=M['estado_terra'][sup['situacao']], fundo=M['estado_terra'][fun['situacao']])
         if not sr: res['limites'].append('sem leitura de umidade do solo para este mês')
         return res
     if intencao == 'vai-chover':

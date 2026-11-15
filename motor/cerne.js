@@ -27,6 +27,7 @@ const MOLDES_NEUTROS={
  nao_sei_prever:"Previsão de chuva eu não tenho. {mes} costuma ter {chuva}, com estiagem máxima de {estiagem} dias, e o solo está {estado}.",
  hipotese_sem_agua:"{cultura} não é da mesma família {de_colheu}. A exigência de água dela não está registrada; a janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
  indicacao_pouca_confianca:"Depois {de_colheu}, a melhor opção é {cultura}, mas só {pct}% dos critérios dessa prioridade puderam ser avaliados nela.",
+ solo_fundo:"Camada superficial {sup}; camada profunda {fundo}. A reserva profunda é a que sustenta no veranico.",
  aviso_calor:"A máxima de {mes} chega a {pico} °C, acima do limite de {limite} °C dessa cultura.",
  agua_sem_numero:"A exigência de água dela não está registrada. A janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
  porques:{familia:"é de outra família {de_colheu}, então as pragas de solo não se mantêm",
@@ -78,6 +79,17 @@ class Cerne{
       const dif=n?(o-n)/n:0;
       e.solo_raiz={observado:o,normal:n,diferenca:Math.floor(dif*1000+0.5)/1000,
         situacao:Math.abs(dif)<0.03?'media':(dif>0?'acima':'abaixo')};}
+    for(const[chave,campo]of[['solo_superficie','solo_sup'],['solo_profundo','solo_perfil']]){
+      const ob=an[campo][m0],no=cl[campo][m0];
+      if(ob==null)continue;
+      const d=no?(ob-no)/no:0;
+      e[chave]={observado:ob,normal:no,diferenca:Math.floor(d*1000+0.5)/1000,
+        situacao:Math.abs(d)<0.03?'media':(d>0?'acima':'abaixo')};
+    }
+    const sp=e.solo_superficie,fu=e.solo_profundo;
+    if(sp&&fu&&fu.situacao==='abaixo'&&sp.situacao!=='abaixo'&&(sp.diferenca-fu.diferenca)>=0.08)
+      e.superficie_engana=true;
+    e.tsolo_c=cl.tsolo[m0];
     if(f)e.fator_do_ano=Object.assign({razao:Math.round(f*100)/100},det);
     return e;
   }
@@ -163,6 +175,9 @@ class Cerne{
         chuva:M.chuva_qualitativa[est.chuva_qualitativa],
         estado:sr?M.estado_terra[sr.situacao]:'sem leitura'});
       res.fala=res.falas[0];
+      if(est.superficie_engana){const sp=est.solo_superficie,fu=est.solo_profundo;
+        res.aviso_do_ano=fmt(lista(M.solo_fundo||'')[0],
+          {sup:M.estado_terra[sp.situacao],fundo:M.estado_terra[fu.situacao]});}
       if(!sr)res.limites.push('sem leitura de umidade do solo para este mês');
       return res;
     }

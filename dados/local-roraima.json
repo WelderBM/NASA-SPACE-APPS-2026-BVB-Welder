@@ -86,10 +86,12 @@
       ]
     },
     "sem_assistencia_tecnica": {
-      "frase_exata": "Dos 16.850 estabelecimentos agropecuarios de Roraima (IBGE, Censo 2017), 87% nao recebiam assistencia tecnica.",
+      "frase_exata": "Dos 16.850 estabelecimentos agropecuarios de Roraima, 87% nao recebiam assistencia tecnica (Censo Agropecuario IBGE 2017, citado pelo IATER em 2024).",
       "cuidado": "NAO dizer '87% dos agricultores familiares do estado'. Sao estabelecimentos agropecuarios, todos, e o dado e de 2017.",
       "ressalva": "O IATER foi criado em 2022 e expandiu: o governo fala de mais de 54 mil atendimentos entre 2022 e 2024, em 61 pontos de atendimento. Sao atendimentos, nao cobertura unica, mas o numero de 2017 pode estar melhor hoje. Dizer o ano.",
-      "fonte": "IATER, proposta de convenio (SUDAM, mar/2024), citando IBGE Censo Agropecuario 2017"
+      "fonte": "IATER, proposta de convenio (SUDAM, mar/2024), citando IBGE Censo Agropecuario 2017",
+      "frase_en": "87% of the 16,850 farm establishments in Roraima had no technical assistance (IBGE Agricultural Census 2017, cited by IATER, 2024).",
+      "uso": "Usar UMA dessas duas, ao pe da letra, em slide, submissao e qualquer texto. A fonte e um convenio do IATER de 2024 CITANDO o censo de 2017: as duas datas precisam aparecer."
     },
     "el_nino_2026_27_oficial": {
       "achado": "O governo de Roraima, pelo IATER, ja esta organizando acao contra os efeitos do El Nino 2026/2027, orientando produtoras da agricultura familiar para o enfrentamento do periodo de estiagem.",
@@ -237,6 +239,10 @@
     "indicacao_pouca_confianca": [
       "Depois {de_colheu}, a que mais encaixa é {cultura}. Mas te aviso: dela eu só consegui medir {pct}% do que importa pro que você quer.",
       "A que mais encaixa é {cultura}. Só que eu conheço pouco dela: medi {pct}% do que pesa na sua escolha. Fica o aviso."
+    ],
+    "solo_fundo": [
+      "Por cima a terra está {sup}, mas no fundo ela está {fundo}. O que segura a planta no veranico é o de baixo.",
+      "Repara numa coisa: a camada de cima está {sup} e a de baixo {fundo}. É a de baixo que socorre na estiagem."
     ]
   }
 }
