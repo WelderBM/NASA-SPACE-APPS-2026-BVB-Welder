@@ -47,12 +47,26 @@ const CH=[['Better soil','#2E6A4C','#F5F0E6'],['Low risk','#D9902F','#1C2620'],[
 const CHG=CH.map(([txt,bg,fg],i)=>{const g=mk('g',{opacity:0},$('selChips'));mk('rect',{x:-90,y:-26,width:180,height:52,rx:26,fill:bg},g);const t=mk('text',{'text-anchor':'middle',y:9,fill:fg},g);t.textContent=txt;return g;});
 
 function sub(t){
-  let cur=null;for(const [txt,a,b] of SUBS){if(t>=a-0.08&&t<b+0.25)cur=txt;}
-  const box=$('subBox');if(t>=T.lines[10][0]-0.1)cur=null;if(!cur){box.setAttribute('opacity',0);return;}
-  const el=$('sub');el.textContent=cur.replace(/\.\.\.$/,'…');
-  let w=el.getComputedTextLength()+80;
-  if(w>1800){el.setAttribute('font-size',36);w=el.getComputedTextLength()+80;} else el.setAttribute('font-size',44);
-  $('subBg').setAttribute('x',960-w/2);$('subBg').setAttribute('width',w);box.setAttribute('opacity',1);
+  let cur=null;
+  for(let i=0;i<SUBS.length;i++){const [txt,a,b]=SUBS[i];const nx=i+1<SUBS.length?SUBS[i+1][1]:1e9;
+    if(t>=a-0.08&&t<Math.min(b+0.25,nx-0.08))cur=txt;}
+  const box=$('subBox');if(t>=T.lines[10][0]-0.1)cur=null;
+  if(!cur){box.setAttribute('opacity',0);return;}
+  cur=cur.replace(/\.\.\.$/,'…');
+  const el=$('sub'),el2=$('sub2'),FS=44,MAXW=1680;
+  el.setAttribute('font-size',FS);el2.setAttribute('font-size',FS);
+  el.textContent=cur;el2.textContent='';
+  let w=el.getComputedTextLength(),lines=1;
+  if(w>MAXW){ // break into two balanced lines at the space nearest the middle
+    const words=cur.split(' ');let best=1,bd=1e9;
+    for(let k=1;k<words.length;k++){const l=words.slice(0,k).join(' ').length,r=cur.length-l;if(Math.abs(l-r)<bd){bd=Math.abs(l-r);best=k;}}
+    el.textContent=words.slice(0,best).join(' ');el2.textContent=words.slice(best).join(' ');
+    w=Math.max(el.getComputedTextLength(),el2.getComputedTextLength());lines=2;}
+  const W=w+80,H=lines===1?80:136,Y=1046-H;
+  $('subBg').setAttribute('x',960-W/2);$('subBg').setAttribute('width',W);
+  $('subBg').setAttribute('y',Y);$('subBg').setAttribute('height',H);
+  el.setAttribute('y',lines===1?1020:Y+56);el2.setAttribute('y',Y+112);
+  box.setAttribute('opacity',1);
 }
 function vis(id,t,a,b){const o=fio(t,a,b,0.4);$(id).setAttribute('opacity',o);return o;}
 

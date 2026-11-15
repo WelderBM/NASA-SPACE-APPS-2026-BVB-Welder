@@ -10,7 +10,7 @@
 | --- | --- | --- | --- |
 | 0:00 | Abertura | Rosa (personagem ilustrativa) colhe mandioca no Cantá e pergunta o que plantar agora | — |
 | 0:11 | Nome | AgroDeal, com o subtítulo "What do I plant next?" e a frase do doc 18: o nome diz deal, mas a ferramenta não vende nada | doc 18, seção 1 |
-| 0:18 | Problema, dado | Junho a setembro de 2026: 330 mm contra 859 mm (média 1981–2025), o mais baixo desde 1981. Veranico de 24 dias contra 9. Umidade do solo na raiz em setembro igual à de janeiro | `dados/nasa-power.json` (`media_serie_mm`, `ano2026.solo_raiz`) |
+| 0:18 | Problema, dado | Junho a setembro de 2026: 330 mm contra 859 mm (média da série 1981–2026, que inclui 2026; sem 2026 a média é ~871 mm e a queda continua 62%), o mais baixo desde 1981. Estiagem de 24 dias (série diária, docs/04) contra 9. Umidade do solo na raiz em setembro igual à de janeiro | `dados/nasa-power.json` (`media_serie_mm`, `ano2026.solo_raiz`) |
 | 0:40 | El Niño | Nos anos de El Niño da série, a chuva de junho a setembro foi de −48% a +17%; não há regra, então não prevemos | `nasa-power.json`, `jun_set_el_nino.anos_desenvolvimento`. Ver a ressalva abaixo |
 | 0:52 | Pessoas | 87% dos 16.850 estabelecimentos sem assistência técnica (IBGE 2017); o IATER orienta escolher culturas adaptadas ao período seco; 4 de 7 famílias plantam de novo logo após colher; medo de investir (entrevista, Goiás) | docs 03, 12, 15 e 18 |
 | 1:15 | O que existe | ZARC responde quando plantar a cultura escolhida; quase todas as ferramentas de rotação otimizam só lucro (Schöning et al., 2023) | doc 12 |
