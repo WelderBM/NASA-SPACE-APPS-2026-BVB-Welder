@@ -11,6 +11,7 @@
 | --- | --- | --- |
 | `slides-en/` | Os 7 slides em inglês, a versão que vai para o campo Project Demo. Arquivos-fonte do deck (deck.json, deck.css, um HTML por slide, roteiro de fala no `<aside>`) | https://claude.ai/artifact/8vgM1J3M8Jqo4XzjMNhPzV |
 | `slides-pt/` | Os mesmos 7 slides em português, só para treino | https://claude.ai/artifact/B5c7gXQRWfndrpbuSnDDt2 |
+| `pdf/` | **Os 7 slides exportados em PDF** (EN para o Project Demo, PT só treino), fontes embutidas, sem as notas de fala. Exportados em 15/11, 15h50, depois de rodar o motor de novo (commit d9e6e93) | EN público: https://drive.google.com/file/d/1mKxyajaC_qmSOTCPDL8D4QHTuizu3hN6/view |
 | `video-pitch-3min/` | **Vídeo-pitch de 2min49s**, mais denso: problema medido, pessoas, o que existe, demo com a janela do ZARC, como funciona, mesmo código em dois lugares, limites. Só para apresentação local ou apoio, nunca no campo de demo | — |
 | `video-pitch/` | **Vídeo-pitch de 29,9 s com história, narração e legenda em inglês.** Roteiro, fontes de cada afirmação e como foi feito no README da pasta | — |
 | `animacao/` | (Substituída pelo `video-pitch/`.) Animação de 29,5 s em inglês, com marca d'água de IA (`field-shift-roraima-30s.mp4`) e o script que a gera (`make.py`, Python + PIL + ffmpeg) | — |
@@ -27,6 +28,7 @@
 - O benchmark é das 12h e foi superado pelo doc 12 em três pontos: o 87% é dos 16.850 estabelecimentos do Censo Agropecuário IBGE 2017; o HydroSCS saiu como precedente; e a pesquisa tem 8 respostas de 7 pessoas.
 - A proposta de valor final é a do doc 12 (as ferramentas de rotação otimizam lucro para fazenda grande; esta deixa o pequeno produtor escolher o que otimizar), não a do benchmark.
 - Pesquisa, contagem conferida na planilha em 15/11: "planta outra coisa em seguida" em 5 de 8 respostas (4 de 7 pessoas); seca em 6 de 8 respostas (5 de 7 pessoas). 
-- Pendências nos slides: GIF no slide 4 e link do GitHub Pages no slide 7.
+- Slide 4 traz uma captura real da demo (Cantá, julho, mandioca) no lugar do GIF; slide 7 aponta para welderbm.github.io/NASA-SPACE-APPS-2026-BVB-Welder. Falta o Welder testar os dois links em aba anônima.
+- Os 859 mm são a média da série 1981–2026, que inclui 2026. Sem 2026, ~871 mm e a queda continua −62%; a climatologia do motor (812 mm) dá −59%. Slides, vídeo de 3 min e texto de estudo já dizem isso.
 
 - 15/11, 15h25: slides refeitos a partir do `main` em `3347ce9` (nome AgroDeal com subtítulo, caupi 70 dias, milho 686 contra 386 mm, "desde 1981", janela do ZARC, honestidade testada, 4 culturas com dado bom, faixa de El Niño de −48% a +17%).

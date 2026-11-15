@@ -1,9 +1,9 @@
 1
-00:00:00,070 --> 00:00:02,060
+00:00:00,070 --> 00:00:01,890
 Cantá, Brazilian Amazon.
 
 2
-00:00:01,930 --> 00:00:04,030
+00:00:01,930 --> 00:00:03,810
 Rosa just pulled up her cassava…
 
 3
@@ -11,7 +11,7 @@ Rosa just pulled up her cassava…
 after the weakest rains since 1981.
 
 4
-00:00:07,010 --> 00:00:08,430
+00:00:07,010 --> 00:00:08,360
 Now, one question.
 
 5
@@ -19,23 +19,24 @@ Now, one question.
 What do I plant next?
 
 6
-00:00:10,020 --> 00:00:11,020
+00:00:10,020 --> 00:00:10,950
 She asks.
 
 7
-00:00:10,990 --> 00:00:14,430
-Our assistant reads NASA satellite data for her land.
+00:00:10,990 --> 00:00:14,260
+Our assistant reads NASA satellite data
+for her land.
 
 8
 00:00:14,300 --> 00:00:15,490
 Rain, and soil.
 
 9
-00:00:15,660 --> 00:00:17,180
+00:00:15,660 --> 00:00:17,060
 She picks what matters.
 
 10
-00:00:17,100 --> 00:00:18,150
+00:00:17,100 --> 00:00:18,080
 Better soil?
 
 11
@@ -43,11 +44,11 @@ Better soil?
 Cowpea. It leaves the ground stronger.
 
 12
-00:00:20,620 --> 00:00:23,380
+00:00:20,620 --> 00:00:23,310
 Most tools chase profit, for big farms.
 
 13
-00:00:23,350 --> 00:00:25,290
+00:00:23,350 --> 00:00:25,120
 Ours lets small farmers choose…
 
 14
@@ -55,7 +56,7 @@ Ours lets small farmers choose…
 and says what it doesn't know.
 
 15
-00:00:26,920 --> 00:00:28,260
+00:00:26,920 --> 00:00:28,190
 What to plant next.
 
 16

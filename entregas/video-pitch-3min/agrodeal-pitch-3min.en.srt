@@ -1,177 +1,210 @@
 1
-00:00:00,320 --> 00:00:03,820
-This is Cantá, in Roraima, in the Brazilian Amazon.
+00:00:00,320 --> 00:00:03,750
+This is Cantá, in Roraima, in the
+Brazilian Amazon.
 
 2
-00:00:03,790 --> 00:00:05,910
+00:00:03,790 --> 00:00:05,840
 Rosa just pulled up her cassava.
 
 3
-00:00:05,880 --> 00:00:09,030
-And after every harvest, she asks the same question…
+00:00:05,880 --> 00:00:08,910
+And after every harvest, she asks the same
+question…
 
 4
 00:00:08,950 --> 00:00:10,410
 What do I plant next?
 
 5
-00:00:10,680 --> 00:00:12,680
+00:00:10,680 --> 00:00:12,560
 AgroDeal helps her answer it.
 
 6
-00:00:12,600 --> 00:00:15,070
+00:00:12,600 --> 00:00:14,900
 The name says deal, but it sells nothing.
 
 7
 00:00:14,940 --> 00:00:17,440
-It lets the farmer choose what to optimize.
+It lets the farmer choose what to
+optimize.
 
 8
-00:00:17,710 --> 00:00:20,530
-First, the problem, measured with NASA POWER.
+00:00:17,710 --> 00:00:20,460
+First, the problem, measured with NASA
+POWER.
 
 9
-00:00:20,500 --> 00:00:25,220
-From June to September, Cantá got three hundred and thirty millimeters of rain.
+00:00:20,500 --> 00:00:25,050
+From June to September, Cantá got three
+hundred and thirty millimeters of rain.
 
 10
-00:00:25,090 --> 00:00:30,140
-The average is eight hundred and fifty-nine. The lowest since 1981.
+00:00:25,090 --> 00:00:30,120
+The average is eight hundred and fifty-
+nine. The lowest since 1981.
 
 11
-00:00:30,160 --> 00:00:34,950
-The longest dry spell in the rainy season: twenty-four days. Normally, nine.
+00:00:30,160 --> 00:00:34,880
+The longest dry spell in the rainy season:
+twenty-four days. Normally, nine.
 
 12
 00:00:34,920 --> 00:00:39,560
-By September, the soil was as dry as in January. Five months early.
+By September, the soil was as dry as in
+January. Five months early.
 
 13
-00:00:39,830 --> 00:00:42,170
+00:00:39,830 --> 00:00:42,050
 Will 2027 repeat it?
 
 14
-00:00:42,090 --> 00:00:48,070
-In El Niño years, that rain ranged from forty-eight percent below average, to seventeen above.
+00:00:42,090 --> 00:00:47,950
+In El Niño years, that rain ranged from forty-eight
+percent below average, to seventeen above.
 
 15
 00:00:47,990 --> 00:00:51,190
-There is no rule. So we don't predict. We observe.
+There is no rule. So we don't predict. We
+observe.
 
 16
-00:00:51,460 --> 00:00:52,810
+00:00:51,460 --> 00:00:52,690
 Second, the people.
 
 17
-00:00:52,730 --> 00:00:58,350
-In the last census, eighty-seven percent of Roraima's farms had no technical assistance.
+00:00:52,730 --> 00:00:58,280
+In the last census, eighty-seven percent of
+Roraima's farms had no technical assistance.
 
 18
-00:00:58,320 --> 00:01:03,950
-Right now, the state extension agency tells families to choose crops suited to the dry period…
+00:00:58,320 --> 00:01:03,730
+Right now, the state extension agency tells families
+to choose crops suited to the dry period…
 
 19
-00:01:03,770 --> 00:01:06,810
-but it only reaches as far as an agent can drive.
+00:01:03,770 --> 00:01:06,740
+but it only reaches as far as an agent can
+drive.
 
 20
-00:01:06,780 --> 00:01:10,710
-In our survey, most families plant again right after harvest.
+00:01:06,780 --> 00:01:10,540
+In our survey, most families plant again
+right after harvest.
 
 21
 00:01:10,580 --> 00:01:14,310
-And a farmer in Goiás told us many were afraid to invest.
+And a farmer in Goiás told us many were
+afraid to invest.
 
 22
-00:01:14,580 --> 00:01:15,810
+00:01:14,580 --> 00:01:15,640
 Tools exist.
 
 23
-00:01:15,680 --> 00:01:20,210
-Brazil's official zoning tells you when to plant the crop you already chose.
+00:01:15,680 --> 00:01:20,090
+Brazil's official zoning tells you when to
+plant the crop you already chose.
 
 24
-00:01:20,130 --> 00:01:26,740
-And a peer-reviewed study found that almost all rotation tools optimize only profit, for big farms.
+00:01:20,130 --> 00:01:26,620
+And a peer-reviewed study found that almost all rotation
+tools optimize only profit, for big farms.
 
 25
 00:01:26,660 --> 00:01:31,040
-None we found starts from the harvest, and lets the small farmer pick the goal.
+None we found starts from the harvest, and
+lets the small farmer pick the goal.
 
 26
-00:01:31,310 --> 00:01:32,780
+00:01:31,310 --> 00:01:32,660
 So, back to Rosa.
 
 27
-00:01:32,700 --> 00:01:38,660
-Better soil? Cowpea. It's not related to cassava, so the pest left in the ground won't take it.
+00:01:32,700 --> 00:01:38,590
+Better soil? Cowpea. It's not related to cassava, so
+the pest left in the ground won't take it.
 
 28
-00:01:38,630 --> 00:01:44,380
-Low risk, in July? Cowpea again, for another reason. Out of the ground in seventy days.
+00:01:38,630 --> 00:01:44,260
+Low risk, in July? Cowpea again, for another
+reason. Out of the ground in seventy days.
 
 29
-00:01:44,300 --> 00:01:50,770
-July is inside the official cowpea window, so the fit jumps from fifty-three to eighty-seven percent.
+00:01:44,300 --> 00:01:50,700
+July is inside the official cowpea window, so the fit
+jumps from fifty-three to eighty-seven percent.
 
 30
-00:01:50,740 --> 00:01:55,550
-Ask for pasture: brachiaria. But it admits it doesn't know how long it takes.
+00:01:50,740 --> 00:01:55,430
+Ask for pasture: brachiaria. But it admits it
+doesn't know how long it takes.
 
 31
 00:01:55,470 --> 00:01:58,310
-Ask about income: it says it can't measure that.
+Ask about income: it says it can't measure
+that.
 
 32
-00:01:58,580 --> 00:02:01,480
-Every option gets three numbers. Never mixed.
+00:01:58,580 --> 00:02:01,360
+Every option gets three numbers. Never
+mixed.
 
 33
-00:02:01,400 --> 00:02:05,430
-Risk: from NASA rain and soil moisture, adjusted to this year.
+00:02:01,400 --> 00:02:05,260
+Risk: from NASA rain and soil moisture,
+adjusted to this year.
 
 34
-00:02:05,300 --> 00:02:07,960
-Fit: from crop traits, weighed by her choice.
+00:02:05,300 --> 00:02:07,790
+Fit: from crop traits, weighed by her
+choice.
 
 35
-00:02:07,830 --> 00:02:10,740
-And confidence: how much we could actually measure.
+00:02:07,830 --> 00:02:10,670
+And confidence: how much we could actually
+measure.
 
 36
 00:02:10,710 --> 00:02:15,600
-Plain arithmetic on named data, in the browser. No model guesses a number.
+Plain arithmetic on named data, in the
+browser. No model guesses a number.
 
 37
-00:02:15,870 --> 00:02:18,410
+00:02:15,870 --> 00:02:18,290
 Same maize, same code, two places.
 
 38
-00:02:18,330 --> 00:02:24,600
-Cantá, in April: six hundred and eighty-six millimeters, against five hundred needed. Low risk.
+00:02:18,330 --> 00:02:24,480
+Cantá, in April: six hundred and eighty-six
+millimeters, against five hundred needed. Low risk.
 
 39
 00:02:24,520 --> 00:02:28,770
-Rio Verde, in September: three hundred and eighty-six. High risk.
+Rio Verde, in September: three hundred and
+eighty-six. High risk.
 
 40
-00:02:29,040 --> 00:02:34,450
-What it can't do, it says. No rain forecast. No prices. Fourteen crops, so far.
+00:02:29,040 --> 00:02:34,380
+What it can't do, it says. No rain forecast.
+No prices. Fourteen crops, so far.
 
 41
 00:02:34,420 --> 00:02:38,600
-Next: more official windows, field tests in Roraima, and WhatsApp.
+Next: more official windows, field tests
+in Roraima, and WhatsApp.
 
 42
-00:02:38,870 --> 00:02:41,310
+00:02:38,870 --> 00:02:41,190
 AgroDeal won't tell Rosa what to do.
 
 43
 00:02:41,230 --> 00:02:44,000
-It shows what each choice does to her soil, this year.
+It shows what each choice does to her
+soil, this year.
 
 44
-00:02:44,070 --> 00:02:45,530
+00:02:44,070 --> 00:02:45,410
 What do I plant next?
 
 45
