@@ -55,7 +55,7 @@ A intuição do Welder é que essa persona usa mais áudio. Pesquisa feita em 14
 - Em outra pesquisa, 56% disseram gostar e preferir enviar áudio ([Mobile Time, com dados Exame/MindMiners](https://www.mobiletime.com.br/?p=695702)).
 - Precedente rural: um livro de 2025 sobre extensão rural propõe um método para produzir e enviar áudios de WhatsApp a produtores ([Zenodo](https://zenodo.org/records/14995584)).
 
-**Contra a hipótese:** na nossa planilha de 6 respondentes, 3 preferem WhatsApp escrito. O formulário não perguntou sobre áudio.
+**Contra a hipótese:** na nossa planilha de 7 pessoas (8 respostas), 3 preferem WhatsApp escrito. O formulário não perguntou sobre áudio.
 
 **Como validar:** acrescentar duas perguntas ("você manda áudio no WhatsApp?" e "prefere receber resposta em áudio ou texto?"), pedir para o produtor mostrar como pergunta algo no WhatsApp com o celular na mão, e testar os dois protótipos com 3 a 5 pessoas.
 
@@ -65,7 +65,7 @@ A intuição do Welder é que essa persona usa mais áudio. Pesquisa feita em 14
 
 "Como a sua família decide o que plantar?", 13 perguntas, já publicado. [Link de edição](https://docs.google.com/forms/d/1g9mkbGMVdfErK_ww15vlBKYNFtulgBS2pxtbsYoKbNo/edit).
 
-Planilha de respostas vinculada: 7 linhas, 1 duplicata, 6 respondentes únicos. **Contém números de WhatsApp: dado pessoal, fora do repositório, não publicar.**
+Planilha de respostas vinculada: 7 linhas, 1 duplicata, 7 pessoas (8 respostas, duas da mesma pessoa). **Contém números de WhatsApp: dado pessoal, fora do repositório, não publicar.**
 
 Agregados dos 6 únicos:
 - 3 "eu planto" e 3 "família"
@@ -133,3 +133,6 @@ Se um produtor de Cantá ou Caracaraí responder parecido com o João, temos o p
 - Perfil do pecuarista familiar de Roraima
 - Perfil do intermediário digital: quem é, com que aparelho, com que internet
 - Estudo da Embrapa sobre perfil de produtores de leite em São Luiz e Rorainópolis, que tem parte sobre o perfil do proprietário: [PDF](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1132606/1/66-PerfilProdutores66-2021-B1.pdf)
+
+
+> Atualização 15/11, 11h30: o vocabulário dos respondentes virou fonte de registro do bot. Ver [11 — Registro e linguagem](11-registro-e-linguagem.md).

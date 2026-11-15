@@ -3,13 +3,23 @@
   "id": "roraima",
   "nome": "Roraima",
   "gerado_em": "2026-11-15",
-  "lugares": ["canta-rr"],
+  "lugares": [
+    "canta-rr"
+  ],
   "inicio_da_safra": "abril",
   "nota_safra": "A estacao chuvosa vai de maio a agosto no Canta; o plantio principal comeca em abril.",
   "culturas_disponiveis": [
-    "mandioca", "feijao-caupi", "milho", "arroz",
-    "melancia", "melao", "jerimum", "batata-doce", "cara",
-    "banana", "braquiaria"
+    "mandioca",
+    "feijao-caupi",
+    "milho",
+    "arroz",
+    "melancia",
+    "melao",
+    "jerimum",
+    "batata-doce",
+    "cara",
+    "banana",
+    "braquiaria"
   ],
   "culturas_excluidas": {
     "soja": "existe no estado mas e agronegocio, nao agricultura familiar",
@@ -17,10 +27,28 @@
     "feijao-guandu": "idem"
   },
   "janelas_zarc": {
-    "feijao-caupi": {"inicio": "fim de junho", "fim": "meados de agosto", "qualidade": "aproximada: a tabela do PDF veio desalinhada", "fonte": "portaria ZARC caupi Roraima, safra 2023/24"},
-    "mandioca": {"inicio": null, "fim": null, "qualidade": "falta", "nota": "Roraima tem ZARC para mandioca; nao baixamos a janela ainda"},
-    "milho": {"inicio": null, "fim": null, "qualidade": "falta"},
-    "arroz": {"inicio": null, "fim": null, "qualidade": "falta"}
+    "feijao-caupi": {
+      "inicio": "fim de junho",
+      "fim": "meados de agosto",
+      "qualidade": "aproximada: a tabela do PDF veio desalinhada",
+      "fonte": "portaria ZARC caupi Roraima, safra 2023/24"
+    },
+    "mandioca": {
+      "inicio": null,
+      "fim": null,
+      "qualidade": "falta",
+      "nota": "Roraima tem ZARC para mandioca; nao baixamos a janela ainda"
+    },
+    "milho": {
+      "inicio": null,
+      "fim": null,
+      "qualidade": "falta"
+    },
+    "arroz": {
+      "inicio": null,
+      "fim": null,
+      "qualidade": "falta"
+    }
   },
   "contexto": {
     "produtores_atendidos_iater": 50192,
@@ -28,11 +56,86 @@
     "sem_assistencia_tecnica_pct": 87,
     "fonte_contexto": "IATER via Assembleia Legislativa de Roraima (set/2026) e proposta de convenio (mar/2024)",
     "produto_de_maior_saida": "farinha de mandioca, em Canta e Iracema",
-    "nota_farinha": "A farinha precisa secar: sol, pouca nuvem e ar seco. Decisao propria, respondida por radiacao, nuvem e umidade relativa."
+    "nota_farinha": "A farinha precisa secar: sol, pouca nuvem e ar seco. Decisao propria, respondida por radiacao, nuvem e umidade relativa.",
+    "respondentes": {
+      "respostas": 8,
+      "pessoas_unicas": 7,
+      "nota": "duas respostas sao da mesma pessoa (mesmo telefone, 2 minutos de diferenca)",
+      "municipios": {
+        "Caracarai": 3,
+        "Boa Vista": 3,
+        "Rorainopolis": 1,
+        "Canta": 1
+      },
+      "como_decidem": "7 de 8 marcaram 'pela experiencia de quem planta'",
+      "depois_da_colheita": "6 de 8 plantam outra coisa em seguida; 2 deixam parada ate a proxima chuva",
+      "o_que_fez_perder": "seca em 5 de 8; praga em 3; TERRA FRACA em 2; fogo em 1; preco baixo em 2",
+      "canal_preferido": "mensagem escrita no WhatsApp em 4 de 8; ligacao ou visita de tecnico em 2; 'um aparelho que fala, la na propriedade' em 1; app ou site em 1",
+      "confia_em_satelite": "4 de 8 sim; 3 'so se um tecnico confirmasse'; e por isso que existe o campo validar_com_tecnico",
+      "sinal_de_chuva_que_usam": [
+        "internet",
+        "previsao da meteorologia",
+        "a temporada, estacoes do ano",
+        "formigas caminhando em processo rapido de coleta de alimento",
+        "conhecimento tradicional"
+      ],
+      "o_que_queriam_saber_antes_de_plantar": [
+        "chuva",
+        "quando vem a proxima chuva e as chances de estiagem",
+        "se a planta vai sobreviver e produzir",
+        "cultivares adaptadas ao ambiente de lavrado"
+      ]
+    }
   },
   "pendencias": [
     "Baixar as janelas do ZARC no Painel de Indicacao de Riscos ou no app Plantio Certo, para Canta e Boa Vista",
     "Conferir se a portaria do caupi tem versao mais nova que 2023/24",
     "Tabela 6778 do SIDRA: estabelecimentos de agricultura familiar por municipio"
-  ]
+  ],
+  "vocabulario": {
+    "_fonte": "palavras escritas pelos proprios respondentes do formulario (14/11/2026, 8 respostas) e literatura do falar roraimense",
+    "terra_ruim": "terra fraca",
+    "sem_chuva": "estiagem",
+    "deixar_descansar": "deixar parada até a próxima chuva",
+    "plantar_depois": "plantar outra coisa em seguida",
+    "ambiente": "lavrado",
+    "estacao_chuvosa": "o tempo da chuva",
+    "estacao_seca": "o tempo da seca",
+    "_perigo_inverno": "NAO usar 'inverno' nem 'verao'. No Norte, inverno e a estacao CHUVOSA (inverno amazonico) e verao e a seca. O oposto do resto do Brasil. Num bot de voz isso inverte a resposta.",
+    "previsao": "a previsão do tempo",
+    "melhorar_terra": "deixar a terra mais forte",
+    "familia_botanica": "parente",
+    "praga_de_solo": "a praga que ficou na terra"
+  },
+  "moldes": {
+    "_regra": "Frase curta, uma ideia, no maximo 35 palavras. Sem termo tecnico. Numero so quando ele pedir.",
+    "indicacao": "Depois {de_colheu}, eu iria de {cultura}. {porque}. Quer saber o que pode dar errado?",
+    "indicacao_com_aviso": "Pelo que você quer, {cultura} seria a melhor, mas te aviso: pode faltar água pra ela. Quer ver uma que arrisca menos?",
+    "hipotese_boa": "{cultura} dá pra plantar, sim. A chuva desse tempo dá o que ela precisa. Quer comparar com as outras?",
+    "hipotese_ruim": "{cultura} dá pra plantar, mas pode faltar água pra ela. A chuva desse tempo fica abaixo do que ela precisa. Quer ver outra?",
+    "hipotese_parente": "{cultura} é parente {de_colheu}. Plantar uma atrás da outra deixa a praga que ficou na terra se multiplicar. Eu não iria por aí.",
+    "sem_dado": "Das que dão aí, eu conheço a parentada de {n}, mas não sei quanto tempo cada uma leva. Sem isso eu não arrisco te indicar.",
+    "nao_sei_prever": "Prever chuva eu não sei, não tenho isso. O que eu sei é que {mes} costuma dar {chuva} e a terra está {estado}. Pra previsão, olha a previsão do tempo.",
+    "porques": {
+      "familia": "não é parente {de_colheu}, então a praga que ficou na terra não pega nela",
+      "agua": "a chuva desse tempo dá o que ela precisa",
+      "solo": "deixa a terra mais forte pro que vem depois",
+      "risco": "é rápida, sai da terra em {dias} dias",
+      "risco_seca": "aguenta a estiagem melhor que as outras",
+      "comida": "pode ficar na terra esperando, e dá de comer",
+      "pasto": "serve de pasto"
+    },
+    "estado_terra": {
+      "acima": "mais molhada que o normal",
+      "abaixo": "mais seca que o normal"
+    },
+    "chuva_qualitativa": {
+      "muita": "chuva boa",
+      "media": "chuva mediana",
+      "pouca": "chuva fraca"
+    },
+    "hipotese_mesma": "Isso é a mesma coisa que você acabou de tirar. Plantar de novo deixa a praga que ficou na terra se multiplicar. Eu não iria por aí.",
+    "hipotese_parente_sem_ciclo": "{cultura} é parente {de_colheu}, então eu não iria por aí. Do resto dela eu não sei, não tenho quanto tempo ela leva.",
+    "hipotese_sem_ciclo": "{cultura} não é parente {de_colheu}, isso já ajuda. Mas eu não sei quanto tempo ela leva pra dar, então não arrisco dizer mais."
+  }
 }

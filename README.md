@@ -26,6 +26,7 @@ Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift:
 | [8. Fontes](docs/08-fontes.md) | tudo que foi lido, agrupado por tema |
 | [9. Decisões do MVP, 15/11](docs/09-mvp-decisoes-15-11.md) | solo, WhatsApp sem site, plano A, áudio nos dois sentidos, slides em vez de vídeo |
 | [10. O cruzamento](docs/10-cruzamento.md) | **como o dado chega até a decisão**: as regras, o protótipo que reprovou e por quê, o veredito de viabilidade |
+| [11. Registro e linguagem](docs/11-registro-e-linguagem.md) | como o bot fala: a armadilha do inverno amazônico, o vocabulário dos respondentes, a troca palavra por palavra |
 | [Motor](motor/cerne.py) | o cerne rodando: contrato de entrada e saída, as três notas, as frases de molde fixo |
 | [Persona secundária (site)](docs/persona-secundaria.md) | a trilha do Giuliano e a regra de verificação de textos |
 

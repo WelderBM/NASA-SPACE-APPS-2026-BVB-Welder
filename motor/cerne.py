@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-"""O CERNE. Nao sabe o que e WhatsApp, voz, site ou Telegram.
-Recebe uma pergunta estruturada, devolve uma resposta estruturada que
-JA CONTEM a frase falada. O canal so toca a frase.
+"""O CERNE. Nao sabe o que e WhatsApp, voz, site ou Telegram, e tambem NAO
+SABE FALAR RORAIMENSE: o vocabulario e os moldes de frase vivem na camada
+local. Trocar de lugar troca a lingua junto com o dado.
 
-Toda frase sai de molde fixo preenchido com numero medido. Nenhum texto
-e redigido por IA: a IA so classifica a intencao na entrada."""
+Recebe pergunta estruturada, devolve resposta estruturada que ja contem a
+frase pronta. Toda frase sai de molde fixo preenchido com numero medido.
+Nenhum texto e redigido por IA: a IA so classifica a intencao na porta."""
 import json, unicodedata
 
 D = 'dados/'
@@ -18,6 +19,33 @@ LOCAL = {'roraima': _j('local-roraima.json'),
 DIAS = [31,28,31,30,31,30,31,31,30,31,30,31]
 MES  = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto',
         'setembro','outubro','novembro','dezembro']
+
+# Portugues neutro: o que o motor fala quando o lugar nao trouxe vocabulario.
+# Serve de rede e, na demo, aparece como limite declarado.
+MOLDES_NEUTROS = {
+  'indicacao': "Depois {de_colheu}, a melhor opção é {cultura}. {porque}. Quer saber os riscos?",
+  'indicacao_com_aviso': "Pelo que você quer, {cultura} seria a melhor, mas pode faltar água para ela. Quer ver uma de menor risco?",
+  'hipotese_boa': "{cultura} pode ser plantada. A chuva do período atende o que ela precisa. Quer comparar com as outras?",
+  'hipotese_ruim': "{cultura} pode ser plantada, mas pode faltar água. A chuva do período fica abaixo do que ela precisa. Quer ver outra?",
+  'hipotese_parente': "{cultura} é da mesma família {de_colheu}. Plantar em seguida multiplica as pragas de solo. Não recomendo.",
+  'hipotese_mesma': "Essa é a mesma cultura que acabou de ser colhida. Repetir multiplica as pragas de solo. Não recomendo.",
+  'hipotese_parente_sem_ciclo': "{cultura} é da mesma família {de_colheu}, então não recomendo. Do resto eu não sei: falta a duração do ciclo.",
+  'hipotese_sem_ciclo': "{cultura} não é da mesma família {de_colheu}, o que já ajuda. Mas falta a duração do ciclo, então não posso dizer mais.",
+  'sem_dado': "Das culturas da região eu sei a família de {n}, mas não sei a duração de nenhuma. Sem isso eu não indico.",
+  'nao_sei_prever': "Previsão de chuva eu não tenho. O que eu sei é que {mes} costuma ter {chuva} e o solo está {estado}. Para previsão, consulte a previsão do tempo.",
+  'porques': {'familia': "é de outra família que a {colheu}, então as pragas de solo não se mantêm",
+              'agua': "a chuva do período atende o que ela precisa",
+              'solo': "melhora o solo para o que vem depois",
+              'risco': "é de ciclo curto, {dias} dias",
+              'risco_seca': "tolera estiagem melhor que as outras",
+              'comida': "pode permanecer no campo, serve de reserva",
+              'pasto': "serve de pasto"},
+  'estado_terra': {'acima': "mais úmido que o normal", 'abaixo': "mais seco que o normal"},
+  'chuva_qualitativa': {'muita': "chuva alta", 'media': "chuva média", 'pouca': "chuva baixa"},
+}
+
+def _moldes(loc):
+    m = dict(MOLDES_NEUTROS); m.update(loc.get('moldes', {})); return m
 
 # ---------------------------------------------------------------- observacao
 def _janela(m0, dias):
@@ -34,15 +62,21 @@ def fator_do_ano(place, m0, n=3):
     return obs/nor, {'observado_mm': round(obs,1), 'normal_mm': nor,
                      'meses': [MES[m] for m in reversed(ms)]}
 
+def qualifica_chuva(place, m):
+    """qualitativo, relativo ao PROPRIO lugar: 146mm e muito em Rio Verde e
+    mediano no Canta. Tercis dos 12 meses daquela coordenada."""
+    c = sorted(NASA[place]['clim']['chuva_mm']); v = NASA[place]['clim']['chuva_mm'][m]
+    return 'pouca' if v <= c[3] else 'muita' if v >= c[8] else 'media'
+
 def estado_observado(place, m0):
     cl, an = NASA[place]['clim'], NASA[place]['ano2026']
     f, det = fator_do_ano(place, m0)
     e = {'mes': MES[m0], 'chuva_normal_do_mes_mm': cl['chuva_mm'][m0],
+         'chuva_qualitativa': qualifica_chuva(place, m0),
          'veranico_normal_do_mes_dias': cl['veranico'][m0]}
     if an['solo_raiz'][m0] is not None:
-        e['solo_raiz'] = {'observado': an['solo_raiz'][m0],
-                          'normal': cl['solo_raiz'][m0],
-                          'situacao': 'acima do normal' if an['solo_raiz'][m0] > cl['solo_raiz'][m0] else 'abaixo do normal'}
+        e['solo_raiz'] = {'observado': an['solo_raiz'][m0], 'normal': cl['solo_raiz'][m0],
+                          'situacao': 'acima' if an['solo_raiz'][m0] > cl['solo_raiz'][m0] else 'abaixo'}
     if f: e['fator_do_ano'] = {'razao': round(f,2), **det}
     return e
 
@@ -64,7 +98,7 @@ def risco(c, place, m0):
                      'nivel': 'baixo' if razao >= 1.2 else 'médio' if razao >= 0.9 else 'alto'}
     else:
         r['agua'] = {'nivel': 'sem dado'}
-        nao_sei.append('quanta água essa cultura precisa no ciclo')
+        nao_sei.append('quanta água essa cultura precisa')
     fc = c.get('fase_critica_dias'); ini, fim = fc if fc else (0, cmin)
     ms = sorted({(m0 + d//30) % 12 for d in range(ini, fim+1, 10)})
     r['veranico'] = {'dias': max(cl['veranico'][m] for m in ms),
@@ -79,8 +113,7 @@ def encaixe(c, prioridade):
     p = PRIO[prioridade]
     if not p['servivel']: return None, 0.0, [], p['resposta_honesta']
     ci = c.get('ciclo_dias')
-    mapa = {'familia_diferente': 1.0,
-            'fixa_n': 1.0 if c['fixa_n'] else 0.0,
+    mapa = {'familia_diferente': 1.0, 'fixa_n': 1.0 if c['fixa_n'] else 0.0,
             'residuo_alto': {'alto':1.0,'medio':0.5,'baixo':0.0}.get(c.get('residuo')),
             'forrageira': 1.0 if c.get('forrageira') else 0.0,
             'tolera_seca': {'alta':1.0,'media':0.6,'baixa':0.2}.get(c.get('tolera_seca')),
@@ -94,183 +127,149 @@ def encaixe(c, prioridade):
         num += pw*e; den += pw
     return (num/den if den else None), (den/tot if tot else 0.0), faltou, None
 
-# ------------------------------------------------------------------ porques
-def porques(c, nome, r, prioridade, fam_colhida, nome_colhido=None):
-    """devolve (chave, frase). a chave deixa a fala escolher o porque que casa
-    com a prioridade dele, em vez de pegar o primeiro da lista."""
+# ------------------------------------------------------- porques etiquetados
+def porques(c, r, fam_colhida):
+    """devolve [(chave, params)]. A FRASE vem do molde do lugar, nao daqui:
+    e assim que o mesmo motor fala roraimense em Canta e neutro em Rio Verde."""
     out = []
-    if c['familia'] != fam_colhida:
-        quem = nome_colhido or fam_colhida
-        out.append(('familia', f"é de outra família que a {quem}, então quebra o ciclo das pragas do solo"))
-    a = r.get('agua', {})
-    if 'razao' in a:
-        ch = r['chuva_ajustada_mm'] or r['chuva_normal_mm']
-        out.append(('agua', f"a chuva da janela dá {ch} mm e essa cultura pede {a['exige_mm']} mm"))
-    if c['fixa_n']:
-        out.append(('solo', "fixa nitrogênio, que é o que melhora a terra"))
-    elif c.get('residuo') == 'alto':
-        out.append(('solo', "deixa muita palha na superfície"))
-    if c.get('tolera_seca') == 'alta':
-        out.append(('risco', "aguenta seca melhor que as outras"))
+    if c['familia'] != fam_colhida: out.append(('familia', {}))
+    if 'razao' in r.get('agua', {}) and r['agua']['nivel'] != 'alto': out.append(('agua', {}))
+    if c['fixa_n'] or c.get('residuo') == 'alto': out.append(('solo', {}))
+    if c.get('tolera_seca') == 'alta': out.append(('risco_seca', {}))
     elif c.get('ciclo_dias') and c['ciclo_dias'][0] <= 90:
-        out.append(('risco', f"o ciclo é curto, {c['ciclo_dias'][0]} dias, então fica menos tempo exposto"))
-    if c.get('espera_no_campo'):
-        out.append(('comida', "pode ficar na terra esperando, serve de estoque"))
-    if c.get('forrageira'):
-        out.append(('pasto', "serve de pasto"))
+        out.append(('risco', {'dias': c['ciclo_dias'][0]}))
+    if c.get('espera_no_campo'): out.append(('comida', {}))
+    if c.get('forrageira'): out.append(('pasto', {}))
     return out
 
-def porque_da_prioridade(pqs, prioridade):
-    """escolha deterministica: primeiro o porque da prioridade, depois agua,
-    depois familia. nunca aleatorio, nunca redigido por IA."""
+def render_porque(pqs, prioridade, moldes, colheu_nome, de_colheu=''):
     d = {}
-    for k, t in pqs: d.setdefault(k, t)
-    for k in (prioridade, 'agua', 'familia'):
-        if k in d: return d[k]
-    return next(iter(d.values()), '')
+    for k, pr in pqs: d.setdefault(k, pr)
+    ordem = ([prioridade, prioridade+'_seca'] if prioridade == 'risco'
+             else [prioridade]) + ['agua', 'familia']
+    for k in ordem:
+        if k in d:
+            return moldes['porques'].get(k, '').format(colheu=colheu_nome, de_colheu=de_colheu, **d[k]), k
+    for k, pr in d.items():
+        return moldes['porques'].get(k, '').format(colheu=colheu_nome, de_colheu=de_colheu, **pr), k
+    return '', None
 
-def avisos(r):
+def avisos(r, moldes):
     out = []
     v = r.get('veranico')
     if v and v['dias'] >= 10:
-        out.append(f"o veranico normal {'na fase crítica' if v['base']=='fase crítica' else 'no ciclo'} é de {v['dias']:.0f} dias")
+        out.append(f"a estiagem normal {v['base']} é de {v['dias']:.0f} dias")
     if r.get('agua', {}).get('nivel') == 'alto':
-        out.append("a chuva da janela não cobre o que essa cultura pede")
+        out.append("a chuva do período não cobre o que essa cultura pede")
     return out
 
 # ----------------------------------------------------------------- atender
-def _norm(s):
-    return unicodedata.normalize('NFKD', s.lower()).encode('ascii','ignore').decode()
+def _norm(s): return unicodedata.normalize('NFKD', s.lower()).encode('ascii','ignore').decode()
 
 def classifica(texto):
-    """o unico lugar onde IA entraria: casar a fala com uma decisao do catalogo.
-    aqui e por palavra-chave, para o MVP rodar sem modelo."""
     t = _norm(texto)
     for d in DEC.values():
-        if d['no_mvp'] and any(_norm(k) in t for k in d['como_ele_fala']):
-            return d['id']
+        if d['no_mvp'] and any(_norm(k) in t for k in d['como_ele_fala']): return d['id']
     return None
 
 def atender(p):
     place = p['lugar']['id']; m0 = p['momento']['mes_plantio']
-    lid = p['lugar']['config_local']; loc = LOCAL[lid]
+    loc = LOCAL[p['lugar']['config_local']]; M = _moldes(loc)
     intencao = p['intencao']; est = estado_observado(place, m0)
-    res = {'intencao': intencao, 'lugar': NASA[place]['nome'],
-           'mes_plantio': MES[m0], 'estado_observado': est,
-           'opcoes': [], 'limites': [], 'fala': None}
+    nome_curto = lambda n: CULT[n]['nome'].split(' (')[0].lower()
+    def de(n):
+        a = CULT[n].get('artigo', 'a')
+        return ('da ' if a == 'a' else 'do ') + nome_curto(n)
+    res = {'intencao': intencao, 'lugar': NASA[place]['nome'], 'mes_plantio': MES[m0],
+           'registro': 'local' if loc.get('moldes') else 'português neutro',
+           'estado_observado': est, 'opcoes': [], 'sei_pouco': [], 'limites': [], 'fala': None}
 
     if intencao == 'vai-chover':
         res['limites'].append('não existe previsão de chuva nestes dados; a série é histórica')
         s = est.get('solo_raiz')
-        res['fala'] = (f"Eu não sei prever chuva, não tenho essa informação. "
-                       f"O que eu sei é que {est['mes']} normalmente dá {est['chuva_normal_do_mes_mm']} "
-                       f"milímetros" + (f" e a terra está {s['situacao']}." if s else ".") +
-                       " Para previsão, veja o boletim do INMET.")
+        res['fala'] = M['nao_sei_prever'].format(
+            mes=est['mes'], chuva=M['chuva_qualitativa'][est['chuva_qualitativa']],
+            estado=M['estado_terra'][s['situacao']] if s else 'sem leitura')
         return res
 
     colheu = p.get('colheu'); fam = CULT[colheu]['familia'] if colheu else None
-    candidatas = ([p['hipotese']] if intencao == 'e-se' and p.get('hipotese')
-                  else loc['culturas_disponiveis'])
-    for nome in candidatas:
+    cn = nome_curto(colheu) if colheu else ''
+    dcn = de(colheu) if colheu else ''
+    cands = [p['hipotese']] if intencao == 'e-se' and p.get('hipotese') else loc['culturas_disponiveis']
+    for nome in cands:
         c = CULT.get(nome)
         if not c: continue
-        if fam and c['familia'] == fam and intencao != 'e-se':
-            continue
+        if fam and c['familia'] == fam and intencao != 'e-se': continue
         r, ns = risco(c, place, m0)
-        enc, conf, faltou, recusa = encaixe(c, p['prioridade'])
-        _pqs = porques(c, nome, r, p['prioridade'], fam,
-                       CULT[colheu]['nome'].split(' (')[0].lower()) if fam else []
+        enc, conf, faltou, _ = encaixe(c, p['prioridade'])
+        pqs = porques(c, r, fam) if fam else []
         res['opcoes'].append({
             'cultura': c['nome'], 'id': nome, 'familia': c['familia'],
             'mesma_familia_do_que_colheu': bool(fam and c['familia'] == fam),
             'risco': r, 'encaixe': round(enc,2) if enc is not None else None,
-            'confianca': round(conf,2),
-            'porques': [t for _, t in _pqs], '_pqs': _pqs,
-            'avisos': avisos(r), 'nao_sei': ns,
-            'qualidade_do_dado': c['qualidade'],
+            'confianca': round(conf,2), '_pqs': pqs,
+            'porques': [M['porques'].get(k,'').format(colheu=cn, de_colheu=dcn, **pr) for k, pr in pqs],
+            'avisos': avisos(r, M), 'nao_sei': ns, 'qualidade_do_dado': c['qualidade'],
             'validar_com_tecnico': ['a janela de plantio oficial do ZARC para o município'],
         })
-    # SEPARACAO CRITICA: uma cultura cujo ciclo a gente nao sabe nao pode ser
-    # a recomendacao falada. Antes a braquiaria vencia com 27% de confianca:
-    # quanto menos dado, melhor o ranking. Isso era bug, e saia na voz.
-    res['sei_pouco'] = [{'cultura': o['cultura'], 'familia': o['familia'],
-                         'falta': o['nao_sei']} for o in res['opcoes']
-                        if not o['risco'].get('avaliavel')]
+    res['sei_pouco'] = [{'cultura': o['cultura'], 'familia': o['familia'], 'falta': o['nao_sei']}
+                        for o in res['opcoes'] if not o['risco'].get('avaliavel')]
     res['opcoes'] = [o for o in res['opcoes'] if o['risco'].get('avaliavel')]
     res['opcoes'].sort(key=lambda o: (o['encaixe'] is None, -(o['encaixe'] or 0)))
 
-    if not res['opcoes'] and res.get('sei_pouco'):
-        res['fala'] = (f"Das culturas que dão aí, eu sei a família de "
-                       f"{len(res['sei_pouco'])}, mas não sei o ciclo de nenhuma. "
-                       f"Sem isso eu não arrisco indicar. Quer que eu diga o que sei?")
-        return res
-    if intencao == 'e-se' and res['opcoes']:
-        o = res['opcoes'][0]
-        if o['mesma_familia_do_que_colheu']:
-            res['fala'] = (f"{o['cultura']} é da mesma família da {colheu}. "
-                           f"Plantar seguido deixa a praga do solo se multiplicar. Eu não indicaria.")
+    if intencao == 'e-se' and p.get('hipotese'):
+        h = p['hipotese']; alvo = nome_curto(h).capitalize()
+        parente = CULT[h]['familia'] == fam
+        avaliavel = bool(res['opcoes'])
+        if h == colheu:
+            res['fala'] = M['hipotese_mesma']
+        elif parente and not avaliavel:
+            res['fala'] = M['hipotese_parente_sem_ciclo'].format(cultura=alvo, de_colheu=dcn)
+        elif parente:
+            res['fala'] = M['hipotese_parente'].format(cultura=alvo, colheu=cn, de_colheu=dcn)
+        elif not avaliavel:
+            res['fala'] = M['hipotese_sem_ciclo'].format(cultura=alvo, de_colheu=dcn)
+        elif res['opcoes'][0]['risco'].get('agua', {}).get('nivel') == 'alto':
+            res['fala'] = M['hipotese_ruim'].format(cultura=alvo)
         else:
-            a = o['risco'].get('agua', {})
-            res['fala'] = (f"{o['cultura']} dá para plantar. " +
-                           (f"O risco de água é {a['nivel']}: a janela dá "
-                            f"{o['risco']['chuva_ajustada_mm'] or o['risco']['chuva_normal_mm']} "
-                            f"milímetros e ela pede {a['exige_mm']}. " if 'razao' in a
-                            else "Da água eu não sei, falta dado dessa cultura. ") +
-                           "Quer comparar com as outras?")
+            res['fala'] = M['hipotese_boa'].format(cultura=alvo)
+    elif not res['opcoes'] and res['sei_pouco']:
+        res['fala'] = M['sem_dado'].format(n=len(res['sei_pouco']))
     elif res['opcoes']:
         o = res['opcoes'][0]
-        nome_f = o['cultura'].split(' (')[0].lower()
-        a = o['risco'].get('agua', {})
-        if a.get('nivel') == 'alto':
-            # o encaixe pode ser bom e o lugar nao permitir. o aviso vem PRIMEIRO.
-            ch = o['risco']['chuva_ajustada_mm'] or o['risco']['chuva_normal_mm']
-            res['fala'] = (f"Pelo que você quer, {nome_f} seria a melhor, mas eu te aviso: "
-                           f"a chuva da janela dá {ch} milímetros e ela pede {a['exige_mm']}. "
-                           f"Quer ver o que arrisca menos?")
-            o.setdefault('avisos', []).insert(0, 'o encaixe é bom mas o lugar não dá a água que ela pede')
+        if o['risco'].get('agua', {}).get('nivel') == 'alto':
+            res['fala'] = M['indicacao_com_aviso'].format(cultura=nome_curto(o['id']))
+            o['avisos'].insert(0, 'o encaixe é bom mas o lugar não dá a água que ela pede')
         else:
-            pq = porque_da_prioridade(o['_pqs'], p['prioridade'])
-            res['fala'] = (f"Depois da {colheu}, o que mais encaixa é {nome_f}. " +
-                           (f"{pq[0].upper()+pq[1:]}. " if pq else "") + "Quer saber o risco?")
+            pq, _ = render_porque(o['_pqs'], p['prioridade'], M, cn, dcn)
+            res['fala'] = M['indicacao'].format(colheu=cn, de_colheu=dcn, cultura=nome_curto(o['id']),
+                                                porque=pq[0].upper()+pq[1:] if pq else '')
     for o in res['opcoes']: o.pop('_pqs', None)
     res['limites'].append('a janela de plantio oficial do ZARC não está carregada; confirme com técnico')
     return res
 
 if __name__ == '__main__':
-    import sys
     casos = [
-      ("1. CANTÁ, RR — colheu mandioca, quer arriscar pouco, planta em abril",
+      ("1. CANTÁ — colheu mandioca, quer arriscar pouco, planta em abril",
        {'lugar':{'id':'canta-rr','config_local':'roraima'},'momento':{'mes_plantio':3},
         'colheu':'mandioca','prioridade':'risco','intencao':'proximo-plantio'}),
-      ("2. O MESMO produtor, mas agora quer que a TERRA melhore",
+      ("2. O MESMO, mas quer que a terra melhore",
        {'lugar':{'id':'canta-rr','config_local':'roraima'},'momento':{'mes_plantio':3},
         'colheu':'mandioca','prioridade':'solo','intencao':'proximo-plantio'}),
       ("3. ELE EXPLORA: 'e se eu plantar milho?'",
        {'lugar':{'id':'canta-rr','config_local':'roraima'},'momento':{'mes_plantio':3},
         'colheu':'mandioca','prioridade':'risco','intencao':'e-se','hipotese':'milho'}),
-      ("4. ELE PERGUNTA O QUE EU NÃO SEI: 'vai chover semana que vem?'",
+      ("4. HIPÓTESE DE PARENTE: colheu caupi, 'e se eu plantar caupi de novo?'",
+       {'lugar':{'id':'canta-rr','config_local':'roraima'},'momento':{'mes_plantio':3},
+        'colheu':'feijao-caupi','prioridade':'risco','intencao':'e-se','hipotese':'feijao-caupi'}),
+      ("5. O QUE EU NÃO SEI: 'vai chover semana que vem?'",
        {'lugar':{'id':'canta-rr','config_local':'roraima'},'momento':{'mes_plantio':3},
         'prioridade':'risco','intencao':'vai-chover'}),
-      ("5. OUTRO LUGAR, mesma pergunta do caso 1: Rio Verde, GO, colheu soja, setembro",
+      ("6. OUTRO LUGAR, sem vocabulário levantado: Rio Verde, colheu soja, setembro",
        {'lugar':{'id':'rioverde-go','config_local':'centro-oeste'},'momento':{'mes_plantio':8},
         'colheu':'soja','prioridade':'risco','intencao':'proximo-plantio'}),
     ]
-    for titulo, p in casos:
+    for t, p in casos:
         r = atender(p)
-        print("="*76); print(titulo); print("="*76)
-        print(f'FALA DO BOT: "{r["fala"]}"')
-        if r['opcoes']:
-            print(f"\n  {'opção':16} {'encaixe':>7} {'conf':>5} {'água':>24}  veranico")
-            for o in r['opcoes'][:4]:
-                e = f"{o['encaixe']:.2f}" if o['encaixe'] is not None else "  --"
-                a = o['risco'].get('agua', {})
-                ag = (f"{a['nivel']:6} {a['razao']}x de {a['exige_mm']}mm" if 'razao' in a
-                      else a.get('nivel','?'))
-                v = o['risco'].get('veranico')
-                print(f"  {o['cultura'][:16]:16} {e:>7} {o['confianca']*100:>4.0f}% {ag:>24}  "
-                      + (f"{v['dias']:.0f}d {v['base']}" if v else "sem ciclo"))
-            o = r['opcoes'][0]
-            if o['porques']: print("  porquês:", "; ".join(o['porques']))
-            if o['avisos']:  print("  avisos: ", "; ".join(o['avisos']))
-            if o['nao_sei']: print("  não sei:", "; ".join(o['nao_sei']))
-        print("  limites:", "; ".join(r['limites']), "\n")
+        print("="*74); print(t); print(f"[registro: {r['registro']}]")
+        print(f'>> "{r["fala"]}"'); print()

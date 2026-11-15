@@ -15,7 +15,8 @@
     "tmax_sofre_c": "temperatura maxima acima da qual sofre",
     "tfaixa_boa_c": "[min, max] de temperatura em que vai bem",
     "qualidade": "boa, parcial, falta",
-    "fonte": "de onde vem o numero"
+    "fonte": "de onde vem o numero",
+    "artigo": "o ou a. A voz fala a frase: sem isso sai 'da feijao-caupi'"
   },
   "culturas": {
     "mandioca": {
@@ -41,7 +42,8 @@
       "tfaixa_boa_c": null,
       "qualidade": "boa",
       "fonte": "Embrapa, Fisiologia da mandioca; Embrapa Cerrados CT51; Embrapa Mandioca e Fruticultura CT172",
-      "observacao": "Unica Euphorbiaceae da lista de Roraima: e o pivo que quebra as duas familias dominantes. Muito sensivel ao deficit nos 3 primeiros meses."
+      "observacao": "Unica Euphorbiaceae da lista de Roraima: e o pivo que quebra as duas familias dominantes. Muito sensivel ao deficit nos 3 primeiros meses.",
+      "artigo": "a"
     },
     "feijao-caupi": {
       "nome": "Feijão-caupi",
@@ -68,7 +70,8 @@
       ],
       "qualidade": "boa",
       "fonte": "ZARC caupi Roraima (portaria 2023/24); faixa de temperatura SEM FONTE ANOTADA, a conferir",
-      "observacao": "Ciclo curto: cabe no fim das chuvas. Perde mais com falta de agua na floracao."
+      "observacao": "Ciclo curto: cabe no fim das chuvas. Perde mais com falta de agua na floracao.",
+      "artigo": "o"
     },
     "milho": {
       "nome": "Milho",
@@ -92,7 +95,8 @@
       "tfaixa_boa_c": null,
       "qualidade": "parcial",
       "fonte": "Folha BV (jornal). FONTE FRACA: trocar por Embrapa ou ZARC antes do slide",
-      "observacao": "Hospedeiro e multiplicador de nematoide: alerta quando a sequencia empilha Poaceae."
+      "observacao": "Hospedeiro e multiplicador de nematoide: alerta quando a sequencia empilha Poaceae.",
+      "artigo": "o"
     },
     "soja": {
       "nome": "Soja",
@@ -116,7 +120,8 @@
       "tfaixa_boa_c": null,
       "qualidade": "boa",
       "fonte": "ZARC soja Roraima 2026/27. Limiar de 40 C e consumo de 7 a 8 mm/dia na floracao SEM FONTE ANOTADA",
-      "observacao": "Agronegocio, nao agricultura familiar. Entra na configuracao do Centro-Oeste."
+      "observacao": "Agronegocio, nao agricultura familiar. Entra na configuracao do Centro-Oeste.",
+      "artigo": "a"
     },
     "braquiaria": {
       "nome": "Braquiária",
@@ -135,7 +140,8 @@
       "tfaixa_boa_c": null,
       "qualidade": "parcial",
       "fonte": "Embrapa Roraima, plantas de cobertura para plantio direto",
-      "observacao": "Cobertura e pasto. Reduz nematoide reniforme em rotacao, segundo a Embrapa."
+      "observacao": "Cobertura e pasto. Reduz nematoide reniforme em rotacao, segundo a Embrapa.",
+      "artigo": "a"
     },
     "milheto": {
       "nome": "Milheto",
@@ -153,7 +159,8 @@
       "tfaixa_boa_c": null,
       "qualidade": "parcial",
       "fonte": "Embrapa Roraima, milheto como cobertura",
-      "observacao": "Hospedeiro de nematoide, mesmo usado como cobertura."
+      "observacao": "Hospedeiro de nematoide, mesmo usado como cobertura.",
+      "artigo": "o"
     },
     "feijao-guandu": {
       "nome": "Feijão-guandu",
@@ -171,7 +178,8 @@
       "tfaixa_boa_c": null,
       "qualidade": "parcial",
       "fonte": "Embrapa Roraima, plantas de cobertura",
-      "observacao": "Cobertura e leguminosa."
+      "observacao": "Cobertura e leguminosa.",
+      "artigo": "o"
     },
     "melancia": {
       "nome": "Melancia",
@@ -189,7 +197,8 @@
       "tfaixa_boa_c": null,
       "qualidade": "falta",
       "fonte": "Embrapa Roraima cita como cultura principal; caracteristicas nao levantadas",
-      "observacao": "O bot deve dizer que sabe a familia e nao sabe o ciclo. ARMADILHA: mesma familia de melao e jerimum."
+      "observacao": "O bot deve dizer que sabe a familia e nao sabe o ciclo. ARMADILHA: mesma familia de melao e jerimum.",
+      "artigo": "a"
     },
     "melao": {
       "nome": "Melão",
@@ -207,7 +216,8 @@
       "tfaixa_boa_c": null,
       "qualidade": "falta",
       "fonte": "Embrapa Roraima",
-      "observacao": "Mesma familia de melancia e jerimum."
+      "observacao": "Mesma familia de melancia e jerimum.",
+      "artigo": "o"
     },
     "jerimum": {
       "nome": "Jerimum (abóbora)",
@@ -225,7 +235,8 @@
       "tfaixa_boa_c": null,
       "qualidade": "falta",
       "fonte": "Embrapa Roraima 2004",
-      "observacao": "Mesma familia de melancia e melao."
+      "observacao": "Mesma familia de melancia e melao.",
+      "artigo": "o"
     },
     "batata-doce": {
       "nome": "Batata-doce",
@@ -243,7 +254,8 @@
       "tfaixa_boa_c": null,
       "qualidade": "falta",
       "fonte": "Embrapa Roraima 2004; programa municipal de Boa Vista",
-      "observacao": "Unica Convolvulaceae: quebra familia sozinha."
+      "observacao": "Unica Convolvulaceae: quebra familia sozinha.",
+      "artigo": "a"
     },
     "cara": {
       "nome": "Cará",
@@ -261,7 +273,8 @@
       "tfaixa_boa_c": null,
       "qualidade": "falta",
       "fonte": "Embrapa Roraima 2004",
-      "observacao": "Unica Dioscoreaceae: quebra familia sozinha."
+      "observacao": "Unica Dioscoreaceae: quebra familia sozinha.",
+      "artigo": "o"
     },
     "arroz": {
       "nome": "Arroz",
@@ -278,7 +291,8 @@
       "tmax_sofre_c": null,
       "tfaixa_boa_c": null,
       "qualidade": "falta",
-      "fonte": "tem ZARC em Roraima; caracteristicas nao levantadas"
+      "fonte": "tem ZARC em Roraima; caracteristicas nao levantadas",
+      "artigo": "o"
     },
     "banana": {
       "nome": "Banana",
@@ -297,7 +311,8 @@
       "tfaixa_boa_c": null,
       "qualidade": "falta",
       "fonte": "IBGE PAM (2.350 ha em Caroebe); Embrapa Roraima com 6 cultivares BRS",
-      "observacao": "Perene: ocupa a area por anos. Sensivel a vento."
+      "observacao": "Perene: ocupa a area por anos. Sensivel a vento.",
+      "artigo": "a"
     }
   },
   "pendencias": [
