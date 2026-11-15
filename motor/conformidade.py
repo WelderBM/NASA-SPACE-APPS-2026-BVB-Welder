@@ -8,11 +8,11 @@ CASOS=[]
 for place,lid in [('canta-rr','roraima'),('rioverde-go','centro-oeste')]:
     cs=LOCAL[lid]['culturas_disponiveis']
     for mes in range(12):
-        for colheu in cs[:4]:
+        for colheu in cs:
             for pr in ['solo','risco','comida','pasto']:
                 CASOS.append({'lugar':{'id':place,'config_local':lid},'momento':{'mes_plantio':mes},
                               'colheu':colheu,'prioridade':pr,'intencao':'proximo-plantio'})
-            for hip in cs[:4]:
+            for hip in cs:
                 CASOS.append({'lugar':{'id':place,'config_local':lid},'momento':{'mes_plantio':mes},
                               'colheu':colheu,'prioridade':'risco','intencao':'e-se','hipotese':hip})
         for it in ['vai-chover','estado-do-solo']:

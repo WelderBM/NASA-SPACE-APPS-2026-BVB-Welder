@@ -45,7 +45,7 @@ MOLDES_NEUTROS = {
   'estado_da_terra': "O solo está {estado}. {mes} costuma ter {chuva}.",
   'fechos_terra': "",
   'nao_sei_prever': "Previsão de chuva eu não tenho. O que eu sei é que {mes} costuma ter {chuva} e o solo está {estado}. Para previsão, consulte a previsão do tempo.",
-  'porques': {'familia': "é de outra família que a {colheu}, então as pragas de solo não se mantêm",
+  'porques': {'familia': "é de outra família {de_colheu}, então as pragas de solo não se mantêm",
               'agua': "a chuva do período atende o que ela precisa",
               'solo': "melhora o solo para o que vem depois",
               'risco': "é de ciclo curto, {dias} dias",
