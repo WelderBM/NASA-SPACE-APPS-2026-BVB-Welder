@@ -4,22 +4,40 @@
   "prioridades": {
     "solo": {
       "fala": "quero que a terra melhore",
-      "pesos": {"fixa_n": 3, "residuo_alto": 2, "familia_diferente": 3, "cobertura_meses": 2},
+      "pesos": {
+        "fixa_n": 3,
+        "residuo_alto": 2,
+        "familia_diferente": 3,
+        "cobertura_meses": 2
+      },
       "servivel": true
     },
     "risco": {
       "fala": "quero arriscar pouco",
-      "pesos": {"tolera_seca": 3, "ciclo_curto": 3, "agua_baixa": 2, "cabe_na_janela": 3},
+      "pesos": {
+        "tolera_seca": 3,
+        "ciclo_curto": 3,
+        "agua_baixa": 2,
+        "cabe_na_janela": 3
+      },
       "servivel": true
     },
     "comida": {
       "fala": "quero comida em casa",
-      "pesos": {"espera_no_campo": 3, "ciclo_curto": 1, "tolera_seca": 2},
+      "pesos": {
+        "espera_no_campo": 3,
+        "ciclo_curto": 1,
+        "tolera_seca": 2
+      },
       "servivel": true
     },
     "pasto": {
       "fala": "quero pasto pro gado",
-      "pesos": {"forrageira": 3, "residuo_alto": 1, "tolera_seca": 2},
+      "pesos": {
+        "forrageira": 3,
+        "residuo_alto": 1,
+        "tolera_seca": 2
+      },
       "servivel": true
     },
     "renda": {
@@ -39,5 +57,9 @@
     "familia da candidata diferente da familia colhida",
     "cultura existe no lugar (camada local)",
     "ciclo cabe na janela que resta"
-  ]
+  ],
+  "pesos_derivados": {
+    "cobertura_meses": "DERIVADO, nao tem fonte: meses de cobertura = ciclo minimo / 30, e a nota e min(1, meses/6). Perene recebe 1. O raciocinio e que solo descoberto e o que lava, e a entrevista de Goias falou de erosao. PRECISA DE VALIDACAO AGRONOMICA antes de virar afirmacao de slide.",
+    "cabe_na_janela": "Compara o mes de plantio com a janela do ZARC daquele lugar. Onde nao ha janela carregada, o peso fica NULO e vira lacuna declarada, nunca zero."
+  }
 }

@@ -202,7 +202,24 @@ def risco(c, place, m0):
     return r, nao_sei
 
 # ------------------------------------------------------------------ encaixe
-def encaixe(c, prioridade):
+def cobertura(c):
+    """quantos meses a cultura cobre o chao. DERIVADO do ciclo, sem fonte:
+    solo descoberto e o que lava. marcado como derivado em prioridades.json."""
+    if 'perene' in (c.get('ciclo_nota') or '').lower(): return 1.0
+    ci = c.get('ciclo_dias')
+    if not ci: return None
+    return min(1.0, (ci[0]/30.0)/6.0)
+
+def cabe_na_janela(nome, loc, m0):
+    """o mes de plantio esta dentro da janela do ZARC daquele lugar? sem
+    janela carregada devolve None, que vira lacuna declarada, nunca zero."""
+    j = (loc.get('janelas_zarc') or {}).get(nome) or {}
+    ini, fim = j.get('inicio_mes'), j.get('fim_mes')
+    if ini is None or fim is None: return None
+    dentro = (ini <= m0 <= fim) if ini <= fim else (m0 >= ini or m0 <= fim)
+    return 1.0 if dentro else 0.0
+
+def encaixe(c, prioridade, nome=None, loc=None, m0=None):
     p = PRIO[prioridade]
     if not p['servivel']: return None, 0.0, [], p['resposta_honesta']
     ci = c.get('ciclo_dias')
@@ -212,7 +229,9 @@ def encaixe(c, prioridade):
             'tolera_seca': {'alta':1.0,'media':0.6,'baixa':0.2}.get(c.get('tolera_seca')),
             'espera_no_campo': None if c.get('espera_no_campo') is None else float(c['espera_no_campo']),
             'ciclo_curto': (1.0 if ci and ci[0] <= 90 else 0.6 if ci and ci[0] <= 150 else 0.3 if ci else None),
-            'agua_baixa': None, 'cabe_na_janela': None, 'cobertura_meses': None}
+            'agua_baixa': None,
+            'cabe_na_janela': (cabe_na_janela(nome, loc, m0) if (nome and loc and m0 is not None) else None),
+            'cobertura_meses': cobertura(c)}
     num = den = tot = 0.0; faltou = []
     for pn, pw in p['pesos'].items():
         tot += pw; e = mapa.get(pn)
@@ -331,7 +350,7 @@ def atender(p):
         if not c: continue
         if fam and c['familia'] == fam and intencao != 'e-se': continue
         r, ns = risco(c, place, m0)
-        enc, conf, faltou, _ = encaixe(c, p['prioridade'])
+        enc, conf, faltou, _ = encaixe(c, p['prioridade'], nome, loc, m0)
         pqs = porques(c, r, fam) if fam else []
         res['opcoes'].append({
             'cultura': c['nome'], 'id': nome, 'familia': c['familia'],
@@ -347,6 +366,12 @@ def atender(p):
             'qualidade_do_dado': c['qualidade'],
             'validar_com_tecnico': ['a janela de plantio oficial do ZARC para o município'],
         })
+    sem_janela = [o['cultura'] for o in res['opcoes']
+                  if not (loc.get('janelas_zarc') or {}).get(o['id'], {}).get('inicio_mes')]
+    if sem_janela:
+        res['lacunas'].append({'o_que': 'a janela oficial de plantio',
+            'por_que': f"o ZARC não está carregado para {len(sem_janela)} das culturas daqui",
+            'efeito': 'não dá para dizer se cabe na janela recomendada', 'falar': False})
     res['sei_pouco'] = [{'cultura': o['cultura'], 'id': o['id'], 'familia': o['familia'],
                          'encaixe': o['encaixe'], 'falta': o['nao_sei']}
                         for o in res['opcoes'] if not o['risco'].get('avaliavel')]

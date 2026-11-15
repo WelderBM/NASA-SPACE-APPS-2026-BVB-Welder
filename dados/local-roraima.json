@@ -31,7 +31,10 @@
       "inicio": "fim de junho",
       "fim": "meados de agosto",
       "qualidade": "aproximada: a tabela do PDF veio desalinhada",
-      "fonte": "portaria ZARC caupi Roraima, safra 2023/24"
+      "fonte": "portaria ZARC caupi Roraima, safra 2023/24",
+      "inicio_mes": 5,
+      "fim_mes": 7,
+      "nota_mes": "fim de junho a meados de agosto virou junho(5) a agosto(7). O motor compara MES, nao decendio, entao a borda e aproximada e esta declarado na qualidade."
     },
     "mandioca": {
       "inicio": null,

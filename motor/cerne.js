@@ -139,7 +139,19 @@ class Cerne{
     }else nao_sei.push('a partir de que temperatura essa cultura sofre');
     r.avaliavel=true;return [r,nao_sei];
   }
-  encaixe(c,prioridade){
+  cobertura(c){
+    if(((c.ciclo_nota||'')+'').toLowerCase().includes('perene'))return 1;
+    const ci=c.ciclo_dias; if(!ci)return null;
+    return Math.min(1,(ci[0]/30)/6);
+  }
+  cabeNaJanela(nome,loc,m0){
+    const j=((loc.janelas_zarc||{})[nome])||{};
+    const ini=j.inicio_mes,fim=j.fim_mes;
+    if(ini==null||fim==null)return null;
+    const dentro=(ini<=fim)?(ini<=m0&&m0<=fim):(m0>=ini||m0<=fim);
+    return dentro?1:0;
+  }
+  encaixe(c,prioridade,nome,loc,m0){
     const p=this.PRIO[prioridade];
     if(!p.servivel)return [null,0,[],p.resposta_honesta];
     const ci=c.ciclo_dias,res={alto:1,medio:.5,baixo:0},sec={alta:1,media:.6,baixa:.2};
@@ -149,7 +161,9 @@ class Cerne{
       tolera_seca:c.tolera_seca in sec?sec[c.tolera_seca]:null,
       espera_no_campo:c.espera_no_campo==null?null:(c.espera_no_campo?1:0),
       ciclo_curto:ci?(ci[0]<=90?1:ci[0]<=150?.6:.3):null,
-      agua_baixa:null,cabe_na_janela:null,cobertura_meses:null};
+      agua_baixa:null,
+      cabe_na_janela:(nome&&loc&&m0!=null)?this.cabeNaJanela(nome,loc,m0):null,
+      cobertura_meses:this.cobertura(c)};
     let num=0,den=0,tot=0;const faltou=[];
     for(const[pn,pw]of Object.entries(p.pesos)){tot+=pw;const e=mapa[pn];
       if(e==null){faltou.push(pn);continue}num+=pw*e;den+=pw}
@@ -223,7 +237,7 @@ class Cerne{
       const c=this.CULT[nome];if(!c)continue;
       if(fam&&c.familia===fam&&intencao!=='e-se')continue;
       const [r,ns]=this.risco(c,place,m0);
-      const [enc,conf]=this.encaixe(c,p.prioridade);
+      const [enc,conf]=this.encaixe(c,p.prioridade,nome,loc,m0);
       const pqs=fam?this.porques(c,r,fam):[];
       res.opcoes.push({cultura:c.nome,id:nome,familia:c.familia,ciclo_dias:c.ciclo_dias||null,
         mesma_familia_do_que_colheu:!!(fam&&c.familia===fam),risco:r,
@@ -235,6 +249,10 @@ class Cerne{
         qualidade_do_dado:c.qualidade,
         validar_com_tecnico:['a janela de plantio oficial do ZARC para o município']});
     }
+    const semJanela=res.opcoes.filter(o=>!(((loc.janelas_zarc||{})[o.id])||{}).inicio_mes);
+    if(semJanela.length)res.lacunas.push({o_que:'a janela oficial de plantio',
+      por_que:`o ZARC não está carregado para ${semJanela.length} das culturas daqui`,
+      efeito:'não dá para dizer se cabe na janela recomendada',falar:false});
     res.sei_pouco=res.opcoes.filter(o=>!o.risco.avaliavel)
       .map(o=>({cultura:o.cultura,id:o.id,familia:o.familia,encaixe:o.encaixe,falta:o.nao_sei}))
       .sort((a,b)=>(a.encaixe==null)-(b.encaixe==null)||(b.encaixe||0)-(a.encaixe||0));

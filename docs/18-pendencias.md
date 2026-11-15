@@ -83,25 +83,28 @@ lista estar completa, porque acrescentar anos só aumenta a dispersão.
 | o quê | efeito hoje | de quem |
 | --- | --- | --- |
 | `ciclo_dias` de 7 culturas | elas nunca viram indicação falada | chat do dado, pelo ECOCROP |
-| `espera_no_campo` de **batata-doce** e **cará** | "comida em casa" não destaca as duas raízes que esperam na terra | chat do dado |
+| ~~`espera_no_campo` de batata-doce e cará~~ | **FEITO 15/11 14h50**, marcado como derivado (raciocínio sobre raiz de reserva), não como fonte. Precisa de validação com técnico | — |
 | `tmax_sofre_c` de 13 culturas | o aviso de calor só acende para a soja | chat do dado, o ECOCROP dá TMAX limpo |
 | `agua_ciclo_mm` | **fechado como impossível**: ECOCROP e Embrapa dão chuva anual, não do ciclo | — |
-| `cobertura_meses` | peso de solo que não existe na tabela | derivável do ciclo |
+| ~~`cobertura_meses`~~ | **FEITO 15/11 14h50**: derivado do ciclo (meses ÷ 6, perene = 1). Marcado como derivado sem fonte, precisa de validação agronômica | — |
 
 ## 4. Declarado e aceito como próximo passo
 
 Não são dívidas escondidas, estão ditas no produto e nos documentos.
 
-- **Janela do ZARC**: o motor não lê `janelas_zarc` e `cabe_na_janela` está fixo
-  em nulo nos dois motores. Carregar as janelas **não muda resposta nenhuma**
-  sem mexer em código, e as janelas estão em texto, não em decêndio comparável
+- ~~**Janela do ZARC**: o motor não lê~~ **MUDOU EM 15/11, 14h50.** O motor lê
+  `janelas_zarc` e `cabe_na_janela` funciona: a janela do caupi em Roraima virou
+  número (junho a agosto) e **muda a resposta** — o encaixe do caupi vai de 0,53
+  em abril para 0,87 em julho, e a confiança sobe de 0,55 para 0,82. Onde não há
+  janela o peso fica **nulo e vira lacuna declarada**, nunca zero. Carregar as
+  outras janelas agora é só dado, e acende sozinho
 - **SoilGrids**: API REST pausada pelo ISRIC. A camada de solo hoje é a umidade
   da NASA em três profundidades mais a temperatura do solo
 - **Lotes**: o motor modela uma área. Quem tem três roçados tem três respostas
 - **IA redatora ao vivo**: precisa de chave, não roda em página pública
 - **FIRMS, GDD, SMAP, ECOSTRESS, Landsat, API oficial do WhatsApp**
 
-## 5. Pesquisa de campo
+## 5. Pesquisa de campo — roteiro pronto em [docs/19](19-roteiro-das-ligacoes.md)
 
 - **Zero entrevistas em Roraima.** Temos 8 respostas de formulário de 7 pessoas
   e uma entrevista em Goiás, feita pelo parceiro
@@ -164,3 +167,10 @@ Conferido contra o `main` em `2bbd12b`. Só o que não estava acima.
 Quem resolver um item: risca aqui, no mesmo commit da correção. Quem achar
 pendência nova em qualquer documento: traz para cá em vez de deixar no lugar
 onde achou.
+
+## 7. Privacidade
+
+Telefone, nome e qualquer coisa que identifique quem respondeu o formulário
+**não entram neste repositório**, que é público. Ficam na planilha privada do
+Drive. Quase aconteceu em 15/11: a primeira versão do `docs/19` tinha os três
+números escritos, e a ação foi bloqueada antes do commit.
