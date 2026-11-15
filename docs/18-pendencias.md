@@ -98,7 +98,7 @@ lista estar completa, porque acrescentar anos só aumenta a dispersão.
 | A confiança mede **cobertura**, não **qualidade de fonte** | com o ciclo preenchido, as 5 culturas foram a 100% ao lado do caupi, cujo dado é melhor. `qualidade_do_dado` já vai na resposta e a fala não diz | desenho, fica com o Welder |
 | ~~`espera_no_campo` de batata-doce e cará~~ | **FEITO 15/11 14h50**, marcado como derivado (raciocínio sobre raiz de reserva), não como fonte. Precisa de validação com técnico | — |
 | `tmax_sofre_c` de 13 culturas | o aviso de calor só acende para a soja | chat do dado, o ECOCROP dá TMAX limpo |
-| `agua_ciclo_mm` | **fechado como impossível**: ECOCROP e Embrapa dão chuva anual, não do ciclo | — |
+| `agua_ciclo_mm` | **fechado para hoje, não impossível.** ECOCROP e Embrapa dão chuva ANUAL, não do ciclo, então por essas duas fontes não sai ([14](14-ecocrop-ciclo.md)). O **Kc do FAO 56** continua sendo caminho: ele dá a evapotranspiração da cultura por fase, que é a grandeza certa. Fica para depois do prazo | — |
 | ~~`cobertura_meses`~~ | **FEITO 15/11 14h50**: derivado do ciclo (meses ÷ 6, perene = 1). Marcado como derivado sem fonte, precisa de validação agronômica | — |
 
 ## 4. Declarado e aceito como próximo passo
@@ -191,7 +191,7 @@ Conferido contra o `main` em `2bbd12b`. Só o que não estava acima.
 | "Fill crop traits from FAO ECOCROP" e "o gargalo não é código, é preencher a tabela": o ECOCROP dá **ciclo** (e nem para a melancia, que vem 0/0). Não dá água do ciclo, não dá tolerância à seca (campo vazio até na mandioca), não dá fixa N nem resíduo | slides `next` EN e PT, `texto-de-estudo-do-pitch.md` | "crop cycles from FAO ECOCROP; water need per crop from Embrapa or FAO 56" |
 | `tmax_sofre_c` "o ECOCROP dá TMAX limpo": `TMAX` é a **máxima absoluta** de sobrevivência; a temperatura acima da qual a planta começa a sofrer é mais perto de `TOPMX`, a ótima máxima. É a quarta causa do doc 17 (semântica de campo externo) de novo | seção 3 acima | decidir qual dos dois é `tmax_sofre_c` antes de preencher, e escrever no `campos` do JSON |
 | ~~A pendência do `culturas.json` manda preencher água pelo ECOCROP~~ | — | **RESOLVIDO no merge do PR #1:** a linha saiu e entraram três, dizendo que o ECOCROP não serve para água, que falta ciclo da melancia, e que o ciclo que entrou é faixa global |
-| `agua_ciclo_mm` "fechado como impossível": é impossível **com ECOCROP e Embrapa**; o Kc do FAO 56 continua sendo caminho | seção 3 acima | "fechado para hoje" |
+| ~~`agua_ciclo_mm` escrito como "fechado como impossível"~~ | — | **RESOLVIDO 15/11, 16h10:** a seção 3 agora diz "fechado para hoje, não impossível", nomeia por que ECOCROP e Embrapa não servem, e registra o Kc do FAO 56 como o caminho que sobra. Importa porque "impossível" fecha a porta e a porta não está fechada |
 
 **Regra do doc 11 quebrada — ~~RESOLVIDO 15/11, 15h20~~**
 
