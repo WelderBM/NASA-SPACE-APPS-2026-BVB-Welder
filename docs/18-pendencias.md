@@ -182,6 +182,8 @@ Conferido contra o `main` em `2bbd12b`. Só o que não estava acima.
 | **Slide 4 desatualizado pelo `2bbd12b`:** a bolha diz "out of the ground in **60 days**"; a demo agora diz **70 dias** (caupi corrigido para 70 a 75 pela Embrapa). O jurado que repetir a conversa vê outro número | `slides-en/solution.html`, `slides-pt/solution.html`, `texto-de-estudo-do-pitch.md` linha 27; também docs 11 e 12 como exemplo | trocar 60 por 70 nos dois decks e no texto de estudo |
 | ~~Linha do milho no doc 05 se contradizia~~ | — | **RESOLVIDO 15/11, 15h20:** coluna em 110 a 145, fonte trocada para a Embrapa Milho e Sorgo e qualidade para boa. A linha ainda dizia "fraca: fonte é jornal" no mesmo lugar onde o título dizia que o jornal tinha saído |
 
+| O vídeo de 3 min etiqueta os 859 mm como "média 1981–**2025**"; o doc 04 linha 94 diz que é a média da série de 1981 a **2026** | `entregas/video-pitch-3min/README.md` linha 0:18 contra `docs/04` | dizer um só. E vale notar: se a média inclui 2026, comparar 2026 contra ela é levemente circular. Não vale re-renderizar 3 min por isso, mas quem apresentar precisa saber responder (dono: chat do pitch) |
+
 **Promessa maior que a fonte**
 
 | achado | onde | o que fazer |
