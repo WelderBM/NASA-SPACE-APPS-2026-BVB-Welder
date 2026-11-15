@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teste de voz</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:#0b141a;display:flex;justify-content:center;min-height:100vh}
+.phone{width:100%;max-width:420px;background:#0b141a;display:flex;flex-direction:column;height:100vh}
+.top{background:#1f2c33;color:#e9edef;padding:12px 14px;display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.av{width:38px;height:38px;border-radius:50%;background:#00a884;display:grid;place-items:center;font-weight:700;color:#0b141a}
+.who{font-size:15px;font-weight:600}
+.sub{font-size:12px;color:#8696a0}
+.chat{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
+.b{max-width:82%;padding:8px 10px;border-radius:8px;font-size:14.5px;line-height:1.4;white-space:pre-wrap}
+.them{background:#1f2c33;color:#e9edef;align-self:flex-start;border-top-left-radius:0}
+.me{background:#005c4b;color:#e9edef;align-self:flex-end;border-top-right-radius:0}
+.t{font-size:10.5px;color:#8696a0;margin-top:3px;text-align:right}
+.bar{flex:0 0 auto;background:#1f2c33;padding:10px;display:flex;gap:8px;align-items:center}
+input{flex:1;background:#2a3942;border:0;color:#e9edef;padding:10px 12px;border-radius:20px;font-size:14px;outline:none}
+button{background:#00a884;border:0;color:#0b141a;width:42px;height:42px;border-radius:50%;font-size:18px;cursor:pointer;flex:0 0 auto}
+button:disabled{background:#3b4a54;color:#8696a0;cursor:default}
+button.rec{background:#f15c6d;animation:p 1s infinite}
+@keyframes p{50%{opacity:.55}}
+.diag{background:#111b21;color:#8696a0;font-size:11.5px;padding:8px 14px;font-family:ui-monospace,monospace;white-space:pre-wrap;border-top:1px solid #222d34;flex:0 0 auto}
+.ok{color:#00a884}.no{color:#f15c6d}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="top">
+    <div class="av">RR</div>
+    <div><div class="who">Assistente da Roça</div><div class="sub" id="st">toque no microfone e fale</div></div>
+  </div>
+  <div class="chat" id="chat"></div>
+  <div class="bar">
+    <input id="txt" placeholder="ou escreva aqui" autocomplete="off">
+    <button id="mic" title="falar">&#127908;</button>
+    <button id="snd" title="enviar">&#10148;</button>
+  </div>
+  <div class="diag" id="diag">verificando…</div>
+</div>
+<script>
+(function(){
+var chat=document.getElementById('chat'),diag=document.getElementById('diag'),st=document.getElementById('st');
+var mic=document.getElementById('mic'),snd=document.getElementById('snd'),txt=document.getElementById('txt');
+function hora(){var d=new Date();return (''+d.getHours()).padStart(2,'0')+':'+(''+d.getMinutes()).padStart(2,'0')}
+function diz(quem,texto){
+  var w=document.createElement('div');w.className='b '+(quem==='me'?'me':'them');
+  w.textContent=texto;
+  var t=document.createElement('div');t.className='t';t.textContent=hora();w.appendChild(t);
+  chat.appendChild(w);chat.scrollTop=chat.scrollHeight;return w;
+}
+// --- deteccao de capacidade ---
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+var temSR=!!SR, temTTS=('speechSynthesis' in window), temMic=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia);
+var linhas=[];
+function marca(nome,ok,obs){linhas.push('<span class="'+(ok?'ok':'no')+'">'+(ok?'OK ':'NAO')+'</span> '+nome+(obs?' — '+obs:''))}
+marca('SpeechRecognition',temSR,temSR?'':'use Chrome ou Edge');
+marca('speechSynthesis',temTTS,'');
+marca('getUserMedia',temMic,'');
+marca('contexto seguro',window.isSecureContext,window.isSecureContext?'':'precisa https');
+linhas.push('dentro de iframe: '+(window.self!==window.top?'sim':'nao'));
+diag.innerHTML=linhas.join('<br>');
+
+// --- falar (TTS) ---
+var vozes=[];
+function carregaVozes(){vozes=window.speechSynthesis?speechSynthesis.getVoices():[]}
+if(temTTS){carregaVozes();speechSynthesis.onvoiceschanged=carregaVozes}
+function fala(texto){
+  if(!temTTS)return;
+  try{
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(texto);
+    u.lang='pt-BR';u.rate=0.95;
+    var v=vozes.filter(function(x){return /pt[-_]?BR/i.test(x.lang)})[0]||vozes.filter(function(x){return /^pt/i.test(x.lang)})[0];
+    if(v)u.voice=v;
+    speechSynthesis.speak(u);
+  }catch(e){diag.innerHTML+='<br><span class="no">erro TTS:</span> '+e.message}
+}
+// --- resposta de teste (o motor entra aqui depois) ---
+function responde(pergunta){
+  var r='Entendi: '+pergunta+'. Esse é o teste de voz. O motor com os dados da NASA entra aqui.';
+  diz('them',r);fala(r);
+}
+function manda(texto){
+  texto=(texto||'').trim();if(!texto)return;
+  diz('me',texto);txt.value='';setTimeout(function(){responde(texto)},400);
+}
+snd.onclick=function(){manda(txt.value)};
+txt.onkeydown=function(e){if(e.key==='Enter')manda(txt.value)};
+
+// --- ouvir (STT) ---
+var rec=null,ouvindo=false;
+if(!temSR){mic.disabled=true;mic.title='sem reconhecimento de voz neste navegador'}
+mic.onclick=function(){
+  if(!temSR)return;
+  if(ouvindo){try{rec.stop()}catch(e){};return}
+  try{
+    rec=new SR();rec.lang='pt-BR';rec.interimResults=true;rec.continuous=false;
+    var parcial=null,ultimo='';
+    rec.onstart=function(){ouvindo=true;mic.classList.add('rec');st.textContent='ouvindo…'};
+    rec.onresult=function(ev){
+      var txtAll='';for(var i=0;i<ev.results.length;i++)txtAll+=ev.results[i][0].transcript;
+      ultimo=txtAll;
+      if(!parcial)parcial=diz('me','…');
+      parcial.firstChild.nodeValue?0:0;
+      parcial.textContent=txtAll;var t=document.createElement('div');t.className='t';t.textContent=hora();parcial.appendChild(t);
+    };
+    rec.onerror=function(ev){
+      mic.classList.remove('rec');ouvindo=false;st.textContent='erro no microfone';
+      diag.innerHTML+='<br><span class="no">erro STT:</span> '+ev.error+(ev.error==='not-allowed'?' (permissao negada ou iframe sem allow=microphone)':'');
+    };
+    rec.onend=function(){
+      mic.classList.remove('rec');ouvindo=false;st.textContent='toque no microfone e fale';
+      if(ultimo.trim())setTimeout(function(){responde(ultimo.trim())},300);
+    };
+    rec.start();
+  }catch(e){diag.innerHTML+='<br><span class="no">erro ao iniciar:</span> '+e.message}
+};
+diz('them','Teste de voz. Toque no microfone e fale uma frase, ou escreva abaixo. O diagnóstico aparece no rodapé.');
+})();
+</script>
+</body>
+</html>
