@@ -32,7 +32,7 @@
     <rect id="bar26" x="450" y="800" width="200" height="0" rx="10" fill="#B5442E"/>
     <text id="lblAvg" x="270" y="0" text-anchor="middle" font-size="56" font-weight="800" fill="#2E6A4C">859 mm</text>
     <text id="lbl26" x="550" y="0" text-anchor="middle" font-size="56" font-weight="800" fill="#B5442E">330 mm</text>
-    <text x="270" y="850" text-anchor="middle" font-size="30" fill="#4A5148">1981–2025 average</text>
+    <text x="270" y="850" text-anchor="middle" font-size="30" fill="#4A5148">1981–2026 mean</text>
     <text x="550" y="850" text-anchor="middle" font-size="30" fill="#4A5148">2026</text>
     <g id="lowest" opacity="0" transform="translate(550,520)">
       <rect x="-170" y="-40" width="340" height="80" rx="40" fill="#1C2620"/>
@@ -56,14 +56,14 @@
     <g id="soilMonths" font-size="26" fill="#4A5148"></g>
     <g id="soilNote" opacity="0"><rect x="690" y="110" width="350" height="110" rx="20" fill="#1C2620"/><text x="712" y="158" font-size="30" font-weight="700" fill="#F5F0E6">September = January</text><text x="712" y="198" font-size="26" fill="#C9D3C6">five months early</text></g>
   </g>
-  <text x="120" y="1072" font-size="20" fill="#4A5148">Source: NASA POWER (PRECTOTCORR, GWETROOT), lat 2.61, lon −60.60, read on Nov 14–15, 2026</text>
+  <text x="120" y="1072" font-size="20" fill="#4A5148">NASA POWER monthly series 1981–2026 (docs/04), lat 2.61, lon −60.60, read Nov 14–15, 2026. Dry spell from the daily series (docs/04).</text>
 </g>
 
 <!-- ===== SC4: El Nino ===== -->
 <g id="sc4" opacity="0">
   <rect width="1920" height="1080" fill="#EAE3D3"/>
   <text x="120" y="130" font-size="30" font-weight="700" fill="#2E6A4C" letter-spacing="3">WILL 2027 REPEAT IT?</text>
-  <text x="120" y="210" font-size="52" font-weight="800" fill="#1C2620">June–September rain in El Niño years, vs average</text>
+  <text x="120" y="210" font-size="52" font-weight="800" fill="#1C2620">June–September rain in El Niño years before 2026</text>
   <line x1="200" y1="560" x2="1720" y2="560" stroke="#4A5148" stroke-width="4"/>
   <text x="1740" y="570" font-size="28" fill="#4A5148">average</text>
   <g id="enDots"></g>
@@ -71,7 +71,7 @@
     <rect x="-470" y="-50" width="940" height="100" rx="50" fill="#1C2620"/>
     <text text-anchor="middle" y="14" font-size="42" font-weight="800" fill="#F5F0E6">No rule. We don’t predict. We observe.</text>
   </g>
-  <text x="120" y="1072" font-size="20" fill="#4A5148">NASA POWER, Cantá. El Niño year list is partial (1994, 2018 and 2019 missing), so we show the spread, never an average.</text>
+  <text x="120" y="1072" font-size="20" fill="#4A5148">NASA POWER, Cantá, vs the 1981–2026 mean. 2026 itself: −62%. Year list is partial (1994, 2018, 2019 missing): we show the spread, never an average.</text>
 </g>
 
 <!-- ===== SC5: people ===== -->
