@@ -127,6 +127,45 @@ Como ler: o solo mais seco é em fevereiro e março, e o mais úmido em julho. A
 
 A conferir: a climatologia de umidade do solo é de 2001 a 2025, e a de chuva que usamos na tabela acima pode ter outro período-base. Registrar o período de cada consulta antes de comparar os dois.
 
+### Teste dos anos de El Niño (rodado em 14/11/2026)
+
+Testamos se ano de El Niño é ano seco no Cantá, usando a série mensal do POWER de 1981 a 2026 e somando junho a setembro, que é o fim da estação chuvosa e o enchimento dos grãos. Média da série: 859 mm. Atenção, a API mensal devolve mm/dia, não mm do mês; os valores abaixo já foram multiplicados pelos dias de cada mês.
+
+Anos em que o El Niño estava ativo em junho-setembro:
+
+| Ano | Jun-set (mm) | Contra a média |
+| --- | --- | --- |
+| 1982 | 572 | -33% |
+| 1986 | 980 | +14% |
+| 1987 | 820 | -5% |
+| 1991 | 1.007 | +17% |
+| 1997 | 678 | -21% |
+| 2002 | 993 | +16% |
+| 2009 | 812 | -5% |
+| 2015 | 445 | -48% |
+| 2023 | 627 | -27% |
+| 2026 | 330 | -62% |
+
+O que isso diz: a média desses anos é só 10% abaixo do normal, então "ano de El Niño" sozinho não serve de regra. Mas o déficit aparece nos eventos fortes: 1982, 1997, 2015 e 2023 foram de -21% a -48%, e 2026, com evento muito forte, é o pior da série de 45 anos, com -62%. Os eventos fracos a moderados (1986, 1991, 2002) vieram acima da média. A regra honesta é pela intensidade, não pela presença do fenômeno.
+
+Anos seguintes ao pico, de decaimento, dão média de apenas 2% abaixo do normal. Isso importa para 2027: o CPC prevê El Niño até março-maio de 2027 e neutro a partir de maio-junho-julho, ou seja, a chuva de junho a setembro de 2027 cai num ano de decaimento. Pelos dados, **não há base para dizer que 2027 repete 2026**. Dizer isso no pitch seria errado.
+
+### O que realmente sobra de 2026: o solo
+
+O que atravessa o ano não é a chuva, é a umidade do solo. Comparando 2026 com a climatologia de 2001 a 2025:
+
+| Mês de 2026 | Perfil (normal) | Superfície (normal) |
+| --- | --- | --- |
+| Julho | 0,74 (0,87) | 0,77 (0,89) |
+| Agosto | 0,57 (0,86) | 0,54 (0,87) |
+| Setembro | 0,51 (0,76) | 0,32 (0,78) |
+
+Em setembro de 2026 o perfil estava em 0,51, que é o nível que ali normalmente só aparece em janeiro e fevereiro, no fundo da estiagem. A superfície estava em 0,32 contra 0,78 do normal. Em outras palavras: **o solo entrou na estiagem de 2026-2027 já no mínimo do ano, cinco meses mais cedo**. A estiagem vai de outubro a março, e o plantio começa em abril.
+
+Isso reposiciona o produto, e deixa ele mais próximo do enunciado: a pergunta não é se vai faltar chuva em 2027, é qual rotação recupera um solo que começa seco e aguenta um início ruim. É adaptação e saúde do solo, com observação da NASA, que é exatamente o que foi pedido. E casa com a regra da mandioca, sensível ao déficit nos três primeiros meses, justo quando o solo estiver recarregando de uma base baixa.
+
+A conferir neste teste: a lista de anos de El Niño foi escrita de memória e precisa ser checada contra o índice ONI da NOAA; é um único ponto de grade do MERRA-2, que é grosseiro; outubro a dezembro de 2026 ainda não estão na série.
+
 ### Medições de campo que confirmam o dado do NASA POWER
 
 Medições de campo que confirmam o dado do NASA POWER (que deu agosto 85% abaixo da média no Cantá):
