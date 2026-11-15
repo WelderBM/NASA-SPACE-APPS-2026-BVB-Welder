@@ -3,124 +3,256 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Teste de voz</title>
+<title>Assistente da roça — demo</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:#0b141a;display:flex;justify-content:center;min-height:100vh}
-.phone{width:100%;max-width:420px;background:#0b141a;display:flex;flex-direction:column;height:100vh}
-.top{background:#1f2c33;color:#e9edef;padding:12px 14px;display:flex;align-items:center;gap:10px;flex:0 0 auto}
-.av{width:38px;height:38px;border-radius:50%;background:#00a884;display:grid;place-items:center;font-weight:700;color:#0b141a}
-.who{font-size:15px;font-weight:600}
-.sub{font-size:12px;color:#8696a0}
-.chat{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
-.b{max-width:82%;padding:8px 10px;border-radius:8px;font-size:14.5px;line-height:1.4;white-space:pre-wrap}
-.them{background:#1f2c33;color:#e9edef;align-self:flex-start;border-top-left-radius:0}
-.me{background:#005c4b;color:#e9edef;align-self:flex-end;border-top-right-radius:0}
-.t{font-size:10.5px;color:#8696a0;margin-top:3px;text-align:right}
-.bar{flex:0 0 auto;background:#1f2c33;padding:10px;display:flex;gap:8px;align-items:center}
-input{flex:1;background:#2a3942;border:0;color:#e9edef;padding:10px 12px;border-radius:20px;font-size:14px;outline:none}
-button{background:#00a884;border:0;color:#0b141a;width:42px;height:42px;border-radius:50%;font-size:18px;cursor:pointer;flex:0 0 auto}
-button:disabled{background:#3b4a54;color:#8696a0;cursor:default}
-button.rec{background:#f15c6d;animation:p 1s infinite}
+body{background:#0b141a;color:#e9edef;font:15px/1.5 system-ui,-apple-system,sans-serif;
+     display:flex;justify-content:center;min-height:100vh}
+.app{width:100%;max-width:1040px;display:grid;grid-template-columns:1fr 340px;gap:14px;padding:14px}
+@media(max-width:860px){.app{grid-template-columns:1fr}}
+.phone{background:#0b141a;border:1px solid #1f2c33;border-radius:14px;display:flex;
+       flex-direction:column;height:84vh;min-height:520px;overflow:hidden}
+.bar{background:#1f2c33;padding:11px 14px;display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.av{width:34px;height:34px;border-radius:50%;background:#00a884;display:grid;place-items:center;font-size:17px}
+.bar b{font-weight:600;font-size:15px}.bar small{color:#8696a0;display:block;font-size:12px}
+.msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px;
+      background:#0b141a}
+.b{max-width:85%;padding:8px 11px;border-radius:9px;white-space:pre-wrap;word-break:break-word}
+.them{background:#1f2c33;align-self:flex-start;border-top-left-radius:2px}
+.me{background:#005c4b;align-self:flex-end;border-top-right-radius:2px}
+.meta{font-size:11.5px;color:#8696a0;align-self:center;text-align:center;padding:2px 8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px;flex:0 0 auto;border-top:1px solid #1f2c33}
+.chip{background:#1f2c33;color:#e9edef;border:1px solid #2a3942;border-radius:14px;
+      padding:5px 11px;font-size:13px;cursor:pointer;font-family:inherit}
+.chip:hover{background:#2a3942}.chip.on{background:#005c4b;border-color:#00a884}
+.row{display:flex;gap:8px;padding:10px 14px;flex:0 0 auto;background:#1f2c33;align-items:center}
+.row input{flex:1;background:#2a3942;border:0;color:#e9edef;padding:10px 13px;border-radius:18px;
+           font:inherit;outline:none}
+.ic{width:40px;height:40px;border-radius:50%;border:0;background:#00a884;color:#0b141a;
+    font-size:17px;cursor:pointer;flex:0 0 auto}
+.ic:disabled{background:#2a3942;color:#8696a0;cursor:not-allowed}
+.ic.rec{background:#e24b4a;color:#fff;animation:p 1s infinite}
 @keyframes p{50%{opacity:.55}}
-.diag{background:#111b21;color:#8696a0;font-size:11.5px;padding:8px 14px;font-family:ui-monospace,monospace;white-space:pre-wrap;border-top:1px solid #222d34;flex:0 0 auto}
-.ok{color:#00a884}.no{color:#f15c6d}
+.side{display:flex;flex-direction:column;gap:12px}
+.card{background:#111b21;border:1px solid #1f2c33;border-radius:12px;padding:13px}
+.card h3{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:#8696a0;
+         font-weight:600;margin-bottom:9px}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:13.5px;
+    border-bottom:1px solid #18242b}
+.kv:last-child{border:0}.kv span:last-child{color:#8bd5bd;text-align:right;font-variant-numeric:tabular-nums}
+.lab{font-size:11px;color:#8696a0;margin:9px 0 5px;text-transform:uppercase;letter-spacing:.06em}
+.diag{font-size:11.5px;color:#8696a0;line-height:1.7}
+.ok{color:#8bd5bd}.no{color:#f09595}
+.note{font-size:12px;color:#8696a0;padding:0 2px}
+select{width:100%;background:#2a3942;color:#e9edef;border:1px solid #2a3942;border-radius:7px;
+       padding:7px 9px;font:inherit;margin-top:3px}
 </style>
 </head>
 <body>
-<div class="phone">
-  <div class="top">
-    <div class="av">RR</div>
-    <div><div class="who">Assistente da Roça</div><div class="sub" id="st">toque no microfone e fale</div></div>
+<div class="app">
+  <div class="phone">
+    <div class="bar"><div class="av">🌱</div>
+      <div><b>Assistente da roça</b><small id="sub">carregando…</small></div></div>
+    <div class="msgs" id="msgs"></div>
+    <div class="chips" id="chips"></div>
+    <div class="row">
+      <button class="ic" id="mic" title="falar">🎤</button>
+      <input id="txt" placeholder="escreva ou aperte o microfone" autocomplete="off">
+      <button class="ic" id="send">↑</button>
+    </div>
   </div>
-  <div class="chat" id="chat"></div>
-  <div class="bar">
-    <input id="txt" placeholder="ou escreva aqui" autocomplete="off">
-    <button id="mic" title="falar">&#127908;</button>
-    <button id="snd" title="enviar">&#10148;</button>
+
+  <div class="side">
+    <div class="card">
+      <h3>Configuração</h3>
+      <div class="lab">Lugar</div>
+      <select id="lugar"></select>
+      <div class="lab">O que acabou de colher</div>
+      <select id="colheu"></select>
+      <div class="lab">O que ele quer</div>
+      <div class="chips" style="padding:0;border:0" id="prios"></div>
+      <p class="note" id="regnote" style="margin-top:9px"></p>
+    </div>
+    <div class="card">
+      <h3>O dado por trás</h3>
+      <div id="dados"><p class="note">Faça uma pergunta para ver os números.</p></div>
+    </div>
+    <div class="card">
+      <h3>Este navegador</h3>
+      <div class="diag" id="diag">testando…</div>
+    </div>
   </div>
-  <div class="diag" id="diag">verificando…</div>
 </div>
 <script>
-(function(){
-var chat=document.getElementById('chat'),diag=document.getElementById('diag'),st=document.getElementById('st');
-var mic=document.getElementById('mic'),snd=document.getElementById('snd'),txt=document.getElementById('txt');
-function hora(){var d=new Date();return (''+d.getHours()).padStart(2,'0')+':'+(''+d.getMinutes()).padStart(2,'0')}
-function diz(quem,texto){
-  var w=document.createElement('div');w.className='b '+(quem==='me'?'me':'them');
-  w.textContent=texto;
-  var t=document.createElement('div');t.className='t';t.textContent=hora();w.appendChild(t);
-  chat.appendChild(w);chat.scrollTop=chat.scrollHeight;return w;
-}
-// --- deteccao de capacidade ---
-var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-var temSR=!!SR, temTTS=('speechSynthesis' in window), temMic=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia);
-var linhas=[];
-function marca(nome,ok,obs){linhas.push('<span class="'+(ok?'ok':'no')+'">'+(ok?'OK ':'NAO')+'</span> '+nome+(obs?' — '+obs:''))}
-marca('SpeechRecognition',temSR,temSR?'':'use Chrome ou Edge');
-marca('speechSynthesis',temTTS,'');
-marca('getUserMedia',temMic,'');
-marca('contexto seguro',window.isSecureContext,window.isSecureContext?'':'precisa https');
-linhas.push('dentro de iframe: '+(window.self!==window.top?'sim':'nao'));
-diag.innerHTML=linhas.join('<br>');
+const PRIOS={solo:'a terra melhorar',risco:'arriscar pouco',comida:'comida em casa',pasto:'pasto pro gado'};
+const INTENT=[
+ ['vai-chover',['vai chover','previsao','previsão','semana que vem','amanha','amanhã','chove']],
+ ['e-se',['e se','sera que posso','será que posso','da pra plantar','dá pra plantar','posso plantar']],
+ ['proximo-plantio',['colhi','tirei','acabei de','o que planto','o que plantar','depois da','depois do','que vem agora']],
+ ['riscos',['o que pode dar errado','risco','perigo','errado']],
+];
+let DB=null,st={lugar:null,colheu:null,prio:'risco',falar:true,ultima:null};
+const $=i=>document.getElementById(i), msgs=$('msgs');
 
-// --- falar (TTS) ---
-var vozes=[];
-function carregaVozes(){vozes=window.speechSynthesis?speechSynthesis.getVoices():[]}
-if(temTTS){carregaVozes();speechSynthesis.onvoiceschanged=carregaVozes}
-function fala(texto){
-  if(!temTTS)return;
-  try{
-    speechSynthesis.cancel();
-    var u=new SpeechSynthesisUtterance(texto);
-    u.lang='pt-BR';u.rate=0.95;
-    var v=vozes.filter(function(x){return /pt[-_]?BR/i.test(x.lang)})[0]||vozes.filter(function(x){return /^pt/i.test(x.lang)})[0];
-    if(v)u.voice=v;
-    speechSynthesis.speak(u);
-  }catch(e){diag.innerHTML+='<br><span class="no">erro TTS:</span> '+e.message}
+function diz(t,quem='them',meta){
+  if(meta){const m=document.createElement('div');m.className='meta';m.textContent=t;msgs.appendChild(m);}
+  else{const d=document.createElement('div');d.className='b '+quem;d.textContent=t;msgs.appendChild(d);}
+  msgs.scrollTop=msgs.scrollHeight;
 }
-// --- resposta de teste (o motor entra aqui depois) ---
-function responde(pergunta){
-  var r='Entendi: '+pergunta+'. Esse é o teste de voz. O motor com os dados da NASA entra aqui.';
-  diz('them',r);fala(r);
+function fala(t){
+  if(!st.falar||!('speechSynthesis'in window))return;
+  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);
+    u.lang='pt-BR';u.rate=.96;
+    const v=speechSynthesis.getVoices().find(v=>/pt[-_]BR/i.test(v.lang))||
+            speechSynthesis.getVoices().find(v=>/^pt/i.test(v.lang));
+    if(v)u.voice=v;speechSynthesis.speak(u);}catch(e){}
 }
-function manda(texto){
-  texto=(texto||'').trim();if(!texto)return;
-  diz('me',texto);txt.value='';setTimeout(function(){responde(texto)},400);
-}
-snd.onclick=function(){manda(txt.value)};
-txt.onkeydown=function(e){if(e.key==='Enter')manda(txt.value)};
+function responde(t){diz(t);fala(t);}
 
-// --- ouvir (STT) ---
-var rec=null,ouvindo=false;
-if(!temSR){mic.disabled=true;mic.title='sem reconhecimento de voz neste navegador'}
-mic.onclick=function(){
-  if(!temSR)return;
-  if(ouvindo){try{rec.stop()}catch(e){};return}
-  try{
-    rec=new SR();rec.lang='pt-BR';rec.interimResults=true;rec.continuous=false;
-    var parcial=null,ultimo='';
-    rec.onstart=function(){ouvindo=true;mic.classList.add('rec');st.textContent='ouvindo…'};
-    rec.onresult=function(ev){
-      var txtAll='';for(var i=0;i<ev.results.length;i++)txtAll+=ev.results[i][0].transcript;
-      ultimo=txtAll;
-      if(!parcial)parcial=diz('me','…');
-      parcial.firstChild.nodeValue?0:0;
-      parcial.textContent=txtAll;var t=document.createElement('div');t.className='t';t.textContent=hora();parcial.appendChild(t);
-    };
-    rec.onerror=function(ev){
-      mic.classList.remove('rec');ouvindo=false;st.textContent='erro no microfone';
-      diag.innerHTML+='<br><span class="no">erro STT:</span> '+ev.error+(ev.error==='not-allowed'?' (permissao negada ou iframe sem allow=microphone)':'');
-    };
-    rec.onend=function(){
-      mic.classList.remove('rec');ouvindo=false;st.textContent='toque no microfone e fale';
-      if(ultimo.trim())setTimeout(function(){responde(ultimo.trim())},300);
-    };
-    rec.start();
-  }catch(e){diag.innerHTML+='<br><span class="no">erro ao iniciar:</span> '+e.message}
-};
-diz('them','Teste de voz. Toque no microfone e fale uma frase, ou escreva abaixo. O diagnóstico aparece no rodapé.');
-})();
+function classifica(s){
+  const n=s.toLowerCase();
+  for(const[id,ks]of INTENT) if(ks.some(k=>n.includes(k))) return id;
+  return null;
+}
+function achaCultura(s){
+  const n=s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  const L=DB.lugares[st.lugar];
+  for(const c of L.culturas){
+    const a=c.replace(/-/g,' '),b=(DB.nomes_culturas[c]||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').split(' (')[0];
+    if(n.includes(a)||n.includes(c)||(b&&n.includes(b)))return c;
+  }
+  return null;
+}
+function painel(r){
+  const d=$('dados');
+  if(!r){d.innerHTML='<p class="note">Sem números para essa resposta.</p>';return;}
+  const e=r.estado_observado||{},o=(r.opcoes||[])[0];
+  let h=`<div class="lab">Observado, ${e.mes||''}</div>`;
+  h+=kv('Chuva normal do mês',(e.chuva_normal_do_mes_mm??'—')+' mm');
+  if(e.solo_raiz)h+=kv('Umidade da raiz',e.solo_raiz.observado+' (normal '+e.solo_raiz.normal+')');
+  if(e.fator_do_ano)h+=kv('O ano até aqui',Math.round(e.fator_do_ano.razao*100)+'% do normal');
+  h+=kv('Estiagem normal do mês',(e.veranico_normal_do_mes_dias??'—')+' dias');
+  if(o){
+    h+=`<div class="lab">${o.cultura}</div>`;
+    h+=kv('Encaixe com o que ele quer',o.encaixe??'—');
+    h+=kv('Confiança no dado',Math.round(o.confianca*100)+'%');
+    if(o.risco&&o.risco.agua&&o.risco.agua.razao!=null)
+      h+=kv('Água',o.risco.agua.nivel+' ('+o.risco.agua.razao+'× de '+o.risco.agua.exige_mm+' mm)');
+    if(o.risco&&o.risco.chuva_ajustada_mm!=null)
+      h+=kv('Chuva da janela, ajustada',o.risco.chuva_ajustada_mm+' mm');
+    if(o.nao_sei&&o.nao_sei.length)h+=`<div class="lab">Não sabemos</div><p class="diag">${o.nao_sei.join('<br>')}</p>`;
+  }
+  if(r.sei_pouco&&r.sei_pouco.length)
+    h+=`<div class="lab">Sei a parentada, não o ciclo</div><p class="diag">${r.sei_pouco.map(s=>s.cultura).join(', ')}</p>`;
+  if(r.limites&&r.limites.length)h+=`<div class="lab">Limites</div><p class="diag">${r.limites.join('<br>')}</p>`;
+  d.innerHTML=h;
+}
+const kv=(a,b)=>`<div class="kv"><span>${a}</span><span>${b}</span></div>`;
+
+function mostraRiscos(){
+  const r=st.ultima;if(!r||!(r.opcoes||[]).length){responde('Dessa não tenho número pra te dar.');return;}
+  const o=r.opcoes[0],partes=[];
+  if(o.avisos&&o.avisos.length)partes.push(o.avisos.join('. '));
+  if(o.nao_sei&&o.nao_sei.length)partes.push('E tem coisa que eu não sei: '+o.nao_sei[0]);
+  responde(partes.length?partes.join('. ')+'.':'Nessa eu não vi problema com a chuva do período.');
+  if(r.opcoes.length>1)
+    diz('Outras opções: '+r.opcoes.slice(1,4).map(x=>x.cultura).join(', '),'them');
+}
+function perguntaProximo(){
+  const L=DB.lugares[st.lugar],r=L.proximo_plantio[st.colheu][st.prio];
+  st.ultima=r;responde(r.fala);painel(r);
+}
+function perguntaESe(hip){
+  const L=DB.lugares[st.lugar],r=(L.e_se[st.colheu]||{})[hip];
+  if(!r){responde('Essa eu não conheço aqui nesse lugar.');return;}
+  st.ultima=r;responde(r.fala);painel(r);
+}
+function trata(s){
+  diz(s,'me');
+  const id=classifica(s),cult=achaCultura(s);
+  if(id==='vai-chover'){const r=DB.lugares[st.lugar].vai_chover;st.ultima=r;responde(r.fala);painel(r);return;}
+  if(id==='riscos'){mostraRiscos();return;}
+  if(id==='e-se'&&cult){perguntaESe(cult);return;}
+  if(id==='proximo-plantio'){if(cult){st.colheu=cult;$('colheu').value=cult;}perguntaProximo();return;}
+  if(cult){st.colheu=cult;$('colheu').value=cult;perguntaProximo();return;}
+  responde('Não entendi. Pode dizer o que acabou de colher, ou perguntar "e se eu plantar milho".');
+}
+
+function chips(){
+  const c=$('chips');c.innerHTML='';
+  const add=(t,f)=>{const b=document.createElement('button');b.className='chip';b.textContent=t;b.onclick=f;c.appendChild(b)};
+  add('colhi '+nome(st.colheu),()=>trata('colhi '+nome(st.colheu)));
+  add('o que pode dar errado?',()=>{diz('o que pode dar errado?','me');mostraRiscos()});
+  const L=DB.lugares[st.lugar],outra=L.culturas.find(x=>x!==st.colheu);
+  if(outra)add('e se eu plantar '+nome(outra),()=>trata('e se eu plantar '+nome(outra)));
+  add('vai chover?',()=>trata('vai chover semana que vem?'));
+  add(st.falar?'🔊 voz ligada':'🔇 voz desligada',()=>{st.falar=!st.falar;if(!st.falar)speechSynthesis.cancel();chips()});
+}
+const nome=c=>(DB.nomes_culturas[c]||c).split(' (')[0].toLowerCase();
+
+function prios(){
+  const p=$('prios');p.innerHTML='';
+  for(const[k,v]of Object.entries(PRIOS)){
+    const b=document.createElement('button');
+    b.className='chip'+(k===st.prio?' on':'');b.textContent=v;
+    b.onclick=()=>{st.prio=k;prios();diz('Prioridade agora: '+v,null,true);perguntaProximo()};
+    p.appendChild(b);
+  }
+}
+function trocaLugar(){
+  const L=DB.lugares[st.lugar];st.colheu=L.culturas[0];
+  const s=$('colheu');s.innerHTML='';
+  L.culturas.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=nome(c);s.appendChild(o)});
+  $('sub').textContent=L.nome+' · plantio em '+L.estado.mes;
+  $('regnote').textContent=L.registro==='local'
+    ? 'Fala no registro local, com as palavras dos produtores que responderam o formulário.'
+    : 'Sem vocabulário levantado para este lugar: o motor cai em português neutro e declara isso.';
+  msgs.innerHTML='';
+  diz('Trocou para '+L.nome+'. Mesmo motor, mesmo código.',null,true);
+  responde('Bom dia. Me diz o que você acabou de colher que eu te digo o que eu plantaria agora.');
+  chips();prios();
+}
+
+// microfone: so o ESCUTAR precisa de permissao. o FALAR funciona sempre.
+let rec=null,gravando=false;
+function micInit(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){$('mic').disabled=true;$('mic').title='este navegador não escuta';return;}
+  rec=new SR();rec.lang='pt-BR';rec.interimResults=false;rec.maxAlternatives=1;
+  rec.onresult=e=>{const t=e.results[0][0].transcript;trata(t)};
+  rec.onerror=e=>{
+    const m={'not-allowed':'permissão do microfone negada','service-not-allowed':'serviço de fala bloqueado',
+             'no-speech':'não ouvi nada','audio-capture':'nenhum microfone encontrado',
+             'network':'o reconhecimento precisa de internet'}[e.error]||e.error;
+    diz('Microfone: '+m+'. Pode escrever.',null,true);
+    $('diag').insertAdjacentHTML('beforeend','<br><span class="no">erro do microfone: '+e.error+'</span>');
+  };
+  rec.onend=()=>{gravando=false;$('mic').classList.remove('rec')};
+  $('mic').onclick=()=>{
+    if(gravando){rec.stop();return}
+    try{speechSynthesis.cancel();rec.start();gravando=true;$('mic').classList.add('rec')}
+    catch(e){diz('Não consegui abrir o microfone: '+e.message,null,true)}
+  };
+}
+function diag(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const l=[['escutar (SpeechRecognition)',!!SR],['falar (speechSynthesis)','speechSynthesis'in window],
+           ['microfone (getUserMedia)',!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)],
+           ['contexto seguro (https)',window.isSecureContext],['fora de iframe',window.self===window.top]];
+  $('diag').innerHTML=l.map(([k,v])=>`<span class="${v?'ok':'no'}">${v?'✓':'✗'}</span> ${k}`).join('<br>')
+    +'<br><span class="ok">vozes pt-BR: '+(('speechSynthesis'in window)?speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang)).length:0)+'</span>';
+}
+$('send').onclick=()=>{const v=$('txt').value.trim();if(v){$('txt').value='';trata(v)}};
+$('txt').onkeydown=e=>{if(e.key==='Enter')$('send').click()};
+$('lugar').onchange=e=>{st.lugar=e.target.value;trocaLugar()};
+$('colheu').onchange=e=>{st.colheu=e.target.value;perguntaProximo()};
+if('speechSynthesis'in window)speechSynthesis.onvoiceschanged=diag;
+
+fetch('./dados/respostas.json').then(r=>r.json()).then(db=>{
+  DB=db;const s=$('lugar');
+  Object.entries(db.lugares).forEach(([k,v])=>{const o=document.createElement('option');o.value=k;o.textContent=v.nome;s.appendChild(o)});
+  st.lugar=Object.keys(db.lugares)[0];trocaLugar();micInit();diag();
+}).catch(e=>{$('sub').textContent='erro ao carregar';diz('Não consegui carregar as respostas do motor: '+e.message,null,true)});
 </script>
 </body>
 </html>

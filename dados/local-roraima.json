@@ -53,7 +53,6 @@
   "contexto": {
     "produtores_atendidos_iater": 50192,
     "agricultores_familiares_iater": 43192,
-    "sem_assistencia_tecnica_pct": 87,
     "fonte_contexto": "IATER via Assembleia Legislativa de Roraima (set/2026) e proposta de convenio (mar/2024)",
     "produto_de_maior_saida": "farinha de mandioca, em Canta e Iracema",
     "nota_farinha": "A farinha precisa secar: sol, pouca nuvem e ar seco. Decisao propria, respondida por radiacao, nuvem e umidade relativa.",
@@ -85,6 +84,19 @@
         "se a planta vai sobreviver e produzir",
         "cultivares adaptadas ao ambiente de lavrado"
       ]
+    },
+    "sem_assistencia_tecnica": {
+      "frase_exata": "Dos 16.850 estabelecimentos agropecuarios de Roraima (IBGE, Censo 2017), 87% nao recebiam assistencia tecnica.",
+      "cuidado": "NAO dizer '87% dos agricultores familiares do estado'. Sao estabelecimentos agropecuarios, todos, e o dado e de 2017.",
+      "ressalva": "O IATER foi criado em 2022 e expandiu: o governo fala de mais de 54 mil atendimentos entre 2022 e 2024, em 61 pontos de atendimento. Sao atendimentos, nao cobertura unica, mas o numero de 2017 pode estar melhor hoje. Dizer o ano.",
+      "fonte": "IATER, proposta de convenio (SUDAM, mar/2024), citando IBGE Censo Agropecuario 2017"
+    },
+    "el_nino_2026_27_oficial": {
+      "achado": "O governo de Roraima, pelo IATER, ja esta organizando acao contra os efeitos do El Nino 2026/2027, orientando produtoras da agricultura familiar para o enfrentamento do periodo de estiagem.",
+      "por_que_importa": "A pergunta que a ferramenta responde esta na pauta oficial do estado AGORA, e o orgao usa a palavra 'estiagem'. Confirma o registro e a atualidade.",
+      "o_que_o_IATER_orienta": "uso eficiente e armazenamento de agua, conservacao da umidade do solo, manejo de pastagens, silagem e ESCOLHA DE CULTURAS MAIS ADAPTADAS AO PERIODO SECO",
+      "leitura_honesta": "a ultima linha e literalmente o nosso produto, entregue hoje por extensionista humano. Nao competimos com isso: a ferramenta e para quem nao alcanca o extensionista.",
+      "fonte": "Diario RR, out/2026; Projeto de Graos, IATER"
     }
   },
   "pendencias": [
