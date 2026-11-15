@@ -19,7 +19,7 @@
 ## Onde cada coisa entra na submissão
 
 - **Project Demo:** só os 7 slides em inglês, exportados em PDF com link público. O guia aceita vídeo de até 30 s **ou** até 7 slides, e passar do limite tira do julgamento global.
-- **Vídeo-pitch:** pode ir no Project Demo no lugar dos slides (vídeo **ou** slides, nunca os dois). Se o demo for os slides, o vídeo vai, com link público na Detailed Project Description. Nunca no campo de demo.
+- **Vídeo-pitch:** pode ir no Project Demo no lugar dos slides (vídeo **ou** slides, nunca os dois). Se o demo for os slides, o vídeo vai como apoio, com link público na Detailed Project Description.
 
 ## Ressalvas, para não repetir o que já foi corrigido
 
