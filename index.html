@@ -72,6 +72,11 @@ select{width:100%;background:#2a3942;color:#e9edef;border:1px solid #2a3942;bord
       <div class="lab">O que ele quer</div>
       <div class="chips" style="padding:0;border:0" id="prios"></div>
       <p class="note" id="regnote" style="margin-top:9px"></p>
+      <div class="lab">Voz</div>
+      <select id="voz"></select>
+      <div class="lab">Velocidade <span id="rlab" style="color:#8bd5bd">0.98</span></div>
+      <input type="range" id="rate" min="0.75" max="1.25" step="0.01" value="0.98" style="width:100%">
+      <button class="chip" id="provar" style="margin-top:7px">ouvir uma frase</button>
     </div>
     <div class="card">
       <h3>O dado por trás</h3>
@@ -91,7 +96,7 @@ const INTENT=[
  ['proximo-plantio',['colhi','tirei','acabei de','o que planto','o que plantar','depois da','depois do','que vem agora']],
  ['riscos',['o que pode dar errado','risco','perigo','errado']],
 ];
-let DB=null,st={lugar:null,colheu:null,prio:'risco',falar:true,ultima:null};
+let DB=null,st={lugar:null,colheu:null,prio:'risco',falar:true,ultima:null,voz:null,rate:0.98};
 const $=i=>document.getElementById(i), msgs=$('msgs');
 
 function diz(t,quem='them',meta){
@@ -99,13 +104,31 @@ function diz(t,quem='them',meta){
   else{const d=document.createElement('div');d.className='b '+quem;d.textContent=t;msgs.appendChild(d);}
   msgs.scrollTop=msgs.scrollHeight;
 }
+function nota(v){
+  const n=(v.name||'').toLowerCase();let s=0;
+  if(/pt[-_]br/i.test(v.lang))s+=100;else if(/^pt/i.test(v.lang))s+=50;else return -1;
+  if(n.includes('google'))s+=40;            // a melhor no Chrome
+  if(n.includes('natural'))s+=35;           // vozes neurais da Microsoft
+  if(n.includes('online'))s+=10;
+  if(v.localService===false)s+=15;          // voz de nuvem soa melhor que SAPI
+  if(/\b(maria|daniel)\b/.test(n))s-=8;     // SAPI5 antiga, a mais robotica
+  return s;
+}
+const vozes=()=>('speechSynthesis'in window)
+  ? speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang)).sort((a,b)=>nota(b)-nota(a)) : [];
 function fala(t){
   if(!st.falar||!('speechSynthesis'in window))return;
-  try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);
-    u.lang='pt-BR';u.rate=.96;
-    const v=speechSynthesis.getVoices().find(v=>/pt[-_]BR/i.test(v.lang))||
-            speechSynthesis.getVoices().find(v=>/^pt/i.test(v.lang));
-    if(v)u.voice=v;speechSynthesis.speak(u);}catch(e){}
+  try{
+    speechSynthesis.cancel();
+    // uma utterance por frase: falar o paragrafo inteiro de uma vez achata a
+    // prosodia e e o que faz soar de robo. frase a frase a pausa fica natural.
+    (t.match(/[^.!?]+[.!?]*/g)||[t]).map(p=>p.trim()).filter(Boolean).forEach(p=>{
+      const u=new SpeechSynthesisUtterance(p);
+      u.lang='pt-BR';u.rate=st.rate;u.pitch=1.02;u.volume=1;
+      if(st.voz)u.voice=st.voz;
+      speechSynthesis.speak(u);
+    });
+  }catch(e){}
 }
 function responde(t){diz(t);fala(t);}
 
@@ -150,7 +173,9 @@ function painel(r){
 const kv=(a,b)=>`<div class="kv"><span>${a}</span><span>${b}</span></div>`;
 
 function mostraRiscos(){
-  const r=st.ultima;if(!r||!(r.opcoes||[]).length){responde('Dessa não tenho número pra te dar.');return;}
+  if(!st.ultima){perguntaProximo();}            // ninguem perguntou ainda: pergunta por ele
+  const r=st.ultima;
+  if(!r||!(r.opcoes||[]).length){responde('Dessa eu não tenho número pra te dar, me diz primeiro o que você colheu.');return;}
   const o=r.opcoes[0],partes=[];
   if(o.avisos&&o.avisos.length)partes.push(o.avisos.join('. '));
   if(o.nao_sei&&o.nao_sei.length)partes.push('E tem coisa que eu não sei: '+o.nao_sei[0]);
@@ -246,12 +271,25 @@ $('send').onclick=()=>{const v=$('txt').value.trim();if(v){$('txt').value='';tra
 $('txt').onkeydown=e=>{if(e.key==='Enter')$('send').click()};
 $('lugar').onchange=e=>{st.lugar=e.target.value;trocaLugar()};
 $('colheu').onchange=e=>{st.colheu=e.target.value;perguntaProximo()};
-if('speechSynthesis'in window)speechSynthesis.onvoiceschanged=diag;
+function montaVozes(){
+  const sel=$('voz'),vs=vozes();
+  if(!vs.length){sel.innerHTML='<option>nenhuma voz em português</option>';return}
+  const atual=st.voz&&st.voz.name;
+  sel.innerHTML='';
+  vs.forEach((v,i)=>{const o=document.createElement('option');o.value=v.name;
+    o.textContent=v.name+(i===0?'  ← melhor':'');sel.appendChild(o)});
+  st.voz=vs.find(v=>v.name===atual)||vs[0];sel.value=st.voz.name;
+}
+$('voz').onchange=e=>{st.voz=vozes().find(v=>v.name===e.target.value)||null};
+$('rate').oninput=e=>{st.rate=parseFloat(e.target.value);$('rlab').textContent=st.rate.toFixed(2)};
+$('provar').onclick=()=>{const g=st.falar;st.falar=true;
+  fala('Depois da mandioca, eu iria de feijão-caupi. Deixa a terra mais forte pro que vem depois. Quer saber o que pode dar errado?');st.falar=g};
+if('speechSynthesis'in window)speechSynthesis.onvoiceschanged=()=>{diag();montaVozes()};
 
 fetch('./dados/respostas.json').then(r=>r.json()).then(db=>{
   DB=db;const s=$('lugar');
   Object.entries(db.lugares).forEach(([k,v])=>{const o=document.createElement('option');o.value=k;o.textContent=v.nome;s.appendChild(o)});
-  st.lugar=Object.keys(db.lugares)[0];trocaLugar();micInit();diag();
+  st.lugar=Object.keys(db.lugares)[0];trocaLugar();micInit();diag();montaVozes();
 }).catch(e=>{$('sub').textContent='erro ao carregar';diz('Não consegui carregar as respostas do motor: '+e.message,null,true)});
 </script>
 </body>
