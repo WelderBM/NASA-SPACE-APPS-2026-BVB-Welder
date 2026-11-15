@@ -4,6 +4,14 @@ Documento de trabalho do time para o NASA Space Apps 2026 (desafio *Field Shift:
 
 Data de referência: 14/11/2026. Responsável: Welder.
 
+## Decisões até agora
+
+- Foco: interior de Roraima, com a persona de quem usa WhatsApp (conversa do time, 14/11).
+- Interface: WhatsApp como intermediário, preferencialmente. Site, app e robô ficam como alternativas em aberto (conversa do time, 14/11).
+- Base de conhecimento separada do canal: dados, análises e fontes ficam isolados, para que qualquer interface use o mesmo conteúdo (conversa do time, 14/11).
+- Em aberto: bot que responde por áudio. A pesquisa mostra uso alto de áudio no Brasil, mas não há dado para Roraima (ver seção "Persona do WhatsApp").
+- Em aberto: definição das personas. Aguarda a conversa do time e as respostas do formulário.
+
 ## Prazo e regras
 
 A submissão fecha domingo, 15/11, às 22h59 de Boa Vista. Fonte das regras: [Project Submission Guide](https://www.spaceappschallenge.org/resources/project-submission-guide/), [Judging & Awards Guide](https://www.spaceappschallenge.org/resources/judging-awards-guide/) e [Participant FAQs](https://www.spaceappschallenge.org/resources/participant-faqs/).
