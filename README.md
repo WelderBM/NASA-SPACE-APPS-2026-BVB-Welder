@@ -2,7 +2,7 @@
 
 Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift: Adapting Farms with NASA Data*.
 
-**Responsável:** Welder, sozinho desde 15/11. **Última atualização:** 15/11/2026, 15h.
+**Time:** Welder Barroso e Giuliano, uma dupla. No dia da entrega, 15/11, o Giuliano não pôde estar presente, e o Welder executou a submissão. **Última atualização:** 15/11/2026, 17h.
 
 ---
 
@@ -106,7 +106,7 @@ A lista completa, com dono de cada item, é [18. Pendências](docs/18-pendencias
 | [Demo](index.html) | a página roda o motor **dentro do navegador** (`motor/cerne.js`), não consulta tabela. Trocar prioridade reordena, trocar o mês muda o veredito, trocar o lugar inverte |
 | [Teste de invariantes](motor/invariantes.py) | seis regras de honestidade sobre 2.748 casos: degradar em silêncio ou afirmar sem lastro quebra o teste |
 | [Teste de conformidade](motor/conformidade.py) | 2.748 casos exigindo que o motor em Python e o em JavaScript respondam igual. Rode depois de mexer em qualquer um dos dois |
-| [Persona secundária (site)](docs/persona-secundaria.md) | **histórico, fora do escopo desde 15/11:** a trilha do site. Sobrevive dele a regra de verificação de textos |
+| [Persona secundária (site)](docs/persona-secundaria.md) | a persona do site, levantada pelo Giuliano: o filho ou neto que acessa e mostra para quem decide na família. **O site saiu do MVP em 15/11** por decisão de escopo, não de time; a persona e a regra de verificação de textos continuam valendo |
 
 ---
 
@@ -115,7 +115,7 @@ A lista completa, com dono de cada item, é [18. Pendências](docs/18-pendencias
 - **Foco:** interior de Roraima, persona de quem usa WhatsApp.
 - **A pergunta do produto:** "qual é a melhor plantação para plantar assim que eu colher essa remessa?" Genérica, sem premissa de 2026, e o El Niño entra pelos dados sem ser citado.
 - **Horizonte:** um ciclo à frente. Três restrições independentes convergem: dado, usuário e terra.
-- **Interface:** WhatsApp como atendimento guiado, **sem site**. Plano A: WhatsApp simulado, sem a API da Meta. Telegram e SMS no radar, não agora. ([9](docs/09-mvp-decisoes-15-11.md))
+- **Interface:** WhatsApp como atendimento guiado, **sem site no MVP**. Plano A: WhatsApp simulado, sem a API da Meta. O site como hub, levantado pelo Giuliano, fica como próximo passo, e a persona dele está documentada. Telegram e SMS no radar, não agora. ([9](docs/09-mvp-decisoes-15-11.md))
 - **Arquitetura:** monolito modular com quatro camadas separadas. Motor devolve estrutura, não texto.
 - **Linguagem:** nenhum jargão na conversa com o produtor; rigor no motor e na submissão.
 - **Base de conhecimento separada do canal**, para que qualquer interface use o mesmo conteúdo.

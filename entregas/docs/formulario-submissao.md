@@ -66,7 +66,7 @@ Words come from farmers in Roraima: "terra fraca" for weak soil, "estiagem" for 
 What it does not do
 No WhatsApp connection, and that is a decision, not a gap. In our survey, 4 of 8 answers named a written WhatsApp message as how they want to be reached, so WhatsApp is the channel this is built for. The demo renders that same conversation in a page rather than calling the Meta API, which keeps the engine open to inspection and the idea channel independent: the engine returns a structure, and any channel can carry it. The page says this at the top.
 
-No rain forecast: Brazil's official ZARC Plantio Certo app has one, and we were built to sit next to it. No prices, no labor questions, and it says so. Of the 14 crops in the table, 4 have good data, 8 partial and 2 missing, and 5 still have no cycle length; for those, the bot says it does not know how long they take. Our field research is small: 8 survey answers and one farmer interview, in Goiás.
+No rain forecast: Brazil's official ZARC Plantio Certo app has one, and we were built to sit next to it. No prices, no labor questions, and it says so. Of the 14 crops in the table, 4 have good data, 8 partial and 2 missing, and 5 still have no cycle length; for those, the bot says it does not know how long they take. Our field research is small: 8 survey answers, and one farmer interview, in Goiás, conducted by Giuliano, the other half of this two-person team. Three calls to Roraima farmers are scripted and not yet made.
 
 Honesty is tested
 Every answer is checked by an automated test suite: 2,748 cases, and a gap left unsaid fails the build. The engine exists in Python and JavaScript, and a conformance test requires both to answer the same in all 2,748 cases.

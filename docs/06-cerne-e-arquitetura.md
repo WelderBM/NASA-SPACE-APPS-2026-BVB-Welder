@@ -69,13 +69,14 @@ O que queremos é um **monolito modular**: um repositório, fronteiras limpas en
 
 ## Por que o contrato existe
 
-O contrato nasceu como fronteira entre duas pessoas: sem o formato de retorno
-escrito, quem constrói o canal e quem constrói o motor se atropelam, porque cada
-um precisa de um retorno falso para testar contra.
+O contrato nasceu como a fronteira entre o Welder e o Giuliano: sem o formato de
+retorno escrito, quem constrói o hub do site e quem constrói o atendimento se
+atropelam, porque cada um precisa de um retorno falso para testar contra.
 
-Com uma pessoa, essa razão caiu, e o contrato ficou **pela razão que importa
-mais**: é ele que permite ao mesmo motor atender num canal e noutro sem mudar
-uma linha, e é por isso que a demo roda o mesmo cerne em Cantá e em Rio Verde.
+Com o site fora do MVP, essa urgência caiu, e o contrato ficou **pela razão que
+importa mais**: é ele que permite ao mesmo motor atender num canal e noutro sem
+mudar uma linha, e é por isso que a demo roda o mesmo cerne em Cantá e em Rio
+Verde. Quando o hub entrar, entra contra este mesmo contrato.
 
 ## O atendimento no WhatsApp é fluxo com ramos
 

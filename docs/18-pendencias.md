@@ -209,10 +209,9 @@ Conferido contra o `main` em `2bbd12b`. Só o que não estava acima.
 Varredura de 15/11, 15h. O `README.md` carregava uma seção "O que está aberto,
 por ordem de bloqueio" escrita em 14/11 e nunca atualizada. Ela dizia que a
 regra de comparação do motor era "o buraco mais bloqueante" (resolvida há
-horas), pedia mandar o contrato de retorno ao Giuliano (fora do projeto desde
-15/11, e o próprio cabeçalho do README já dizia "Welder, sozinho desde 15/11"),
-e trazia **a média de −10% dos anos de El Niño** como número nosso — o número
-que a seção 2.1 aqui manda não usar.
+horas), tratava o contrato de retorno como urgente quando o site já tinha saído
+do MVP naquela manhã, e trazia **a média de −10% dos anos de El Niño** como
+número nosso, que é o número que a seção 2.1 aqui manda não usar.
 
 A causa não é desatenção, é estrutura: **duas listas da mesma coisa divergem
 sempre.** Corrigido pela forma, não pelo caso — o README agora resume e aponta

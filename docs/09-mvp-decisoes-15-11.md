@@ -2,7 +2,7 @@
 
 [Voltar ao índice](../README.md)
 
-Dia da entrega. **O Giuliano não pôde vir: o Welder está sozinho.**
+Dia da entrega. **O Giuliano não pôde estar presente**, e as decisões abaixo são o que muda quando uma pessoa executa a entrega sozinha. A dupla continua: a persona do site e a entrevista de campo são dele, e estão no [3](03-persona-e-pesquisa.md).
 
 ## O que mudou por causa disso
 

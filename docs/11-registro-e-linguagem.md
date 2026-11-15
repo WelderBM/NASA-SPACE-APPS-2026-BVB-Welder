@@ -7,7 +7,7 @@
 ## O erro
 
 A decisão de linguagem do doc 02 mandou tirar o jargão. Na implementação ele
-voltou sozinho, porque eu escrevi os moldes de frase pensando no dado e não em
+voltou sozinho, porque os moldes de frase foram escritos pensando no dado e não em
 quem ouve. O bot dizia:
 
 - "Fixa nitrogênio, que é o que melhora a terra"
