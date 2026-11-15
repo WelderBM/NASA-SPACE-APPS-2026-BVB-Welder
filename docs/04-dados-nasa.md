@@ -36,7 +36,7 @@ A comunidade AG tem **1.388 parâmetros**. Fonte do dado: reanálise MERRA-2, e 
 - Comum a todos: `parameters=...&community=AG&longitude=-60.60&latitude=2.61&format=JSON`
 - Lista de parâmetros: `https://power.larc.nasa.gov/api/system/manager/parameters?community=AG&temporal=monthly`
 
-**PEGADINHA IMPORTANTE:** a API mensal e a diária devolvem chuva em **mm/dia**, não em mm do mês. Para obter mm do mês é preciso multiplicar pelos dias. A climatologia devolve mm do mês. Misturar os dois gera erro de 30x.
+**PEGADINHA IMPORTANTE, corrigida em 15/11:** os **três** endpoints (climatologia, mensal e diário) devolvem `PRECTOTCORR` em **mm/dia**, não em mm do mês. Para obter mm do mês, multiplicar pelos dias. Este doc afirmava antes que a climatologia vinha em mm do mês, o que estava errado; os valores das tabelas abaixo já estavam convertidos, o que mascarou o erro. Confirmação: 1,04 mm/dia x 31 dias = 32 mm, que é janeiro no Cantá. Misturar os dois gera erro de 30x.
 
 **Períodos-base diferentes:** a climatologia de umidade do solo é de janeiro de 2001 a dezembro de 2025 (25 anos). A climatologia de chuva pode ter outro período-base. Registrar o período de cada consulta antes de comparar os dois.
 
