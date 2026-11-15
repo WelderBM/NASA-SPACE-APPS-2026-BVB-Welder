@@ -132,8 +132,10 @@ alcança só quem o extensionista alcança.
 ## As seis perguntas do benchmark, respondidas
 
 1. **A demo mostra resposta do motor até as 18h?** Sim, já está em pé. O motor
-   gera `dados/respostas.json` com 225 respostas e a página consulta. A resposta
-   é do motor, não roteiro. Falta só habilitar o GitHub Pages, que é do Welder.
+   roda dentro do navegador (`motor/cerne.js`), com teste de conformidade
+   garantindo que responde igual ao Python. **Atualização 12h45:** a resposta
+   deixou de ser consultada em tabela e passou a ser calculada. O GitHub Pages
+   está no ar.
 2. **Trocar a prioridade reordena na demo?** Sim, e é clicável em quatro chips.
    É a prova do `explore`, e é o GIF do slide.
 3. **Dá para dizer "complementa o ZARC" com a janela vazia?** Dá para dizer que
