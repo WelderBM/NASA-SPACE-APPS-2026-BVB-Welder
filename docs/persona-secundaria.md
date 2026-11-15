@@ -1,5 +1,7 @@
 # Persona secundária: versão para o site
 
+[Voltar ao índice](../README.md)
+
 Data de referência: 14/11/2026. Status: rascunho, a validar com o time.
 
 Este arquivo separa as dependências da persona secundária, a mais informatizada: o filho ou neto que acessa um site e mostra as informações para quem decide na família. Ele é paralelo à persona do WhatsApp (README, seção "Persona do WhatsApp") e não substitui essa.
