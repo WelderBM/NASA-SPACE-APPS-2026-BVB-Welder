@@ -247,7 +247,8 @@ class Cerne{
         avisos:this.avisos(r,M),nao_sei:ns,
         nao_sei_nao_dito:ns.filter(x=>!(r.agua_indireta&&x.indexOf('água')>=0)),
         qualidade_do_dado:c.qualidade,
-        validar_com_tecnico:['a janela de plantio oficial do ZARC para o município']});
+        validar_com_tecnico:(c.validar_com_tecnico||[])
+          .concat(['a janela de plantio oficial do ZARC para o município'])});
     }
     const semJanela=res.opcoes.filter(o=>!(((loc.janelas_zarc||{})[o.id])||{}).inicio_mes);
     if(semJanela.length)res.lacunas.push({o_que:'a janela oficial de plantio',

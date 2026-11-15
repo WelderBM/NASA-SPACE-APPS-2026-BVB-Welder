@@ -81,6 +81,16 @@ def checa(r, caso):
     if o and (o.get('confianca') or 0) < CONF_MIN and r['intencao'] == 'proximo-plantio':
         if falas and not any('%' in f for f in falas):
             erros.append(f"confiança {o['confianca']} e a fala não avisa: {falas[0]!r}")
+
+    # 7. o que a LINHA da cultura manda validar nao pode morrer no motor.
+    # O dado do cara trazia "qual especie se planta aqui e suposicao" e a
+    # resposta devolvia so a janela do ZARC: o motor engolia o aviso do dado.
+    for op in (r.get('opcoes') or []):
+        pedido = (CULT.get(op['id'], {}) or {}).get('validar_com_tecnico') or []
+        levou = op.get('validar_com_tecnico') or []
+        faltou = [x for x in pedido if x not in levou]
+        if faltou:
+            erros.append(f"o dado manda validar e a resposta não leva: {op['id']} perdeu {faltou[0]!r}")
     return erros
 
 if __name__ == '__main__':

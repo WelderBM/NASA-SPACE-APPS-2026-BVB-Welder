@@ -364,7 +364,10 @@ def atender(p):
             # a pagina dizia a mesma ignorancia duas vezes na mesma frase
             'nao_sei_nao_dito': [x for x in ns if not (r.get('agua_indireta') and 'água' in x)],
             'qualidade_do_dado': c['qualidade'],
-            'validar_com_tecnico': ['a janela de plantio oficial do ZARC para o município'],
+            # o que a propria linha da cultura manda validar vem do dado, nao daqui:
+            # a especie do cara e suposicao e o motor engolia o aviso que o dado trazia
+            'validar_com_tecnico': (c.get('validar_com_tecnico') or [])
+                                   + ['a janela de plantio oficial do ZARC para o município'],
         })
     sem_janela = [o['cultura'] for o in res['opcoes']
                   if not (loc.get('janelas_zarc') or {}).get(o['id'], {}).get('inicio_mes')]
