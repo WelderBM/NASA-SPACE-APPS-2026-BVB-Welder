@@ -43,7 +43,25 @@
       "qualidade": "boa",
       "fonte": "Embrapa, Fisiologia da mandioca; Embrapa Cerrados CT51; Embrapa Mandioca e Fruticultura CT172",
       "observacao": "Unica Euphorbiaceae da lista de Roraima: e o pivo que quebra as duas familias dominantes. Muito sensivel ao deficit nos 3 primeiros meses.",
-      "artigo": "a"
+      "artigo": "a",
+      "agua_motivo": "Sem exigencia minima POR CICLO em fonte primaria. A Embrapa da chuva ANUAL: 1.000 a 1.500 mm/ano bem distribuidos (Embrapa Mandioca e Fruticultura, Sistema de Producao 12, e Embrapa Amazonia Oriental, Circular Tecnica 23), produz com 500 a 700 mm/ano no semiarido e ate 4.000 mm/ano no tropico umido. Irrigada: 3 a 6 mm/dia conforme a fase. Nenhum desses e o campo agua_ciclo_mm: dividir a chuva da janela de 180 dias por 1.000 mm/ano seria o erro do ECOCROP de novo. Lido em 15/11/2026.",
+      "agua_contexto": {
+        "chuva_anual_adequada_mm": [
+          1000,
+          1500
+        ],
+        "chuva_anual_semiarido_mm": [
+          500,
+          700
+        ],
+        "irrigada_mm_dia": [
+          3,
+          6
+        ],
+        "qualidade": "boa para o que diz; nao e exigencia do ciclo, o motor nao usa",
+        "fonte": "Embrapa Mandioca e Fruticultura, Sistema de Producao 12 (Mandioca no Semiarido) e cap. 11 de Recomendacoes de Calagem e Adubacao (Borges); Embrapa, Circular Tecnica 23"
+      },
+      "fase_critica_fonte": "dias 30 a 150 confirmados tambem em Pesquisa Agropecuaria Brasileira (CNPMF/Embrapa): enraizamento e tuberizacao sao os estagios mais criticos ao deficit hidrico"
     },
     "feijao-caupi": {
       "nome": "Feijão-caupi",
