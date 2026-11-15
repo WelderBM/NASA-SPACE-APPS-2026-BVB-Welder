@@ -110,7 +110,7 @@ A lista completa, com dono de cada item, é [18. Pendências](docs/18-pendencias
 
 ---
 
-## Onde estamos: decisões fechadas
+## Decisões de desenho
 
 - **Foco:** interior de Roraima, persona de quem usa WhatsApp.
 - **A pergunta do produto:** "qual é a melhor plantação para plantar assim que eu colher essa remessa?" Genérica, sem premissa de 2026, e o El Niño entra pelos dados sem ser citado.
@@ -123,36 +123,23 @@ A lista completa, com dono de cada item, é [18. Pendências](docs/18-pendencias
 - **O enunciado pede observação e adaptação, não previsão.** A previsão sazonal entra só como contexto no pitch.
 - **Solo não precisa ser dado da NASA**, mas acabou sendo: o POWER entrega umidade do solo sem login.
 
-## O que está aberto, por ordem de bloqueio
+## O que falta, e de quem é
 
-A lista completa, com dono e estado, é [18. Pendências](docs/18-pendencias.md). **É a única lista.** Esta seção aqui ficou um dia inteira desatualizada enquanto a de lá andava, então agora ela só resume e aponta.
+A lista única, com dono e estado de cada item, é **[18. Pendências](docs/18-pendencias.md)**.
+O que o produto deixa de responder hoje está na tabela da seção
+[O que está incompleto, e declarado](#o-que-está-incompleto-e-declarado), acima.
 
-1. **Os nove campos da submissão em inglês**, a declaração de uso de IA e as duas caixas. Rascunho em [15](docs/15-submissao.md), com colchetes a preencher. *Chat do dado.*
-2. **Confirmar a hora do prazo** com o líder local. Até confirmar, conta 22h59. **Welder.**
-3. **Testar todos os links em aba anônima:** nada pode pedir login. **Welder.**
-4. **Os 7 slides existem**, em inglês e em português, com o subtítulo obrigatório na capa, mais um vídeo-pitch de 29,9 s com legenda ([entregas/](entregas/)). Falta: o GIF do slide 4, o link do GitHub Pages no slide 7, **trocar "60 days" por "70 days" nos dois decks** (o caupi foi corrigido e o slide ficou atrás da demo) e exportar em PDF com link público. *Chat dos slides.*
-5. **Falar no microfone na demo ao vivo.** Os cinco diagnósticos dão verde; falar nunca foi testado. **Welder.**
-6. **Nenhuma entrevista em Roraima ainda.** A única é de Goiás, n=1. As três perguntas estão prontas em [19](docs/19-roteiro-das-ligacoes.md) e os contatos ficam na planilha privada, não aqui. **Welder.**
-7. **A hipótese do áudio não está validada.** ([3](docs/03-persona-e-pesquisa.md))
-8. **Água por ciclo** falta em oito culturas. O ECOCROP não serve para isso ([14](docs/14-ecocrop-ciclo.md)); a fonte certa é Embrapa por cultura ou o Kc do FAO 56. Não bloqueia: o motor declara a falta em vez de afirmar.
-9. **A confiança mede cobertura de critério, não qualidade de fonte.** Com o ciclo do ECOCROP preenchido, cinco culturas foram a 100% ao lado do caupi, cujo dado é melhor. O número certo para essa diferença, `qualidade_do_dado`, a resposta já carrega e a fala não diz. ([14 §5](docs/14-ecocrop-ciclo.md))
-
-**Saiu desta lista em 15/11:** a regra de comparação do motor, que era o item mais bloqueante — virou três notas separadas e 2.748 casos de teste; o contrato de retorno; o nome do projeto; os limiares sem fonte; e o ciclo de cinco culturas.
-
-## Ordem sugerida do que falta hoje
-
-1. Confirmar a hora do prazo. Decide o ritmo de tudo o que vem depois.
-2. Submeter cedo uma versão simples e ir reenviando.
-3. As três ligações. Quinze minutos tiram o pitch de "uma entrevista em Goiás, n=1".
-4. Escrever os 7 slides, em inglês.
-5. Falar no microfone na demo, uma vez, antes de apresentar para alguém.
-6. Água por ciclo, se sobrar tempo. É o único item da lista que não muda nada se ficar de fora.
+Esta seção já carregou uma cópia dessa lista, e a cópia envelheceu duas vezes num
+só dia enquanto a de lá andava. Duas listas da mesma coisa divergem sempre, então
+aqui fica só o endereço.
 
 ---
 
-## Os números que são nossos
+## O que medimos, e o que não se confirmou
 
-Medidos no NASA POWER em 14/11/2026, ponto do Cantá (lat 2,61, lon -60,60). Detalhe e método em [4](docs/04-dados-nasa.md).
+Medições próprias no NASA POWER, feitas em 14/11/2026 no ponto do Cantá
+(lat 2,61, lon -60,60). Nenhum destes números é citado de terceiro. Método e
+série completa em [4](docs/04-dados-nasa.md).
 
 | Achado | Número |
 | --- | --- |
@@ -170,11 +157,17 @@ E o que **não** se confirmou, igualmente importante:
 
 ---
 
-## Regra de trabalho
+## Procedência
 
-- **Git:** antes de dar push, conferir a versão do momento. Se houver diferença, estudar e atualizar com base no que está lá.
-- **Marcos:** cada etapa fechada ganha um branch `marco-revN-data`.
-- **Histórico:** o git é o histórico. Nada se perde depois de uma edição, e o commit diz por que a edição foi feita, não só o que mudou.
-- **Registro:** os documentos descrevem **o projeto**, não a conversa que o construiu. Sem "vamos fazer", sem autoria de quem sugeriu o que, sem detalhe da ferramenta usada para escrever. O que fica é a decisão, a data, a fonte e o motivo. A declaração de uso de IA é obrigatória e vive num lugar só: o campo *Use of AI* da submissão.
-- **Dados pessoais:** os números de WhatsApp da planilha de respostas ficam fora do repositório.
-- **Qualidade de dado:** nada vai para slide ou código sem fonte e sem data de leitura. Cada tabela marca o que está "a validar".
+- Nenhum número deste repositório entra em documento, slide ou código sem fonte e
+  sem data de leitura. Cada linha de dado marca a própria qualidade, e o que
+  depende de validação técnica carrega `validar_com_tecnico`, que aparece na tela
+  junto da resposta.
+- Contato de quem respondeu a pesquisa não está aqui. Os números agregados ficam
+  em `dados/local-roraima.json`, sem identificar ninguém.
+- Dois testes guardam o motor: `motor/conformidade.py`, que exige a mesma resposta
+  em Python e em JavaScript nos 2.748 casos, e `motor/invariantes.py`, com dez
+  regras de honestidade sobre os mesmos casos.
+- O uso de IA está declarado no campo *Use of AI* da submissão.
+
+Convenções de quem contribui: [CONTRIBUTING.md](CONTRIBUTING.md).
