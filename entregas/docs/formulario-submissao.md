@@ -1,6 +1,6 @@
 # Formulário de submissão do Space Apps, preenchido
 
-> 15/11/2026, 16h40 (Boa Vista). Feito a partir da página do projeto salva pelo
+> 15/11/2026, 16h40 (Boa Vista), fontes reconferidas às 16h30. Feito a partir da página do projeto salva pelo
 > Welder (campos e textos de ajuda) e do main em e10d2a2. Rascunho, não definitivo:
 > o chat principal continua mexendo no produto. Substitui os textos do docs/15
 > onde os números mudaram (milho 686/386, culturas 4/8/2, 5 sem ciclo, janela do
@@ -16,10 +16,10 @@
 AgroDeal: What do I plant next?
 ```
 
-## Summary (limite 1500; este tem 1092 caracteres, 185 palavras)
+## Summary (limite 1500; este tem 1127 caracteres, 191 palavras)
 
 ```
-AgroDeal, What do I plant next?, is a conversation for small farmers in Roraima, in the Brazilian Amazon, who must decide what to plant right after a harvest. In 2026 that decision got harder: NASA POWER shows 330 mm of June to September rain in Cantá, Roraima, against a 1981 to 2026 mean of 859 mm, the lowest since 1981. And 87% of Roraima's 16,850 farm establishments had no technical assistance in the 2017 IBGE Agricultural Census.
+AgroDeal, What do I plant next?, is a conversation for small farmers in Roraima, in the Brazilian Amazon, who must decide what to plant right after a harvest. In 2026 that decision got harder: NASA POWER shows 330 mm of June to September rain in Cantá, Roraima, against a 1981 to 2026 mean of 859 mm, the lowest since 1981. And 87% of Roraima's 16,850 farm establishments had no technical assistance, according to 2017 IBGE data cited by the state extension agency, IATER.
 
 The farmer says, by voice or text, what was just harvested, then picks what matters: better soil, low risk, food at home, pasture or income. The answer reorders, with the reason. Every option carries three separate numbers: risk, from NASA POWER rain and root-zone soil moisture adjusted to this year; fit, from crop traits weighed by the farmer's goal; and confidence, the share of criteria we could actually measure. What it cannot measure, like income, it says.
 
@@ -45,7 +45,7 @@ The problem
 In 2026 the El Niño hit Roraima, in the Brazilian Amazon. At our reference point in Cantá (lat 2.61, lon -60.60), NASA POWER shows 330 mm of rain from June to September 2026, against a 1981 to 2026 mean of 859 mm: minus 62%, the lowest since 1981. The longest dry spell inside the rainy season was 24 days, against 9. In September, root-zone soil moisture was 0.51, against a normal of 0.76, a level that place usually reaches only in January. We do not claim 2027 will repeat it: in earlier El Niño years, that same rain ranged from 48% below to 17% above the mean.
 
 The people
-87% of Roraima's 16,850 farm establishments had no technical assistance (IBGE Agricultural Census 2017). This season the state extension agency, IATER, is guiding family farmers to choose crops better adapted to the dry period, but it reaches only as far as an agent can drive. In our survey (8 answers from 7 people in Roraima), 4 of 7 said they plant something else right after a harvest, and drought was the most cited loss. That is the decision we support: one crop cycle ahead, starting from what was just harvested.
+87% of Roraima's 16,850 farm establishments had no technical assistance (IBGE data for 2017, cited by the state extension agency IATER in 2024). This season, under a state emergency over the El Niño drought, IATER is guiding family farmers to choose crops better adapted to the dry period, but it reaches only as far as an agent can drive. In our survey (8 answers from 7 people in Roraima), 4 of 7 said they plant something else right after a harvest, and drought was the most cited loss. That is the decision we support: one crop cycle ahead, starting from what was just harvested.
 
 What it does
 The farmer says, by voice or text, what was just harvested, and picks what matters most: better soil, low risk, food at home, pasture or income. The answer reorders, with the reason. Example, Cantá, July, after cassava: choose low risk and it suggests cowpea, "out of the ground in 70 days". Choose better soil: same crop, new reason, "it leaves the soil stronger". Choose income: it says it cannot measure that. It compares options, never gives orders, and ends with what to check with a technician.
@@ -100,7 +100,8 @@ Não marcar imagem gerada (não há) nem "I did not use SI".
 | Project code and data (GitHub) | https://github.com/WelderBM/NASA-SPACE-APPS-2026-BVB-Welder |
 | FAO ECOCROP database, copy by OpenCLIM (crop cycle) | https://github.com/OpenCLIM/ecocrop |
 | ZARC agricultural climate risk zoning, cowpea ordinance for Roraima (MAPA) | https://www.gov.br/agricultura/pt-br/assuntos/riscos-seguro/programa-nacional-de-zoneamento-agricola-de-risco-climatico/portarias/safra-vigente/roraima/PORTN291FEIJOCAUPIRR.pdf |
-| IBGE Agricultural Census 2017, family farming results | https://biblioteca.ibge.gov.br/visualizacao/periodicos/3096/agro_2017_agricultura_familiar.pdf |
+| IATER Roraima, extension agreement proposal, March 2024 (16,850 establishments, 87% without technical assistance, IBGE 2017 data) | https://prda.sudam.gov.br/pdf/80bff30c20fcfd50e68aaebbd52cdf26.pdf |
+| Folha BV, Sep 8 2026: IATER guidance for the El Niño dry period, including choosing crops adapted to it | https://www.folhabv.com.br/?p=667353 |
 | Schöning et al. (2023), crop rotation and management tools review | https://doaj.org/article/ac7cad55d97344d0826ef322e929cc11 |
 | Embrapa Roraima, production systems for Roraima | https://www.alice.cnptia.embrapa.br/alice/bitstream/doc/68108/1/RoraimaSistemasProducao-19728.pdf |
 | Kokoro TTS, AI voice used in the pitch videos | https://github.com/hexgrad/kokoro |
