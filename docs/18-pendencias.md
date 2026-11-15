@@ -50,11 +50,17 @@ A afirmação de que "a média dos anos de El Niño é de −10%" repousa nessa 
 e **não deve ir para slide**.
 
 **O que sobrevive, e é mais forte:** nos anos de El Niño da nossa série o
-desvio de chuva de junho a setembro vai de **−33% a +17%**, e vários vieram
+desvio de chuva de junho a setembro vai de **−48% a +17%** (sem contar 2026), e vários vieram
 acima da média. Isso derruba "ano de El Niño é ano seco" sem depender de a
 lista estar completa, porque acrescentar anos só aumenta a dispersão.
 
 **Recomendação:** usar a faixa, nunca a média. Está corrigido no `nasa-power.json`.
+
+> **Correção, 15/11, 15h30 (chat do pitch):** esta seção dizia "−33% a +17%".
+> A própria lista em `nasa-power.json` (`anos_desenvolvimento`) tem **2015 com
+> −48%**, então a faixa é −48% a +17%. O campo `o_que_sobrevive` do
+> `nasa-power.json` ainda diz −33% e precisa da mesma troca (dono: chat do
+> dado). Vídeo de 3 min, slides e texto de estudo já usam −48%.
 
 ### 2.2 Limiares sem fonte anotada — ~~RESOLVIDO 15/11, 14h45~~
 
