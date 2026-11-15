@@ -243,6 +243,10 @@
     "solo_fundo": [
       "Por cima a terra está {sup}, mas no fundo ela está {fundo}. O que segura a planta no veranico é o de baixo.",
       "Repara numa coisa: a camada de cima está {sup} e a de baixo {fundo}. É a de baixo que socorre na estiagem."
+    ],
+    "melhor_sem_ciclo": [
+      "Pra isso aqui quem serve é {cultura}, só que eu não sei quanto tempo ela leva na terra, então não garanto que cabe. Das que eu conheço bem, a mais perto é {alternativa}.",
+      "Olha, {cultura} é a que serve pro que você quer. Só me falta o tempo dela. Das que eu conheço direito, {alternativa} é a que mais chega perto."
     ]
   }
 }

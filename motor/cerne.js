@@ -10,7 +10,7 @@
 // resposta. Se divergirem, o teste quebra.
 (function(global){
 const DIAS=[31,28,31,30,31,30,31,31,30,31,30,31];
-const CONF_MIN=0.5;
+const CONF_MIN=0.5, MARGEM_SEM_CICLO=0.25;
 const MES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto',
            'setembro','outubro','novembro','dezembro'];
 const MOLDES_NEUTROS={
@@ -27,6 +27,7 @@ const MOLDES_NEUTROS={
  nao_sei_prever:"Previsão de chuva eu não tenho. {mes} costuma ter {chuva}, com estiagem máxima de {estiagem} dias, e o solo está {estado}.",
  hipotese_sem_agua:"{cultura} não é da mesma família {de_colheu}. A exigência de água dela não está registrada; a janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
  indicacao_pouca_confianca:"Depois {de_colheu}, a melhor opção é {cultura}, mas só {pct}% dos critérios dessa prioridade puderam ser avaliados nela.",
+ melhor_sem_ciclo:"Para esse objetivo a cultura indicada seria {cultura}, mas falta a duração do ciclo dela. Entre as avaliáveis, {alternativa} é a mais próxima.",
  solo_fundo:"Camada superficial {sup}; camada profunda {fundo}. A reserva profunda é a que sustenta no veranico.",
  aviso_calor:"A máxima de {mes} chega a {pico} °C, acima do limite de {limite} °C dessa cultura.",
  agua_sem_numero:"A exigência de água dela não está registrada. A janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
@@ -168,7 +169,7 @@ class Cerne{
     const de=n=>((this.CULT[n].artigo||'a')==='a'?'da ':'do ')+nc(n);
     const res={intencao,lugar:this.NASA[place].nome,mes_plantio:MES[m0],
       registro:loc.moldes?'local':'português neutro',estado_observado:est,
-      opcoes:[],sei_pouco:[],limites:[],fala:null,falas:[],aviso_do_ano:null};
+      opcoes:[],sei_pouco:[],limites:[],fala:null,falas:[],aviso_do_ano:null,destaque:null};
     const sr=est.solo_raiz;
     if(intencao==='estado-do-solo'){
       res.falas=this.renderAll(M,'estado_da_terra','fechos_terra',{mes:est.mes,
@@ -207,7 +208,8 @@ class Cerne{
         validar_com_tecnico:['a janela de plantio oficial do ZARC para o município']});
     }
     res.sei_pouco=res.opcoes.filter(o=>!o.risco.avaliavel)
-      .map(o=>({cultura:o.cultura,familia:o.familia,falta:o.nao_sei}));
+      .map(o=>({cultura:o.cultura,id:o.id,familia:o.familia,encaixe:o.encaixe,falta:o.nao_sei}))
+      .sort((a,b)=>(a.encaixe==null)-(b.encaixe==null)||(b.encaixe||0)-(a.encaixe||0));
     const gate=o=>((o.confianca||0)>=CONF_MIN?0:1);
     res.opcoes=res.opcoes.filter(o=>o.risco.avaliavel)
       .sort((a,b)=>(a.encaixe==null)-(b.encaixe==null)||gate(a)-gate(b)||(b.encaixe||0)-(a.encaixe||0));
@@ -232,7 +234,13 @@ class Cerne{
       res.falas=this.renderAll(M,'sem_dado',null,{n:res.sei_pouco.length});
     }else if(res.opcoes.length){
       const o=res.opcoes[0];
-      if((o.confianca||0)<CONF_MIN){
+      const sp=res.sei_pouco.length?res.sei_pouco[0]:null;
+      if(sp&&((sp.encaixe||0)-(o.encaixe||0))>=MARGEM_SEM_CICLO){
+        res.destaque=sp.id;
+        res.falas=this.renderAll(M,'melhor_sem_ciclo',null,
+          {cultura:nc(sp.id),alternativa:nc(o.id)});
+        o.avisos.unshift(`${sp.cultura} encaixa melhor no que ele pediu, mas falta o ciclo dela`);
+      }else if((o.confianca||0)<CONF_MIN){
         const pct=Math.floor((o.confianca||0)*100+0.5);
         res.falas=this.renderAll(M,'indicacao_pouca_confianca',null,
           {colheu:cn,de_colheu:dcn,cultura:nc(o.id),pct:pct});
@@ -254,6 +262,7 @@ class Cerne{
           null,{pct:Math.floor(rz*100+0.5)})[0];
     }
     if(res.falas.length)res.fala=res.falas[0];
+    if(!res.destaque&&res.opcoes.length)res.destaque=res.opcoes[0].id;
     res.opcoes.forEach(o=>{delete o._pqs});
     res.limites.push('a janela de plantio oficial do ZARC não está carregada; confirme com técnico');
     return res;

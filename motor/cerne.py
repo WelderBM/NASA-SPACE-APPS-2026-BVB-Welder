@@ -30,6 +30,11 @@ DIAS = [31,28,31,30,31,30,31,31,30,31,30,31]
 # abaixo disso a nota se apoia na minoria dos criterios, entao a cultura ainda
 # aparece na lista mas nao pode ser a indicacao falada sem o aviso junto
 CONF_MIN = 0.5
+# se a cultura que a gente conhece MAL encaixa muito melhor no que ele pediu do
+# que a melhor que a gente conhece bem, calar sobre ela e esconder a resposta.
+# foi o caso do pasto: a unica forrageira era a braquiaria, sem ciclo, e o bot
+# recomendava feijao-caupi com encaixe 0,28 e confianca 1,0, sem ressalva.
+MARGEM_SEM_CICLO = 0.25
 MES  = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto',
         'setembro','outubro','novembro','dezembro']
 
@@ -50,6 +55,7 @@ MOLDES_NEUTROS = {
   'nao_sei_prever': "Previsão de chuva eu não tenho. {mes} costuma ter {chuva}, com estiagem máxima de {estiagem} dias, e o solo está {estado}.",
   'hipotese_sem_agua': "{cultura} não é da mesma família {de_colheu}. A exigência de água dela não está registrada; a janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
   'indicacao_pouca_confianca': "Depois {de_colheu}, a melhor opção é {cultura}, mas só {pct}% dos critérios dessa prioridade puderam ser avaliados nela.",
+  'melhor_sem_ciclo': "Para esse objetivo a cultura indicada seria {cultura}, mas falta a duração do ciclo dela. Entre as avaliáveis, {alternativa} é a mais próxima.",
   'solo_fundo': "Camada superficial {sup}; camada profunda {fundo}. A reserva profunda é a que sustenta no veranico.",
   'aviso_calor': "A máxima de {mes} chega a {pico} °C, acima do limite de {limite} °C dessa cultura.",
   'agua_sem_numero': "A exigência de água dela não está registrada. A janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
@@ -254,7 +260,7 @@ def atender(p):
     res = {'intencao': intencao, 'lugar': NASA[place]['nome'], 'mes_plantio': MES[m0],
            'registro': 'local' if loc.get('moldes') else 'português neutro',
            'estado_observado': est, 'opcoes': [], 'sei_pouco': [], 'limites': [],
-           'fala': None, 'falas': [], 'aviso_do_ano': None}
+           'fala': None, 'falas': [], 'aviso_do_ano': None, 'destaque': None}
 
     if intencao == 'estado-do-solo':
         sr = est.get('solo_raiz')
@@ -299,8 +305,10 @@ def atender(p):
             'avisos': avisos(r, M), 'nao_sei': ns, 'qualidade_do_dado': c['qualidade'],
             'validar_com_tecnico': ['a janela de plantio oficial do ZARC para o município'],
         })
-    res['sei_pouco'] = [{'cultura': o['cultura'], 'familia': o['familia'], 'falta': o['nao_sei']}
+    res['sei_pouco'] = [{'cultura': o['cultura'], 'id': o['id'], 'familia': o['familia'],
+                         'encaixe': o['encaixe'], 'falta': o['nao_sei']}
                         for o in res['opcoes'] if not o['risco'].get('avaliavel')]
+    res['sei_pouco'].sort(key=lambda x: (x['encaixe'] is None, -(x['encaixe'] or 0)))
     res['opcoes'] = [o for o in res['opcoes'] if o['risco'].get('avaliavel')]
     res['opcoes'].sort(key=lambda o: (o['encaixe'] is None,
         0 if (o['confianca'] or 0) >= CONF_MIN else 1, -(o['encaixe'] or 0)))
@@ -329,7 +337,13 @@ def atender(p):
         res['falas'] = render_all(M, 'sem_dado', n=len(res['sei_pouco']))
     elif res['opcoes']:
         o = res['opcoes'][0]
-        if (o['confianca'] or 0) < CONF_MIN:
+        sp = res['sei_pouco'][0] if res['sei_pouco'] else None
+        if sp and (sp['encaixe'] or 0) - (o['encaixe'] or 0) >= MARGEM_SEM_CICLO:
+            res['destaque'] = sp['id']
+            res['falas'] = render_all(M, 'melhor_sem_ciclo',
+                cultura=nome_curto(sp['id']), alternativa=nome_curto(o['id']))
+            o['avisos'].insert(0, f"{sp['cultura']} encaixa melhor no que ele pediu, mas falta o ciclo dela")
+        elif (o['confianca'] or 0) < CONF_MIN:
             res['falas'] = render_all(M, 'indicacao_pouca_confianca', colheu=cn, de_colheu=dcn,
                 cultura=nome_curto(o['id']), pct=_r((o['confianca'] or 0)*100))
             o['avisos'].insert(0, f"só {_r((o['confianca'] or 0)*100)}% dos critérios dessa prioridade puderam ser avaliados")
@@ -349,6 +363,7 @@ def atender(p):
             chave = 'aviso_ano_seco' if rz <= 0.9 else 'aviso_ano_chuvoso'
             res['aviso_do_ano'] = render_all(M, chave, pct=_r(rz*100))[0]
     if res.get('falas'): res['fala'] = res['falas'][0]
+    if not res.get('destaque') and res['opcoes']: res['destaque'] = res['opcoes'][0]['id']
     for o in res['opcoes']: o.pop('_pqs', None)
     res['limites'].append('a janela de plantio oficial do ZARC não está carregada; confirme com técnico')
     return res

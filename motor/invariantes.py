@@ -59,7 +59,10 @@ def checa(r, caso):
 
     # 3. a cultura falada tem que ser a primeira opcao, nunca outra
     if o and r['intencao'] == 'proximo-plantio':
-        nome = o['cultura'].split(' (')[0].lower()
+        d = r.get('destaque')
+        alvo = next((x for x in (r.get('opcoes') or []) + (r.get('sei_pouco') or [])
+                     if x.get('id') == d), o)
+        nome = alvo['cultura'].split(' (')[0].lower()
         if falas and not any(nome in f.lower() for f in falas):
             erros.append(f"fala não cita a opção de cima ({nome}): {falas[0]!r}")
 
