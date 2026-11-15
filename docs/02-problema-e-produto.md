@@ -1,5 +1,7 @@
 # 2. Problema e produto
 
+> **Atenção, 15/11 11h45:** a proposta de valor deste documento foi substituída depois do benchmark. Duas das três vantagens que eu afirmava aqui não se sustentam. Ver [12 — Alinhamento depois do benchmark](12-alinhamento-pos-benchmark.md).
+
 [Voltar ao índice](../README.md)
 
 ## A pergunta do produto

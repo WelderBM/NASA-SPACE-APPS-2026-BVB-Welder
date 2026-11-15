@@ -1,5 +1,7 @@
 # 7. Pitch e demo
 
+> **Atenção, 15/11 11h45:** a abertura do pitch mudou. Ver [12 — Alinhamento depois do benchmark](12-alinhamento-pos-benchmark.md).
+
 [Voltar ao índice](../README.md)
 
 ## URGENTE: o pitch atual tem uma afirmação errada
