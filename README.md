@@ -31,6 +31,7 @@ Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift:
 | [13. A segunda IA, redatora](docs/13-ia-redatora.md) | a IA que escreve mas não calcula, a verificação que impede número inventado, e por que o molde fixo vira rede de segurança |
 | [16. De onde vem cada campo](docs/16-como-a-configuracao-chega.md) | como o lugar, a data, a colheita e a prioridade chegam no WhatsApp, sem formulário |
 | [17. A raiz dos defeitos](docs/17-a-raiz-dos-defeitos.md) | **a recapitulação**: por que tanto bug, a causa única, e a correção estrutural que fechou a classe |
+| [18. Pendências](docs/18-pendencias.md) | **a lista única**, de todos os documentos, com dono e se bloqueia. Resolveu, risca lá |
 | [Motor](motor/cerne.py) | o cerne rodando: contrato de entrada e saída, as três notas, as frases de molde fixo |
 | [Demo](index.html) | a página roda o motor **dentro do navegador** (`motor/cerne.js`), não consulta tabela. Trocar prioridade reordena, trocar o mês muda o veredito, trocar o lugar inverte |
 | [Teste de invariantes](motor/invariantes.py) | seis regras de honestidade sobre 2.748 casos: degradar em silêncio ou afirmar sem lastro quebra o teste |
