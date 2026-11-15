@@ -125,7 +125,7 @@
     "praga_de_solo": "a praga que ficou na terra"
   },
   "moldes": {
-    "_regra": "Frase curta, uma ideia, no maximo 35 palavras. Sem termo tecnico. Numero so quando ele pedir. CADA MOLDE E UMA LISTA: o motor gera todas as variantes e a pagina nunca repete a mesma frase duas vezes seguidas.",
+    "_regra": "Frase curta, uma ideia, no maximo 35 palavras. Sem termo tecnico. Numero so quando ele pedir. CADA MOLDE E UMA LISTA: o motor gera todas as variantes e a pagina nunca repete a mesma frase duas vezes seguidas, com teto de 8 combinacoes de corpo x fecho. EXCECAO, medida em 15/11/2026 as 16h: agua_sem_numero, aviso_calor e solo_fundo sao lidos com _lista(...)[0], entao SO A PRIMEIRA variante roda e as outras estao mortas por construcao. Escreva a melhor primeiro e nao acrescente variante nessas tres esperando que ela fale: tres variantes ja foram escritas assim e nunca falaram.",
     "indicacao": [
       "Depois {de_colheu}, eu iria de {cultura}. {porque}.",
       "Olha, {de_colheu} pra {cultura} funciona bem. {porque}.",

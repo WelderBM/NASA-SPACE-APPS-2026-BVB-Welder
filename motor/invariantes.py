@@ -19,9 +19,18 @@ AFIRMA_SOLO = ['mais seca', 'mais seco', 'mais molhada', 'mais úmido']
 # O doc 11 trocou palavra por palavra. A lista de la, virada teste:
 # 'inverno' e 'verao' nunca, porque no Norte significam o contrario;
 # o resto e jargao que o produtor nao usa.
-JARGAO = ['veranico', 'inverno', 'verão', 'nitrogênio', 'inmet', 'pousio',
+# 'inverno' e 'verao' em qualquer lugar: as duas invertem de sentido entre as
+# regioes, entao o bot nao usa nenhuma das duas em canto nenhum. O resto e
+# jargao em todo lugar.
+JARGAO = ['inverno', 'verão', 'nitrogênio', 'inmet', 'pousio',
           'sucessão', 'euphorbiaceae', 'cucurbitaceae', 'poaceae', 'fabaceae',
           'convolvulaceae', 'dioscoreaceae', 'solanaceae', 'musaceae']
+# 'veranico' e decisao do doc 11 e vale SO em Roraima, onde os respondentes
+# dizem 'estiagem'. No Centro-Oeste veranico e a palavra local e correta, e o
+# molde padrao do cerne.py usa ela de proposito. Eu tinha posto na lista global
+# hoje as 15h20 e isso reprovaria texto certo de Rio Verde: armadilha minha,
+# achada na varredura dos moldes as 16h.
+JARGAO_ROraima = ['veranico']
 
 def numeros(t):
     return {n.replace(',', '.') for n in re.findall(r'\d+(?:[.,]\d+)?', t or '')}
@@ -94,9 +103,12 @@ def checa(r, caso):
     # e passou dois dias porque nenhum teste olhava a PALAVRA, so o numero.
     # 'inverno' e 'verao' sao o caso grave: no Norte inverno e a estacao
     # CHUVOSA, entao a palavra inverte a resposta na boca do bot.
+    proibidas = list(JARGAO)
+    if (caso.get('lugar') or {}).get('config_local') == 'roraima':
+        proibidas += JARGAO_ROraima
     for f in falas:
         baixo = f.lower()
-        for palavra in JARGAO:
+        for palavra in proibidas:
             if palavra in baixo:
                 erros.append(f"jargao na fala: {palavra!r} em {f[:90]!r}")
 

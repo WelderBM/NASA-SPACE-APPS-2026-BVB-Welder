@@ -202,12 +202,43 @@ Conferido contra o `main` em `2bbd12b`. Só o que não estava acima.
   principalmente **`inverno` e `verão`**, que no Norte significam o contrário e
   inverteriam a resposta na boca do bot.
 - **Achado de brinde:** esse molde **nunca é alcançado** em nenhum dos 2.748
-  casos, então o invariante 8 não o pegaria. Medindo o resto: **18 das 66
-  variantes de fala nunca rodam** nos casos de Roraima. Algumas por motivo
-  conhecido e declarado (o aviso de calor só existe para a soja, que não se
-  planta aqui; o aviso de ano chuvoso não dispara porque 2026 é seco), mas
-  texto que nunca rodou é texto que ninguém leu, e foi exatamente aí que o
-  "veranico" sobreviveu dois dias. Vale uma varredura depois do prazo.
+  casos, então o invariante 8 não o pegaria.
+
+### 7.2 A varredura dos moldes, feita às 16h. Medido com instrumentação, não com heurística
+
+A estimativa de "18 das 66 variantes nunca rodam" era minha e estava inflada:
+ela contava **pares** de corpo e fecho que nunca se encontram, e não texto que
+ninguém leu. Instrumentei o `render_all` e contei de verdade. O resultado:
+
+**Nenhum texto errado.** Li todos os moldes nunca alcançados; todos estão
+corretos.
+
+**Três variantes estão mortas por construção, e a culpa é de uma frase falsa
+no próprio arquivo.** O motor lê `agua_sem_numero`, `aviso_calor` e
+`solo_fundo` com `_lista(...)[0]`, então só a primeira variante roda. E a linha
+`_regra` do `local-roraima.json` prometia "o motor gera todas as variantes".
+Quem lê a regra escreve uma segunda variante e ela nunca fala. Três já foram
+escritas assim. Corrigido onde a afirmação mora: a `_regra` agora diz a
+exceção e o teto de 8 combinações.
+
+**Quatro chaves são guardas que esta configuração não dispara, cada uma por um
+motivo que vale saber:**
+
+| chave | por que não dispara |
+| --- | --- |
+| `aviso_calor` | nenhuma cultura das listas de Cantá e Rio Verde tem `tmax_sofre_c`, menos a soja |
+| `indicacao_pouca_confianca` | depois da porteira, todo destaque passa de 0,5. A guarda fica |
+| `sem_dado` | sempre há pelo menos uma cultura avaliável. A guarda fica |
+| `solo_fundo` | **vale para o pitch:** a condição pede fundo abaixo do normal e superfície **não** abaixo, o caso em que a chuva recente engana. Em 2026 as duas caem juntas em quase todo mês: setembro deu −59% na superfície e −34% no perfil. O ano não secou por cima, secou até embaixo |
+
+**E a varredura pegou um defeito meu, de hoje às 15h20:** eu havia posto
+`veranico` na lista global do invariante 8. Mas "estiagem em vez de veranico" é
+decisão do doc 11 para **Roraima**, onde os respondentes dizem estiagem. No
+Centro-Oeste veranico é a palavra local e correta, e o molde padrão do
+`cerne.py` usa ela de propósito. A lista global reprovaria texto certo de Rio
+Verde. Agora o invariante 8 tem duas listas: `inverno` e `verão` proibidas em
+qualquer lugar, porque invertem de sentido entre as regiões, e `veranico` só em
+Roraima.
 
 **Documento velho que contradiz o novo**
 
