@@ -82,7 +82,8 @@ lista estar completa, porque acrescentar anos só aumenta a dispersão.
 
 | o quê | efeito hoje | de quem |
 | --- | --- | --- |
-| `ciclo_dias` de 7 culturas | elas nunca viram indicação falada | chat do dado, pelo ECOCROP |
+| ~~`ciclo_dias` de 7 culturas~~ | **5 FEITAS 15/11, 15h** (PR #1, merge): melão, jerimum, batata-doce, cará e arroz, pelo ECOCROP, com espécie e EcoPort. Faltam **melancia** (o ECOCROP não tem) e **banana** (perene de propósito, fora de `ciclo_dias`). Ver [14](14-ecocrop-ciclo.md) | — |
+| A confiança mede **cobertura**, não **qualidade de fonte** | com o ciclo preenchido, as 5 culturas foram a 100% ao lado do caupi, cujo dado é melhor. `qualidade_do_dado` já vai na resposta e a fala não diz | desenho, fica com o Welder |
 | ~~`espera_no_campo` de batata-doce e cará~~ | **FEITO 15/11 14h50**, marcado como derivado (raciocínio sobre raiz de reserva), não como fonte. Precisa de validação com técnico | — |
 | `tmax_sofre_c` de 13 culturas | o aviso de calor só acende para a soja | chat do dado, o ECOCROP dá TMAX limpo |
 | `agua_ciclo_mm` | **fechado como impossível**: ECOCROP e Embrapa dão chuva anual, não do ciclo | — |
@@ -116,10 +117,16 @@ Não são dívidas escondidas, estão ditas no produto e nos documentos.
 
 **Correção, 14h50 (chat do dado):** o `docs/14` existiu. Era *ECOCROP: o que ele
 dá, o que ele não dá*, no branch `ecocrop-ciclo-15-11` (commit `6191dd0`), com o
-ciclo de melão, jerimum, batata-doce, arroz e cará já preenchido. O branch foi
-apagado do remoto; a cópia existe só no clone local do chat do dado. O
-`docs/05` ainda cita "(doc 14)". Decisão do Welder: restaurar no `main` ou
-declarar descartado.
+ciclo de melão, jerimum, batata-doce, arroz e cará já preenchido.
+
+**RESOLVIDO 15/11, 15h: está no `main`.** Duas coisas da nota acima estavam
+erradas e vale registrar, porque a segunda quase custou o dado: o branch
+**não** havia sido apagado do remoto, e havia um **PR aberto** (#1) com ele.
+A conclusão "existe só no clone local" veio de não ter olhado o remoto. O
+Welder achou o PR na interface do GitHub às 14h53.
+
+A numeração não tem mais buraco: 01 a 19, sem faltas. A citação "(doc 14)" no
+`docs/05` volta a valer.
 
 ## 7. Inconsistências entre documentos, varredura de 14h50 (chat do dado)
 
@@ -162,13 +169,27 @@ Conferido contra o `main` em `2bbd12b`. Só o que não estava acima.
   Centro-Oeste com **sorgo**, que não existe no `culturas.json`; o arquivo tem
   guandu e caupi.
 
+### 7.1 O README tinha a sua própria lista de pendências, e ela envelheceu
+
+Varredura de 15/11, 15h. O `README.md` carregava uma seção "O que está aberto,
+por ordem de bloqueio" escrita em 14/11 e nunca atualizada. Ela dizia que a
+regra de comparação do motor era "o buraco mais bloqueante" (resolvida há
+horas), pedia mandar o contrato de retorno ao Giuliano (fora do projeto desde
+15/11, e o próprio cabeçalho do README já dizia "Welder, sozinho desde 15/11"),
+e trazia **a média de −10% dos anos de El Niño** como número nosso — o número
+que a seção 2.1 aqui manda não usar.
+
+A causa não é desatenção, é estrutura: **duas listas da mesma coisa divergem
+sempre.** Corrigido pela forma, não pelo caso — o README agora resume e aponta
+para cá, e esta lista é a única.
+
 ## Como usar esta lista
 
 Quem resolver um item: risca aqui, no mesmo commit da correção. Quem achar
 pendência nova em qualquer documento: traz para cá em vez de deixar no lugar
 onde achou.
 
-## 7. Privacidade
+## 8. Privacidade
 
 Telefone, nome e qualquer coisa que identifique quem respondeu o formulário
 **não entram neste repositório**, que é público. Ficam na planilha privada do

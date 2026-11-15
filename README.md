@@ -2,7 +2,7 @@
 
 Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift: Adapting Farms with NASA Data*.
 
-**Responsável:** Welder, sozinho desde 15/11. **Última atualização:** 15/11/2026, 12h45.
+**Responsável:** Welder, sozinho desde 15/11. **Última atualização:** 15/11/2026, 15h.
 
 ---
 
@@ -29,6 +29,8 @@ Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift:
 | [11. Registro e linguagem](docs/11-registro-e-linguagem.md) | como o bot fala: a armadilha do inverno amazônico, o vocabulário dos respondentes, a troca palavra por palavra |
 | [12. Alinhamento depois do benchmark](docs/12-alinhamento-pos-benchmark.md) | **a proposta de valor reescrita**: o que o benchmark derrubou, a lacuna de literatura que nos posiciona, a tabela comparativa |
 | [13. A segunda IA, redatora](docs/13-ia-redatora.md) | a IA que escreve mas não calcula, a verificação que impede número inventado, e por que o molde fixo vira rede de segurança |
+| [14. ECOCROP: ciclo das culturas](docs/14-ecocrop-ciclo.md) | **por que o ECOCROP não serve para a água do ciclo**, o ciclo que entrou linha por linha, e os três defeitos do motor que o dado novo expôs |
+| [15. Campos da submissão](docs/15-submissao.md) | o rascunho dos nove campos em inglês, com o que ainda está entre colchetes |
 | [16. De onde vem cada campo](docs/16-como-a-configuracao-chega.md) | como o lugar, a data, a colheita e a prioridade chegam no WhatsApp, sem formulário |
 | [17. A raiz dos defeitos](docs/17-a-raiz-dos-defeitos.md) | **a recapitulação**: por que tanto bug, a causa única, e a correção estrutural que fechou a classe |
 | [18. Pendências](docs/18-pendencias.md) | **a lista única**, de todos os documentos, com dono e se bloqueia. Resolveu, risca lá |
@@ -37,7 +39,7 @@ Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift:
 | [Demo](index.html) | a página roda o motor **dentro do navegador** (`motor/cerne.js`), não consulta tabela. Trocar prioridade reordena, trocar o mês muda o veredito, trocar o lugar inverte |
 | [Teste de invariantes](motor/invariantes.py) | seis regras de honestidade sobre 2.748 casos: degradar em silêncio ou afirmar sem lastro quebra o teste |
 | [Teste de conformidade](motor/conformidade.py) | 2.748 casos exigindo que o motor em Python e o em JavaScript respondam igual. Rode depois de mexer em qualquer um dos dois |
-| [Persona secundária (site)](docs/persona-secundaria.md) | a trilha do Giuliano e a regra de verificação de textos |
+| [Persona secundária (site)](docs/persona-secundaria.md) | **histórico, fora do escopo desde 15/11:** a trilha do site. Sobrevive dele a regra de verificação de textos |
 
 ---
 
@@ -46,7 +48,7 @@ Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift:
 - **Foco:** interior de Roraima, persona de quem usa WhatsApp.
 - **A pergunta do produto:** "qual é a melhor plantação para plantar assim que eu colher essa remessa?" Genérica, sem premissa de 2026, e o El Niño entra pelos dados sem ser citado.
 - **Horizonte:** um ciclo à frente. Três restrições independentes convergem: dado, usuário e terra.
-- **Interface:** WhatsApp como atendimento guiado (Welder); site como hub (Giuliano). Telegram e SMS no radar, não agora.
+- **Interface:** WhatsApp como atendimento guiado, **sem site**. Plano A: WhatsApp simulado, sem a API da Meta. Telegram e SMS no radar, não agora. ([9](docs/09-mvp-decisoes-15-11.md))
 - **Arquitetura:** monolito modular com quatro camadas separadas. Motor devolve estrutura, não texto.
 - **Linguagem:** nenhum jargão na conversa com o produtor; rigor no motor e na submissão.
 - **Base de conhecimento separada do canal**, para que qualquer interface use o mesmo conteúdo.
@@ -56,24 +58,28 @@ Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift:
 
 ## O que está aberto, por ordem de bloqueio
 
-1. **A regra de comparação do motor.** Sem ela a saída é tabela, não recomendação. É o buraco mais bloqueante. ([6](docs/06-cerne-e-arquitetura.md))
-2. **A abertura do pitch está errada:** dá a entender que 2027 repete 2026, e os dados não sustentam. ([7](docs/07-pitch-e-demo.md))
-3. **O contrato de retorno** precisa ser fechado e mandado ao Giuliano, senão os dois não trabalham em paralelo. ([6](docs/06-cerne-e-arquitetura.md))
-4. **A maior parte da tabela de culturas está sem dado** de ciclo e água. ([5](docs/05-base-agronomica.md))
-5. **Definição formal das personas.** O Welder quer conversar antes de fechar. ([3](docs/03-persona-e-pesquisa.md))
-6. **Nenhuma entrevista em Roraima ainda.** A única é de Goiás, n=1. ([3](docs/03-persona-e-pesquisa.md))
+A lista completa, com dono e estado, é [18. Pendências](docs/18-pendencias.md). **É a única lista.** Esta seção aqui ficou um dia inteira desatualizada enquanto a de lá andava, então agora ela só resume e aponta.
+
+1. **Os nove campos da submissão em inglês**, a declaração de uso de IA e as duas caixas. Rascunho em [15](docs/15-submissao.md), com colchetes a preencher. *Chat do dado.*
+2. **Confirmar a hora do prazo** com o líder local. Até confirmar, conta 22h59. **Welder.**
+3. **Testar todos os links em aba anônima:** nada pode pedir login. **Welder.**
+4. **Os 7 slides, em inglês**, com o subtítulo obrigatório `AgroDeal — What do I plant next?` e a **faixa** do El Niño, nunca a média. *Chat dos slides.*
+5. **Falar no microfone na demo ao vivo.** Os cinco diagnósticos dão verde; falar nunca foi testado. **Welder.**
+6. **Nenhuma entrevista em Roraima ainda.** A única é de Goiás, n=1. As três perguntas estão prontas em [19](docs/19-roteiro-das-ligacoes.md) e os contatos ficam na planilha privada, não aqui. **Welder.**
 7. **A hipótese do áudio não está validada.** ([3](docs/03-persona-e-pesquisa.md))
-8. **Pitch de 30 segundos e os 7 slides** não foram escritos. ([7](docs/07-pitch-e-demo.md))
+8. **Água por ciclo** falta em oito culturas. O ECOCROP não serve para isso ([14](docs/14-ecocrop-ciclo.md)); a fonte certa é Embrapa por cultura ou o Kc do FAO 56. Não bloqueia: o motor declara a falta em vez de afirmar.
+9. **A confiança mede cobertura de critério, não qualidade de fonte.** Com o ciclo do ECOCROP preenchido, cinco culturas foram a 100% ao lado do caupi, cujo dado é melhor. O número certo para essa diferença, `qualidade_do_dado`, a resposta já carrega e a fala não diz. ([14 §5](docs/14-ecocrop-ciclo.md))
 
-## Próximos passos sugeridos para amanhã, em ordem
+**Saiu desta lista em 15/11:** a regra de comparação do motor, que era o item mais bloqueante — virou três notas separadas e 2.748 casos de teste; o contrato de retorno; o nome do projeto; os limiares sem fonte; e o ciclo de cinco culturas.
 
-1. Fechar o contrato de retorno do motor e mandar ao Giuliano. Destrava os dois lados.
-2. Definir a regra de comparação: como o motor ordena as opções.
-3. Reescrever a abertura do pitch com o argumento do solo, não com previsão de 2027.
-4. Ligar para 3 produtores de Roraima com as três perguntas sobre medo de investir.
-5. Preencher ciclo e água das culturas que faltam, priorizando mandioca, caupi, milho, melancia e banana.
-6. Escrever o pitch de 30 segundos e os 7 slides, em inglês.
-7. Submeter cedo uma versão simples e ir reenviando.
+## Ordem sugerida do que falta hoje
+
+1. Confirmar a hora do prazo. Decide o ritmo de tudo o que vem depois.
+2. Submeter cedo uma versão simples e ir reenviando.
+3. As três ligações. Quinze minutos tiram o pitch de "uma entrevista em Goiás, n=1".
+4. Escrever os 7 slides, em inglês.
+5. Falar no microfone na demo, uma vez, antes de apresentar para alguém.
+6. Água por ciclo, se sobrar tempo. É o único item da lista que não muda nada se ficar de fora.
 
 ---
 
@@ -91,8 +97,8 @@ Medidos no NASA POWER em 14/11/2026, ponto do Cantá (lat 2,61, lon -60,60). Det
 
 E o que **não** se confirmou, igualmente importante:
 
-- "Ano de El Niño é ano seco" não se sustenta: a média desses anos é só 10% abaixo do normal. O déficit aparece nos eventos fortes.
-- 2027 cai num ano de decaimento, e esses anos dão média de -2%. **Não há base para prever repetição de 2026.**
+- "Ano de El Niño é ano seco" não se sustenta: nos anos de El Niño da nossa série o desvio de chuva de junho a setembro vai de **−33% a +17%**, e vários vieram acima da média. **Usamos a faixa, nunca a média:** a lista de anos está incompleta (faltam ao menos 1994, 2018 e 2019, cerca de um quarto da amostra), e acrescentar anos só aumenta a dispersão — o que torna a faixa mais forte que a média, não mais fraca. ([18 §2.1](docs/18-pendencias.md))
+- **Não há base para prever repetição de 2026.** A frase sobre anos de decaimento dar −2% saiu daqui em 15/11: dependia da mesma lista não conferida.
 - Chuva mais forte não aconteceu em 2026: o maior dia foi 35,5 mm, abaixo da média de 44,4 mm.
 
 ---
