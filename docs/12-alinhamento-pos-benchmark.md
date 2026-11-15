@@ -144,8 +144,7 @@ alcança só quem o extensionista alcança.
    passos, declarado.
 4. **Qual a frase pronta sobre chuva?** Já escrita, no registro local, e **não
    abre o pitch**: vai no slide de validade.
-5. **Usar "AgroDeal"?** Não. Nome não checado é risco desnecessário num slide. A
-   demo está com título descritivo.
+5. **Usar "AgroDeal"?** **Revertido em 14h50 pelo Welder: sim, fica.** A busca não achou produto registrado, e o time já está inscrito assim. O risco real é outro: o espaço está cheio de marketplaces com nomes parecidos, então o subtítulo "What do I plant next?" é obrigatório no slide 1.
 6. **Prazo?** 22h59 até confirmação.
 
 ## Fontes verificadas nesta rodada

@@ -14,7 +14,7 @@
 - Só número que está no repositório, com a fonte no próprio texto ou no campo de referências.
 - Nada de "nenhuma ferramenta faz isso" sobre o que o ZARC e o RAImundo fazem (doc 12).
 - O que não fazemos está escrito: previsão de chuva, preço, mão de obra, cobertura de culturas.
-- Sem o nome AgroDeal, que não foi checado.
+- **Atualizado 15/11, 14h50: o nome FICA AgroDeal**, com o subtítulo obrigatório "What do I plant next?". Ver docs/18.
 - O estado da tabela de culturas é o do `main`: 14 culturas, 3 marcadas como dado bom, 4 parcial, 7 falta; 10 das 14 sem ciclo. Se o ciclo pelo ECOCROP entrar, atualizar a frase do campo 5.
 
 ---
