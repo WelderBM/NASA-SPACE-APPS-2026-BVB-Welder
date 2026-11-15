@@ -24,6 +24,9 @@ Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift:
 | [6. Cerne e arquitetura](docs/06-cerne-e-arquitetura.md) | as quatro camadas, o contrato de retorno, o fluxo do atendimento, o que falta fechar |
 | [7. Pitch e demo](docs/07-pitch-e-demo.md) | a correção urgente do pitch, contexto, os números que valem slide |
 | [8. Fontes](docs/08-fontes.md) | tudo que foi lido, agrupado por tema |
+| [9. Decisões do MVP, 15/11](docs/09-mvp-decisoes-15-11.md) | solo, WhatsApp sem site, plano A, áudio nos dois sentidos, slides em vez de vídeo |
+| [10. O cruzamento](docs/10-cruzamento.md) | **como o dado chega até a decisão**: as regras, o protótipo que reprovou e por quê, o veredito de viabilidade |
+| [Motor](motor/cerne.py) | o cerne rodando: contrato de entrada e saída, as três notas, as frases de molde fixo |
 | [Persona secundária (site)](docs/persona-secundaria.md) | a trilha do Giuliano e a regra de verificação de textos |
 
 ---
