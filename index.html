@@ -274,6 +274,11 @@ function mostraRiscos(){
   const o=(st.ultima.opcoes||[])[0];
   if(!o){responde('Dessa eu não tenho número pra te dar.',undefined,'inicio');return}
   const p=[];
+  // quando o destaque e uma cultura que o motor nao consegue avaliar, os
+  // numeros do risco sao da ALTERNATIVA, nao dela. Sem nomear, o "ela" das
+  // frases seguintes trocava de dono no meio da mensagem.
+  if(st.ultima.destaque&&st.ultima.destaque!==o.id)
+    p.push('Da '+nome(o.id)+', que é a que eu conheço melhor:');
   if(o.avisos&&o.avisos.length)p.push(o.avisos.join('. '));
   const falta=o.nao_sei_nao_dito||o.nao_sei||[];
   if(falta.length)p.push('E tem coisa que eu não sei: '+falta[0]+'.');

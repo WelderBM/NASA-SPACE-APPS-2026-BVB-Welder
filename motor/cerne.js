@@ -15,7 +15,8 @@ const MES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto
            'setembro','outubro','novembro','dezembro'];
 const MOLDES_NEUTROS={
  indicacao:"Depois {de_colheu}, a melhor opção é {cultura}. {porque}. Quer saber os riscos?",
- indicacao_com_aviso:"Pelo que você quer, {cultura} seria a melhor, mas pode faltar água para ela. Quer ver uma de menor risco?",
+ indicacao_com_aviso:"Pelo que você quer, {cultura} seria a melhor, porque {porque}. Mas pode faltar água para ela. Quer ver uma de menor risco?",
+ indicacao_com_aviso_sem_porque:"Pelo que você quer, {cultura} seria a melhor, mas pode faltar água para ela. Quer ver uma de menor risco?",
  hipotese_boa:"{cultura} pode ser plantada. A chuva do período atende o que ela precisa. Quer comparar com as outras?",
  hipotese_ruim:"{cultura} pode ser plantada, mas pode faltar água. A chuva do período fica abaixo do que ela precisa. Quer ver outra?",
  hipotese_parente:"{cultura} é da mesma família {de_colheu}. Plantar em seguida multiplica as pragas de solo. Não recomendo.",
@@ -28,7 +29,8 @@ const MOLDES_NEUTROS={
  hipotese_sem_agua:"{cultura} não é da mesma família {de_colheu}. A exigência de água dela não está registrada; a janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
  indicacao_pouca_confianca:"Depois {de_colheu}, a melhor opção é {cultura}, mas só {pct}% dos critérios dessa prioridade puderam ser avaliados nela.",
  lacuna_falada:"A leitura deste ano vai até {ate}; para {mes} há apenas a média de {anos} anos, sem ajuste pelo ano corrente.",
- melhor_sem_ciclo:"Para esse objetivo a cultura indicada seria {cultura}, mas falta a duração do ciclo dela. Entre as avaliáveis, {alternativa} é a mais próxima.",
+ melhor_sem_ciclo:"Para esse objetivo a cultura indicada seria {cultura}, porque {porque}. Falta a duração do ciclo dela. Entre as avaliáveis, {alternativa} é a mais próxima.",
+ melhor_sem_ciclo_sem_porque:"Para esse objetivo a cultura indicada seria {cultura}, mas falta a duração do ciclo dela. Entre as avaliáveis, {alternativa} é a mais próxima.",
  solo_fundo:"Camada superficial {sup}; camada profunda {fundo}. A reserva profunda é a que sustenta no veranico.",
  aviso_calor:"A máxima de {mes} chega a {pico} °C, acima do limite de {limite} °C dessa cultura.",
  agua_sem_numero:"A exigência de água dela não está registrada. A janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
@@ -184,12 +186,25 @@ class Cerne{
     if(c.forrageira)out.push(['pasto',{}]);
     return out;
   }
-  renderPorque(pqs,prioridade,M,cn,dcn){
+  // evitar: chave de porque que nao deve ser usada, porque a razao da PROPRIA
+  // prioridade e tautologica no melhor_sem_ciclo. quantos: quantas juntar.
+  // Espelho do render_porque do cerne.py, inclusive na ordem de varredura.
+  renderPorque(pqs,prioridade,M,cn,dcn,evitar,quantos){
+    quantos=quantos||1;
     const d={};for(const[k,pr]of pqs)if(!(k in d))d[k]=pr;
+    if(evitar)delete d[evitar];
     const ordem=(prioridade==='risco'?[prioridade,prioridade+'_seca']:[prioridade]).concat(['agua','familia']);
-    for(const k of ordem)if(k in d)return [fmt(lista(M.porques[k]||'')[0],Object.assign({colheu:cn,de_colheu:dcn},d[k])),k];
-    for(const k in d)return [fmt(lista(M.porques[k]||'')[0],Object.assign({colheu:cn,de_colheu:dcn},d[k])),k];
-    return ['',null];
+    const resto=Object.keys(d).filter(k=>ordem.indexOf(k)<0);
+    const saida=[];
+    for(const k of ordem.concat(resto)){
+      if(k in d&&saida.length<quantos){
+        const t=fmt(lista(M.porques[k]||'')[0],Object.assign({colheu:cn,de_colheu:dcn},d[k]));
+        if(t)saida.push([t,k]);
+      }
+    }
+    if(!saida.length)return ['',null];
+    if(quantos===1)return saida[0];
+    return [saida.map(x=>x[0]).join(', e '),saida[0][1]];
   }
   avisos(r,M){const out=[],v=r.veranico;
     if(r.agua_indireta&&v)out.push(fmt(lista(M.agua_sem_numero||'')[0],
@@ -260,7 +275,7 @@ class Cerne{
       efeito:'não dá para dizer se cabe na janela recomendada',falar:false});
     res.sei_pouco=res.opcoes.filter(o=>!o.risco.avaliavel)
       .map(o=>({cultura:o.cultura,id:o.id,familia:o.familia,encaixe:o.encaixe,
-        confianca:o.confianca,falta:o.nao_sei}))
+        confianca:o.confianca,_pqs:o._pqs||[],falta:o.nao_sei}))
       .sort((a,b)=>(a.encaixe==null)-(b.encaixe==null)||(b.encaixe||0)-(a.encaixe||0));
     const gate=o=>((o.confianca||0)>=CONF_MIN?0:1);
     res.opcoes=res.opcoes.filter(o=>o.risco.avaliavel)
@@ -289,16 +304,22 @@ class Cerne{
       const sp=res.sei_pouco.length?res.sei_pouco[0]:null;
       if(sp&&(sp.confianca||0)>=CONF_MIN&&((sp.encaixe||0)-(o.encaixe||0))>=MARGEM_SEM_CICLO){
         res.destaque=sp.id;
-        res.falas=this.renderAll(M,'melhor_sem_ciclo',null,
-          {cultura:nc(sp.id),alternativa:nc(o.id)});
-        o.avisos.unshift(`${sp.cultura} encaixa melhor no que ele pediu, mas falta o ciclo dela`);
+        // diz o que sabe antes do que nao sabe: ver o comentario no cerne.py
+        const [pqsp]=this.renderPorque(sp._pqs||[],p.prioridade,M,cn,dcn,p.prioridade,2);
+        res.falas=this.renderAll(M,pqsp?'melhor_sem_ciclo':'melhor_sem_ciclo_sem_porque',null,
+          {cultura:nc(sp.id),alternativa:nc(o.id),porque:pqsp});
+        // o aviso dessa cultura NAO entra nos avisos da outra: a pagina junta os
+        // avisos numa frase so e o "ela" trocava de dono no meio da mensagem
       }else if((o.confianca||0)<CONF_MIN){
         const pct=Math.floor((o.confianca||0)*100+0.5);
         res.falas=this.renderAll(M,'indicacao_pouca_confianca',null,
           {colheu:cn,de_colheu:dcn,cultura:nc(o.id),pct:pct});
         o.avisos.unshift(`só ${pct}% dos critérios dessa prioridade puderam ser avaliados`);
       }else if(o.risco.agua&&o.risco.agua.nivel==='alto'){
-        res.falas=this.renderAll(M,'indicacao_com_aviso','fechos_aviso',{cultura:nc(o.id)});
+        // ver o comentario no cerne.py: dizia so a ma noticia
+        const [pqa]=this.renderPorque(o._pqs,p.prioridade,M,cn,dcn,'agua');
+        res.falas=this.renderAll(M,pqa?'indicacao_com_aviso':'indicacao_com_aviso_sem_porque',
+          'fechos_aviso',{cultura:nc(o.id),porque:pqa});
         o.avisos.unshift('o encaixe é bom mas o lugar não dá a água que ela pede');
       }else{
         const [pq]=this.renderPorque(o._pqs,p.prioridade,M,cn,dcn);
@@ -317,6 +338,7 @@ class Cerne{
     if(res.falas.length)res.fala=res.falas[0];
     if(!res.destaque&&res.opcoes.length)res.destaque=res.opcoes[0].id;
     res.opcoes.forEach(o=>{delete o._pqs});
+    res.sei_pouco.forEach(o=>{delete o._pqs});
     res.limites.push('de onde vem a semente ou a muda e quanto ela custa não entra aqui; '+
       'esta resposta diz o que plantar, não se dá para comprar');
     return res;

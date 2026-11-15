@@ -132,6 +132,11 @@
       "Se fosse eu, depois {de_colheu} eu botava {cultura}. {porque}."
     ],
     "indicacao_com_aviso": [
+      "Pelo que você quer, {cultura} seria a melhor, porque {porque}. Mas te aviso: pode faltar água pra ela.",
+      "{cultura} encaixa no que você quer, {porque}. Só que a água é apertada: pode faltar.",
+      "Ia te dizer {cultura}, que {porque}, mas tem um porém: a chuva desse tempo fica curta pro que ela pede."
+    ],
+    "indicacao_com_aviso_sem_porque": [
       "Pelo que você quer, {cultura} seria a melhor, mas te aviso: pode faltar água pra ela.",
       "{cultura} encaixa no que você quer, só que a água é apertada. Pode faltar.",
       "Ia te dizer {cultura}, mas tem um porém: a chuva desse tempo fica curta pro que ela pede."
@@ -248,6 +253,10 @@
       "Repara numa coisa: a camada de cima está {sup} e a de baixo {fundo}. É a de baixo que socorre na estiagem."
     ],
     "melhor_sem_ciclo": [
+      "Pra isso aqui quem serve é {cultura}: {porque}. O que eu não sei é quanto tempo ela leva na terra, então não garanto que cabe. Das que eu conheço bem, a mais perto é {alternativa}.",
+      "Olha, {cultura} é a que serve pro que você quer, porque {porque}. Só me falta o tempo dela. Das que eu conheço direito, {alternativa} é a que mais chega perto."
+    ],
+    "melhor_sem_ciclo_sem_porque": [
       "Pra isso aqui quem serve é {cultura}, só que eu não sei quanto tempo ela leva na terra, então não garanto que cabe. Das que eu conheço bem, a mais perto é {alternativa}.",
       "Olha, {cultura} é a que serve pro que você quer. Só me falta o tempo dela. Das que eu conheço direito, {alternativa} é a que mais chega perto."
     ],

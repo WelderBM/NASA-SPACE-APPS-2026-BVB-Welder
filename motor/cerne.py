@@ -42,7 +42,8 @@ MES  = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto',
 # Serve de rede e, na demo, aparece como limite declarado.
 MOLDES_NEUTROS = {
   'indicacao': "Depois {de_colheu}, a melhor opção é {cultura}. {porque}. Quer saber os riscos?",
-  'indicacao_com_aviso': "Pelo que você quer, {cultura} seria a melhor, mas pode faltar água para ela. Quer ver uma de menor risco?",
+  'indicacao_com_aviso': "Pelo que você quer, {cultura} seria a melhor, porque {porque}. Mas pode faltar água para ela. Quer ver uma de menor risco?",
+  'indicacao_com_aviso_sem_porque': "Pelo que você quer, {cultura} seria a melhor, mas pode faltar água para ela. Quer ver uma de menor risco?",
   'hipotese_boa': "{cultura} pode ser plantada. A chuva do período atende o que ela precisa. Quer comparar com as outras?",
   'hipotese_ruim': "{cultura} pode ser plantada, mas pode faltar água. A chuva do período fica abaixo do que ela precisa. Quer ver outra?",
   'hipotese_parente': "{cultura} é da mesma família {de_colheu}. Plantar em seguida multiplica as pragas de solo. Não recomendo.",
@@ -56,7 +57,8 @@ MOLDES_NEUTROS = {
   'hipotese_sem_agua': "{cultura} não é da mesma família {de_colheu}. A exigência de água dela não está registrada; a janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
   'indicacao_pouca_confianca': "Depois {de_colheu}, a melhor opção é {cultura}, mas só {pct}% dos critérios dessa prioridade puderam ser avaliados nela.",
   'lacuna_falada': "A leitura deste ano vai até {ate}; para {mes} há apenas a média de {anos} anos, sem ajuste pelo ano corrente.",
-  'melhor_sem_ciclo': "Para esse objetivo a cultura indicada seria {cultura}, mas falta a duração do ciclo dela. Entre as avaliáveis, {alternativa} é a mais próxima.",
+  'melhor_sem_ciclo': "Para esse objetivo a cultura indicada seria {cultura}, porque {porque}. Falta a duração do ciclo dela. Entre as avaliáveis, {alternativa} é a mais próxima.",
+  'melhor_sem_ciclo_sem_porque': "Para esse objetivo a cultura indicada seria {cultura}, mas falta a duração do ciclo dela. Entre as avaliáveis, {alternativa} é a mais próxima.",
   'solo_fundo': "Camada superficial {sup}; camada profunda {fundo}. A reserva profunda é a que sustenta no veranico.",
   'aviso_calor': "A máxima de {mes} chega a {pico} °C, acima do limite de {limite} °C dessa cultura.",
   'agua_sem_numero': "A exigência de água dela não está registrada. A janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
@@ -272,17 +274,27 @@ def porques(c, r, fam_colhida):
     if c.get('forrageira'): out.append(('pasto', {}))
     return out
 
-def render_porque(pqs, prioridade, moldes, colheu_nome, de_colheu=''):
+def render_porque(pqs, prioridade, moldes, colheu_nome, de_colheu='',
+                  evitar=None, quantos=1):
+    """evitar: chave de porque que nao deve ser usada. Serve para o
+    melhor_sem_ciclo, onde a razao da PROPRIA prioridade e tautologica:
+    "quem serve e braquiaria, e ela serve de pasto". quantos: quantas razoes
+    juntar. O motor tinha quatro razoes prontas da braquiaria e falava zero,
+    e falava a unica lacuna duas vezes."""
     d = {}
     for k, pr in pqs: d.setdefault(k, pr)
+    if evitar: d.pop(evitar, None)
     ordem = ([prioridade, prioridade+'_seca'] if prioridade == 'risco'
              else [prioridade]) + ['agua', 'familia']
-    for k in ordem:
-        if k in d:
-            return _fmt(moldes['porques'].get(k, ''), colheu=colheu_nome, de_colheu=de_colheu, **d[k]), k
-    for k, pr in d.items():
-        return _fmt(moldes['porques'].get(k, ''), colheu=colheu_nome, de_colheu=de_colheu, **pr), k
-    return '', None
+    saida = []
+    for k in ordem + [k for k in d if k not in ordem]:
+        if k in d and len(saida) < quantos:
+            t = _fmt(moldes['porques'].get(k, ''), colheu=colheu_nome,
+                     de_colheu=de_colheu, **d[k])
+            if t: saida.append((t, k))
+    if not saida: return '', None
+    if quantos == 1: return saida[0]
+    return ', e '.join(t for t, _ in saida), saida[0][1]
 
 def avisos(r, moldes):
     out = []
@@ -397,7 +409,7 @@ def atender(p):
     # virar destaque com encaixe inflado por ignorancia (ver o bloco abaixo)
     res['sei_pouco'] = [{'cultura': o['cultura'], 'id': o['id'], 'familia': o['familia'],
                          'encaixe': o['encaixe'], 'confianca': o['confianca'],
-                         'falta': o['nao_sei']}
+                         '_pqs': o.get('_pqs') or [], 'falta': o['nao_sei']}
                         for o in res['opcoes'] if not o['risco'].get('avaliavel')]
     res['sei_pouco'].sort(key=lambda x: (x['encaixe'] is None, -(x['encaixe'] or 0)))
     res['opcoes'] = [o for o in res['opcoes'] if o['risco'].get('avaliavel')]
@@ -442,16 +454,31 @@ def atender(p):
         if sp and (sp['confianca'] or 0) >= CONF_MIN \
                 and (sp['encaixe'] or 0) - (o['encaixe'] or 0) >= MARGEM_SEM_CICLO:
             res['destaque'] = sp['id']
-            res['falas'] = render_all(M, 'melhor_sem_ciclo',
-                cultura=nome_curto(sp['id']), alternativa=nome_curto(o['id']))
-            o['avisos'].insert(0, f"{sp['cultura']} encaixa melhor no que ele pediu, mas falta o ciclo dela")
+            # DIZ O QUE SABE ANTES DO QUE NAO SABE. Na conversa de 16h15 o bot
+            # recomendou braquiaria para pasto com confianca 1,00, quatro
+            # razoes medidas na mao (forrageira, residuo alto, tolera seca,
+            # familia diferente) e falou NENHUMA, so a lacuna do ciclo. Evita a
+            # razao da propria prioridade, que aqui seria tautologica.
+            pq, _ = render_porque(sp.get('_pqs') or [], p['prioridade'], M, cn, dcn,
+                                  evitar=p['prioridade'], quantos=2)
+            res['falas'] = render_all(M, 'melhor_sem_ciclo' if pq else 'melhor_sem_ciclo_sem_porque',
+                cultura=nome_curto(sp['id']), alternativa=nome_curto(o['id']), porque=pq)
+            # o aviso da braquiaria NAO entra nos avisos da mandioca: a pagina
+            # junta os avisos numa frase so, e o "ela" da frase seguinte, que e
+            # da mandioca, era lido como sendo da braquiaria. Dois numeros de uma
+            # cultura atribuidos a outra. A fala ja diz o que falta na braquiaria.
         elif (o['confianca'] or 0) < CONF_MIN:
             res['falas'] = render_all(M, 'indicacao_pouca_confianca', colheu=cn, de_colheu=dcn,
                 cultura=nome_curto(o['id']), pct=_r((o['confianca'] or 0)*100))
             o['avisos'].insert(0, f"só {_r((o['confianca'] or 0)*100)}% dos critérios dessa prioridade puderam ser avaliados")
         elif o['risco'].get('agua', {}).get('nivel') == 'alto':
-            res['falas'] = render_all(M, 'indicacao_com_aviso', 'fechos_aviso',
-                                      cultura=nome_curto(o['id']))
+            # dizia so a ma noticia: 234 das 816 indicacoes caem aqui e nenhuma
+            # dizia POR QUE a cultura e a melhor. Evita a razao 'agua', senao a
+            # frase diz "a chuva da o que ela precisa, mas pode faltar agua".
+            pqa, _ = render_porque(o['_pqs'], p['prioridade'], M, cn, dcn, evitar='agua')
+            res['falas'] = render_all(M,
+                'indicacao_com_aviso' if pqa else 'indicacao_com_aviso_sem_porque',
+                'fechos_aviso', cultura=nome_curto(o['id']), porque=pqa)
             o['avisos'].insert(0, 'o encaixe é bom mas o lugar não dá a água que ela pede')
         else:
             pq, _ = render_porque(o['_pqs'], p['prioridade'], M, cn, dcn)
@@ -472,6 +499,7 @@ def atender(p):
     if res.get('falas'): res['fala'] = res['falas'][0]
     if not res.get('destaque') and res['opcoes']: res['destaque'] = res['opcoes'][0]['id']
     for o in res['opcoes']: o.pop('_pqs', None)
+    for sp_ in res['sei_pouco']: sp_.pop('_pqs', None)
     for l in res['lacunas']:
         res['limites'].append(f"{l['o_que']}: {l['por_que']}, então {l['efeito']}")
     # a linha fixa do ZARC saiu daqui: era incondicional e por isso FALSA para o
