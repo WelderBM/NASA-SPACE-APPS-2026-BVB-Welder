@@ -229,6 +229,14 @@
     "aviso_calor": [
       "E o calor: {mes} costuma bater {pico} graus aí, e ela sofre acima de {limite}.",
       "Repara no calor também: a máxima de {mes} fica em {pico} graus, e o limite dela é {limite}."
+    ],
+    "hipotese_sem_agua": [
+      "{cultura} não é parente {de_colheu}, isso já ajuda. Quanta água ela pede eu não sei, mas a janela dá {chuva_mm} milímetros e a estiagem mais longa {base} fica em {estiagem} dias.",
+      "Parente {de_colheu} ela não é. Agora, o quanto de água ela pede me falta: o que eu tenho é {chuva_mm} milímetros na janela e até {estiagem} dias sem chuva {base}."
+    ],
+    "indicacao_pouca_confianca": [
+      "Depois {de_colheu}, a que mais encaixa é {cultura}. Mas te aviso: dela eu só consegui medir {pct}% do que importa pro que você quer.",
+      "A que mais encaixa é {cultura}. Só que eu conheço pouco dela: medi {pct}% do que pesa na sua escolha. Fica o aviso."
     ]
   }
 }

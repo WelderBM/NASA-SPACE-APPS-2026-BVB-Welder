@@ -27,6 +27,9 @@ DEC   = {d['id']: d for d in _j('decisoes.json')['decisoes']}
 LOCAL = {'roraima': _j('local-roraima.json'),
          'centro-oeste': _j('local-centro-oeste.json')}
 DIAS = [31,28,31,30,31,30,31,31,30,31,30,31]
+# abaixo disso a nota se apoia na minoria dos criterios, entao a cultura ainda
+# aparece na lista mas nao pode ser a indicacao falada sem o aviso junto
+CONF_MIN = 0.5
 MES  = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto',
         'setembro','outubro','novembro','dezembro']
 
@@ -45,6 +48,8 @@ MOLDES_NEUTROS = {
   'estado_da_terra': "O solo está {estado}. {mes} costuma ter {chuva}.",
   'fechos_terra': "",
   'nao_sei_prever': "Previsão de chuva eu não tenho. {mes} costuma ter {chuva}, com estiagem máxima de {estiagem} dias, e o solo está {estado}.",
+  'hipotese_sem_agua': "{cultura} não é da mesma família {de_colheu}. A exigência de água dela não está registrada; a janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
+  'indicacao_pouca_confianca': "Depois {de_colheu}, a melhor opção é {cultura}, mas só {pct}% dos critérios dessa prioridade puderam ser avaliados nela.",
   'aviso_calor': "A máxima de {mes} chega a {pico} °C, acima do limite de {limite} °C dessa cultura.",
   'agua_sem_numero': "A exigência de água dela não está registrada. A janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
   'porques': {'familia': "é de outra família {de_colheu}, então as pragas de solo não se mantêm",
@@ -105,7 +110,8 @@ def qualifica_chuva(place, m):
 def estado_observado(place, m0):
     cl, an = NASA[place]['clim'], NASA[place]['ano2026']
     f, det = fator_do_ano(place, m0)
-    e = {'mes': MES[m0], 'chuva_normal_do_mes_mm': cl['chuva_mm'][m0],
+    e = {'mes': MES[m0], 'anos_de_serie': NASA[place].get('abr_set', {}).get('anos_base'),
+         'chuva_normal_do_mes_mm': cl['chuva_mm'][m0],
          'chuva_qualitativa': qualifica_chuva(place, m0),
          'veranico_normal_do_mes_dias': cl['veranico'][m0]}
     if an['solo_raiz'][m0] is not None:
@@ -268,6 +274,7 @@ def atender(p):
         pqs = porques(c, r, fam) if fam else []
         res['opcoes'].append({
             'cultura': c['nome'], 'id': nome, 'familia': c['familia'],
+            'ciclo_dias': c.get('ciclo_dias'),
             'mesma_familia_do_que_colheu': bool(fam and c['familia'] == fam),
             'risco': r, 'encaixe': _r(enc,2) if enc is not None else None,
             'confianca': _r(conf,2), '_pqs': pqs,
@@ -278,7 +285,8 @@ def atender(p):
     res['sei_pouco'] = [{'cultura': o['cultura'], 'familia': o['familia'], 'falta': o['nao_sei']}
                         for o in res['opcoes'] if not o['risco'].get('avaliavel')]
     res['opcoes'] = [o for o in res['opcoes'] if o['risco'].get('avaliavel')]
-    res['opcoes'].sort(key=lambda o: (o['encaixe'] is None, -(o['encaixe'] or 0)))
+    res['opcoes'].sort(key=lambda o: (o['encaixe'] is None,
+        0 if (o['confianca'] or 0) >= CONF_MIN else 1, -(o['encaixe'] or 0)))
 
     if intencao == 'e-se' and p.get('hipotese'):
         h = p['hipotese']; alvo = nome_curto(h)
@@ -293,12 +301,22 @@ def atender(p):
             mes=est['mes'], chuva=M['chuva_qualitativa'][est['chuva_qualitativa']], **kw)
         elif res['opcoes'][0]['risco'].get('agua', {}).get('nivel') == 'alto':
                                  res['falas'] = render_all(M, 'hipotese_ruim', 'fechos_hipotese', **kw)
+        elif res['opcoes'][0]['risco'].get('agua', {}).get('nivel') == 'sem dado':
+            # NAO dizer que a chuva da quando nao se sabe quanto ela pede
+            rk = res['opcoes'][0]['risco']; v = rk.get('veranico') or {}
+            res['falas'] = render_all(M, 'hipotese_sem_agua',
+                chuva_mm=rk.get('chuva_ajustada_mm') or rk.get('chuva_normal_mm'),
+                estiagem=_r(v.get('dias', 0)), base=v.get('base', 'no ciclo'), **kw)
         else:                    res['falas'] = render_all(M, 'hipotese_boa', 'fechos_hipotese', **kw)
     elif not res['opcoes'] and res['sei_pouco']:
         res['falas'] = render_all(M, 'sem_dado', n=len(res['sei_pouco']))
     elif res['opcoes']:
         o = res['opcoes'][0]
-        if o['risco'].get('agua', {}).get('nivel') == 'alto':
+        if (o['confianca'] or 0) < CONF_MIN:
+            res['falas'] = render_all(M, 'indicacao_pouca_confianca', colheu=cn, de_colheu=dcn,
+                cultura=nome_curto(o['id']), pct=_r((o['confianca'] or 0)*100))
+            o['avisos'].insert(0, f"só {_r((o['confianca'] or 0)*100)}% dos critérios dessa prioridade puderam ser avaliados")
+        elif o['risco'].get('agua', {}).get('nivel') == 'alto':
             res['falas'] = render_all(M, 'indicacao_com_aviso', 'fechos_aviso',
                                       cultura=nome_curto(o['id']))
             o['avisos'].insert(0, 'o encaixe é bom mas o lugar não dá a água que ela pede')

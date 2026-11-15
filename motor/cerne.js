@@ -10,6 +10,7 @@
 // resposta. Se divergirem, o teste quebra.
 (function(global){
 const DIAS=[31,28,31,30,31,30,31,31,30,31,30,31];
+const CONF_MIN=0.5;
 const MES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto',
            'setembro','outubro','novembro','dezembro'];
 const MOLDES_NEUTROS={
@@ -24,6 +25,8 @@ const MOLDES_NEUTROS={
  sem_dado:"Das culturas da região eu sei a família de {n}, mas não sei a duração de nenhuma. Sem isso eu não indico.",
  estado_da_terra:"O solo está {estado}. {mes} costuma ter {chuva}.",
  nao_sei_prever:"Previsão de chuva eu não tenho. {mes} costuma ter {chuva}, com estiagem máxima de {estiagem} dias, e o solo está {estado}.",
+ hipotese_sem_agua:"{cultura} não é da mesma família {de_colheu}. A exigência de água dela não está registrada; a janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
+ indicacao_pouca_confianca:"Depois {de_colheu}, a melhor opção é {cultura}, mas só {pct}% dos critérios dessa prioridade puderam ser avaliados nela.",
  aviso_calor:"A máxima de {mes} chega a {pico} °C, acima do limite de {limite} °C dessa cultura.",
  agua_sem_numero:"A exigência de água dela não está registrada. A janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
  porques:{familia:"é de outra família {de_colheu}, então as pragas de solo não se mantêm",
@@ -67,7 +70,8 @@ class Cerne{
     return a[m]<=c[3]?'pouca':a[m]>=c[8]?'muita':'media'}
   estadoObservado(place,m0){
     const cl=this.NASA[place].clim,an=this.NASA[place].ano2026,[f,det]=this.fatorDoAno(place,m0);
-    const e={mes:MES[m0],chuva_normal_do_mes_mm:cl.chuva_mm[m0],
+    const e={mes:MES[m0],anos_de_serie:(this.NASA[place].abr_set||{}).anos_base||null,
+             chuva_normal_do_mes_mm:cl.chuva_mm[m0],
              chuva_qualitativa:this.qualificaChuva(place,m0),
              veranico_normal_do_mes_dias:cl.veranico[m0]};
     if(an.solo_raiz[m0]!=null){const o=an.solo_raiz[m0],n=cl.solo_raiz[m0];
@@ -179,7 +183,7 @@ class Cerne{
       const [r,ns]=this.risco(c,place,m0);
       const [enc,conf]=this.encaixe(c,p.prioridade);
       const pqs=fam?this.porques(c,r,fam):[];
-      res.opcoes.push({cultura:c.nome,id:nome,familia:c.familia,
+      res.opcoes.push({cultura:c.nome,id:nome,familia:c.familia,ciclo_dias:c.ciclo_dias||null,
         mesma_familia_do_que_colheu:!!(fam&&c.familia===fam),risco:r,
         encaixe:enc==null?null:Math.round(enc*100)/100,
         confianca:Math.round(conf*100)/100,_pqs:pqs,
@@ -189,8 +193,9 @@ class Cerne{
     }
     res.sei_pouco=res.opcoes.filter(o=>!o.risco.avaliavel)
       .map(o=>({cultura:o.cultura,familia:o.familia,falta:o.nao_sei}));
+    const gate=o=>((o.confianca||0)>=CONF_MIN?0:1);
     res.opcoes=res.opcoes.filter(o=>o.risco.avaliavel)
-      .sort((a,b)=>(a.encaixe==null)-(b.encaixe==null)||(b.encaixe||0)-(a.encaixe||0));
+      .sort((a,b)=>(a.encaixe==null)-(b.encaixe==null)||gate(a)-gate(b)||(b.encaixe||0)-(a.encaixe||0));
     if(intencao==='e-se'&&p.hipotese){
       const h=p.hipotese,alvo=nc(h);
       const parente=this.CULT[h].familia===fam,av=res.opcoes.length>0;
@@ -202,12 +207,22 @@ class Cerne{
         Object.assign({mes:est.mes,chuva:M.chuva_qualitativa[est.chuva_qualitativa]},kw));
       else if(res.opcoes[0].risco.agua&&res.opcoes[0].risco.agua.nivel==='alto')
         res.falas=this.renderAll(M,'hipotese_ruim','fechos_hipotese',kw);
-      else res.falas=this.renderAll(M,'hipotese_boa','fechos_hipotese',kw);
+      else if(res.opcoes[0].risco.agua&&res.opcoes[0].risco.agua.nivel==='sem dado'){
+        const rk=res.opcoes[0].risco,v=rk.veranico||{};
+        res.falas=this.renderAll(M,'hipotese_sem_agua',null,Object.assign({
+          chuva_mm:rk.chuva_ajustada_mm||rk.chuva_normal_mm,
+          estiagem:Math.floor((v.dias||0)+0.5),base:v.base||'no ciclo'},kw));
+      }else res.falas=this.renderAll(M,'hipotese_boa','fechos_hipotese',kw);
     }else if(!res.opcoes.length&&res.sei_pouco.length){
       res.falas=this.renderAll(M,'sem_dado',null,{n:res.sei_pouco.length});
     }else if(res.opcoes.length){
       const o=res.opcoes[0];
-      if(o.risco.agua&&o.risco.agua.nivel==='alto'){
+      if((o.confianca||0)<CONF_MIN){
+        const pct=Math.floor((o.confianca||0)*100+0.5);
+        res.falas=this.renderAll(M,'indicacao_pouca_confianca',null,
+          {colheu:cn,de_colheu:dcn,cultura:nc(o.id),pct:pct});
+        o.avisos.unshift(`só ${pct}% dos critérios dessa prioridade puderam ser avaliados`);
+      }else if(o.risco.agua&&o.risco.agua.nivel==='alto'){
         res.falas=this.renderAll(M,'indicacao_com_aviso','fechos_aviso',{cultura:nc(o.id)});
         o.avisos.unshift('o encaixe é bom mas o lugar não dá a água que ela pede');
       }else{
