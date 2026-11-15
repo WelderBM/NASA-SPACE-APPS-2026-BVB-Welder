@@ -21,7 +21,7 @@
 
 ## 1. Project Name
 
-[Decisão do Welder. O título da demo hoje é "Assistente da roça". Sugestão descritiva, sem nome de marca:]
+AgroDeal — What do I plant next?  (decidido pelo Welder em 15/11, 14h50; o time já está inscrito como AgroDeal. O subtítulo é obrigatório: sem ele o nome promete comércio, que é a única coisa que a ferramenta declara não fazer.)
 
 ```
 Assistente da Roça: what to plant after this harvest

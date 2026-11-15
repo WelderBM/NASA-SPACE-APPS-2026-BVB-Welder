@@ -10,9 +10,33 @@
 | o quê | de quem | estado |
 | --- | --- | --- |
 | Os nove campos em inglês, a declaração de uso de IA e as duas caixas | chat do dado | rascunho em `docs/15`, com colchetes a preencher |
-| Nome do projeto no slide e na submissão | **Welder** | decidido não usar "AgroDeal" sem checagem; falta escolher o título |
+| ~~Nome do projeto~~ | — | **RESOLVIDO 15/11, 14h50: fica AgroDeal**, decisão do Welder. Ver a ressalva abaixo |
 | Confirmar a hora do prazo com o líder local | **Welder** | conte 22h59 até confirmar |
 | Testar todos os links em aba anônima | **Welder** | nada pode pedir login |
+
+### O nome: decidido, com uma ressalva que precisa ir para o slide
+
+**Fica AgroDeal**, time e projeto. Zero retrabalho, e o nome já está no site do
+Space Apps.
+
+A ressalva é de posicionamento, não de marca. A busca de 15/11 não achou um
+produto registrado com esse nome, mas achou que o espaço está cheio de nomes
+quase iguais — Agrofy, Agroads, AgriAcordo, Agronegociar, AgriConnection,
+Broto — **e todos são marketplaces**. "Deal" promete comércio, e comércio é
+exatamente a única prioridade que a gente declara que **não** serve.
+
+**Como neutralizar, e isso é obrigatório no slide 1:**
+
+> **AgroDeal — What do I plant next?**
+
+O subtítulo carrega o sentido que o nome não carrega: a ferramenta parte da
+colheita e responde o próximo plantio. E no slide onde dizemos que não
+otimizamos lucro, abrir com uma frase que assume a leitura, em vez de deixar o
+júri achar contradição:
+
+> *"The name says deal, but this tool does not sell anything. It helps the
+> farmer choose what to optimize, and income is the one thing it says it cannot
+> answer."*
 
 ## 2. Afeta a Validade, e um jurado pode perguntar
 
