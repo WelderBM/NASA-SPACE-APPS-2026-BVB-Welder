@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Assistente da roça — demo</title>
+<title>AgroDeal — What do I plant next?</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0b141a;color:#e9edef;font:15px/1.5 system-ui,-apple-system,sans-serif;
@@ -47,6 +48,7 @@ body{background:#0b141a;color:#e9edef;font:15px/1.5 system-ui,-apple-system,sans
 .kv:last-child{border:0}.kv span:last-child{color:#8bd5bd;text-align:right;font-variant-numeric:tabular-nums}
 .lab{font-size:11px;color:#8696a0;margin:9px 0 5px;text-transform:uppercase;letter-spacing:.06em}
 .diag{font-size:11.5px;color:#8696a0;line-height:1.7}
+.en{font-size:11.5px;color:#54656f;background:#fff6d8;border-bottom:1px solid #f0e3b8;padding:8px 12px;line-height:1.5}
 .ok{color:#8bd5bd}.no{color:#f09595}
 .note{font-size:12px;color:#8696a0;padding:0 2px}
 select{width:100%;background:#2a3942;color:#e9edef;border:1px solid #2a3942;border-radius:7px;
@@ -57,7 +59,10 @@ select{width:100%;background:#2a3942;color:#e9edef;border:1px solid #2a3942;bord
 <div class="app">
   <div class="phone">
     <div class="bar"><div class="av">🌱</div>
-      <div><b>Assistente da roça</b><small id="sub">carregando…</small></div></div>
+      <div><b>AgroDeal</b><small id="sub">carregando…</small></div></div>
+    <div class="en" lang="en">This demo speaks Portuguese, the language of the
+      farmer it was built for. To try it, tap a crop chip, then a goal chip below.
+      The 7 slides and the pitch video are in English.</div>
     <div class="msgs" id="msgs"></div>
     <div class="prow"><span>o que você quer:</span><span id="prios"></span></div>
     <div class="chips" id="chips"></div>
@@ -97,7 +102,25 @@ select{width:100%;background:#2a3942;color:#e9edef;border:1px solid #2a3942;bord
 <script src="motor/cerne.js"></script>
 <script>
 
-const PRIOS={solo:'a terra melhorar',risco:'arriscar pouco',comida:'comida em casa',pasto:'pasto pro gado'};
+// PRIOS sai do DADO, nao do codigo: a pagina duplicava os rotulos e deixava de
+// fora a renda e a mao de obra, as duas que o motor responde dizendo que NAO
+// serve. Era por isso que o video prometia "ask about income" e a demo nao
+// entendia a palavra. O rotulo e a 'fala' da prioridade sem o "quero ".
+let PRIOS={},SINONIMOS={};
+function montaPrioridades(){
+  PRIOS={};SINONIMOS={};
+  for(const[k,v]of Object.entries(DADOS.prioridades.prioridades||{})){
+    PRIOS[k]=(v.fala||k).replace(/^quero\s+/,'');
+    SINONIMOS[k]=(v.sinonimos||[]).concat([PRIOS[k]]);
+  }
+}
+// cada pergunta da conversa declara o que aceita como resposta. Sem isso o
+// trata() classificava o texto sem olhar em que ponto da conversa ele chegou,
+// e a resposta a "o que te importa mais?" caia no "Nao peguei".
+function achaPrioridade(s){const n=N(s);
+  for(const[k,ts]of Object.entries(SINONIMOS))
+    for(const t of ts)if(n.includes(N(t)))return k;
+  return null}
 const INTENT=[
  ['estado-do-solo',['a terra ta','a terra esta','como ta a terra','como esta a terra','terra boa',
    'terra seca','ta seco','esta seco','molhad','umidade','como ta o solo','da pra mexer na terra','terra fraca']],
@@ -159,8 +182,12 @@ function responde(t,r,ctx){
     if(r!==undefined)painel(r);
     // o aviso do ano vem como SEGUNDO balao: a frase principal fica curta e o
     // produtor ouve o que o ano fez, que e o dado que eu mais escondia
-    const extra=r&&r.aviso_do_ano;
+    // UMA VEZ por mes: repetindo a cada resposta, na terceira o produtor para
+    // de ler e o dado que mais importa vira ruido. Troca de mes conta como
+    // noticia nova, porque o fator do ano muda com o mes.
+    const extra=(r&&r.aviso_do_ano&&st.anoDito!==st.mes)?r.aviso_do_ano:null;
     if(extra){
+      st.anoDito=st.mes;
       const d2=digitando();
       setTimeout(()=>{d2.remove();diz(extra);fala(extra,true);if(ctx)chips(ctx)},
                  Math.min(1400,500+extra.length*9));
@@ -198,6 +225,13 @@ function painel(r){
     if(o.nao_sei&&o.nao_sei.length)h+=`<div class="lab">Não sabemos</div><p class="diag">${o.nao_sei.join('<br>')}</p>`;}
   if(r.sei_pouco&&r.sei_pouco.length)
     h+=`<div class="lab">Sei a parentada, não o ciclo</div><p class="diag">${r.sei_pouco.map(s=>s.cultura).join(', ')}</p>`;
+  // defeito 9 do relatorio critico: as vezes uma cultura com encaixe MAIOR
+  // aparece abaixo de outra, porque a confianca dela nao passa de 50%. A regra
+  // e boa e a tela nao dizia por que, entao quem olhava achava que era erro.
+  const pulou=(r.opcoes||[]).filter((o,i,a)=>i>0&&(o.encaixe||0)>(a[0].encaixe||0));
+  if(pulou.length)h+=`<div class="lab">Por que essa ordem</div><p class="diag">`+
+    pulou.map(o=>`${o.cultura} encaixa mais (${o.encaixe}) e ficou abaixo: só `+
+      `${Math.round((o.confianca||0)*100)}% dos critérios dessa prioridade puderam ser medidos nela.`).join('<br>')+`</p>`;
   if(r.limites&&r.limites.length)h+=`<div class="lab">Limites</div><p class="diag">${r.limites.join('<br>')}</p>`;
   d.innerHTML=h;
 }
@@ -254,9 +288,23 @@ function defineColheita(c,ecoar){
   if(!st.prio){pedirPrioridade();return}
   indica();
 }
+const ACEITA={prioridade:achaPrioridade,colheita:achaCultura};
 function trata(s){
   diz(s,'me');
   const id=classifica(s),cult=achaCultura(s);
+  // o que a pergunta em pe aceita como resposta, DEPOIS de checar se o produtor
+  // mudou de assunto: intencao explicita ("e se eu plantar milho", "vai
+  // chover") vence a resposta a pergunta que estava em pe. Sem essa ordem, com
+  // a pergunta da colheita aberta o "e se eu plantar milho" definia milho como
+  // colheita em vez de hipotese.
+  const aceita=!id&&ACEITA[st.ctx];
+  if(aceita){
+    const v=aceita(s);
+    if(v!==null&&v!==undefined){
+      if(st.ctx==='prioridade'){st.prio=v;prios();indica();return}
+      if(st.ctx==='colheita'){defineColheita(v,false);return}
+    }
+  }
   if(st.pendente&&cult&&id!=='e-se'){defineColheita(cult,false);return}
   if(id==='estado-do-solo'){const r=pergunta({intencao:'estado-do-solo'});
     responde(escolhe(r,'terra'+st.mes),r,'terra');return}
@@ -278,7 +326,9 @@ function chips(ctx){
   const outra=()=>{const v=cs.filter(x=>x!==st.colheu);return v[Math.floor(Math.random()*v.length)]};
   if(st.ctx==='colheita'){cs.slice(0,6).forEach(x=>add(nome(x),()=>{diz('colhi '+nome(x),'me');defineColheita(x,false)}));}
   else if(st.ctx==='prioridade'){
-    Object.entries(PRIOS).forEach(([k,v])=>add(v,()=>{diz(v,'me');st.prio=k;prios();indica()}));}
+    Object.entries(PRIOS).filter(([k])=>
+      (DADOS.prioridades.prioridades[k]||{}).servivel||k==='renda')
+      .forEach(([k,v])=>add(v,()=>{diz(v,'me');st.prio=k;prios();indica()}));}
   else{
     const set={
       inicio:[['o que eu planto agora?',()=>trata('o que eu planto agora?')],
@@ -297,7 +347,9 @@ function chips(ctx){
 }
 function prios(){
   const p=$('prios');p.innerHTML='';
-  for(const[k,v]of Object.entries(PRIOS)){
+  const naBarra=Object.entries(PRIOS).filter(([k])=>
+    (DADOS.prioridades.prioridades[k]||{}).servivel||k==='renda');
+  for(const[k,v]of naBarra){
     const b=document.createElement('button');
     b.className='chip'+(k===st.prio?' on':'');b.textContent=v;
     b.onclick=()=>{if(k===st.prio)return;st.prio=k;prios();diz('agora é '+v,'me');
@@ -311,7 +363,7 @@ function montaMes(){
 }
 function trocaLugar(){
   const loc=DADOS.locais[st.lid],cs=loc.culturas_disponiveis;
-  st.colheu=null;st.prio=null;st.ultima=null;st.pendente=null;
+  st.colheu=null;st.prio=null;st.ultima=null;st.pendente=null;st.anoDito=null;
   const inicio={roraima:3,'centro-oeste':8}[st.lid];st.mes=inicio==null?3:inicio;
   montaMes();
   const sel=$('colheu');sel.innerHTML='<option value="">(ele ainda não disse)</option>';
@@ -387,6 +439,7 @@ Promise.all(['nasa-power.json','culturas.json','prioridades.json','local-roraima
   Object.entries(nasa.lugares).forEach(([k,v])=>{const o=document.createElement('option');
     o.value=k;o.textContent=v.nome;sel.appendChild(o)});
   st.lugar=Object.keys(nasa.lugares)[0];st.lid=DADOS.lid_de[st.lugar];
+  montaPrioridades();
   trocaLugar();micInit();diag();montaVozes();
 }).catch(e=>{$('sub').textContent='erro ao carregar';
   diz('Não consegui carregar os dados do motor: '+e.message,null,true)});

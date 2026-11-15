@@ -79,6 +79,24 @@ def _moldes(loc):
 
 def _lista(v): return v if isinstance(v, list) else [v]
 
+# concordancia num lugar so. O motor arredonda, a estiagem de junho e julho da
+# 1,2 e virava "1 dias" na boca do bot. Nenhum teste olhava gramatica: o
+# invariantes.py testava honestidade. Vale para TODOS os moldes de uma vez, em
+# vez de consertar molde por molde, que e consertar o caso e nao a classe.
+# o par mais longo vem PRIMEIRO: 'dias seguidos' tem que virar 'dia seguido'
+# antes de 'dias' virar 'dia', senao sobra "1 dia seguidos". Dicionario preserva
+# a ordem de insercao em Python e em JS, e os dois motores dependem disso.
+_PLURAL = {'dias seguidos': 'dia seguido', 'meses seguidos': 'mês seguido',
+           'dias': 'dia', 'milímetros': 'milímetro', 'graus': 'grau',
+           'meses': 'mês', 'anos': 'ano'}
+def _conc(t):
+    for pl, sg in _PLURAL.items():
+        t = t.replace(' 1 ' + pl, ' 1 ' + sg)
+    return t
+
+def _fmt(t, **kw):
+    return _conc(t.format(**kw))
+
 def render_all(M, chave, fechos=None, **kw):
     """devolve TODAS as variantes da frase. a pagina sorteia sem repetir, e o
     bot deixa de soar gravado. a autoria continua sendo do molde, nunca da IA."""
@@ -87,7 +105,7 @@ def render_all(M, chave, fechos=None, **kw):
     out = []
     for b in corpos:
         for f in fs:
-            try: t = b.format(**kw)
+            try: t = _fmt(b, **kw)
             except KeyError: continue
             t = (t + ' ' + f).strip() if f else t.strip()
             if t: t = t[0].upper() + t[1:]
@@ -261,9 +279,9 @@ def render_porque(pqs, prioridade, moldes, colheu_nome, de_colheu=''):
              else [prioridade]) + ['agua', 'familia']
     for k in ordem:
         if k in d:
-            return moldes['porques'].get(k, '').format(colheu=colheu_nome, de_colheu=de_colheu, **d[k]), k
+            return _fmt(moldes['porques'].get(k, ''), colheu=colheu_nome, de_colheu=de_colheu, **d[k]), k
     for k, pr in d.items():
-        return moldes['porques'].get(k, '').format(colheu=colheu_nome, de_colheu=de_colheu, **pr), k
+        return _fmt(moldes['porques'].get(k, ''), colheu=colheu_nome, de_colheu=de_colheu, **pr), k
     return '', None
 
 def avisos(r, moldes):
@@ -272,7 +290,7 @@ def avisos(r, moldes):
     if r.get('agua_indireta') and v:
         # nao sei o numero dela, mas sei a chuva da janela e a estiagem na fase
         # critica. isso e resposta, e antes eu calava.
-        out.append(_lista(moldes.get('agua_sem_numero', ''))[0].format(
+        out.append(_fmt(_lista(moldes.get('agua_sem_numero', ''))[0],
             chuva_mm=r.get('chuva_ajustada_mm') or r.get('chuva_normal_mm'),
             estiagem=_r(v['dias']), base=v['base']))
     elif v and v['dias'] >= 10:
@@ -281,7 +299,7 @@ def avisos(r, moldes):
         out.append("a chuva do período não cobre o que essa cultura pede")
     cal = r.get('calor')
     if cal:
-        out.append(_lista(moldes.get('aviso_calor', ''))[0].format(**cal))
+        out.append(_fmt(_lista(moldes.get('aviso_calor', ''))[0], **cal))
     return out
 
 # ----------------------------------------------------------------- atender
@@ -315,7 +333,7 @@ def atender(p):
         res['fala'] = res['falas'][0]
         if est.get('superficie_engana'):
             sup, fun = est['solo_superficie'], est['solo_profundo']
-            res['aviso_do_ano'] = _lista(M.get('solo_fundo',''))[0].format(
+            res['aviso_do_ano'] = _fmt(_lista(M.get('solo_fundo',''))[0],
                 sup=M['estado_terra'][sup['situacao']], fundo=M['estado_terra'][fun['situacao']])
         if not sr: res['limites'].append('sem leitura de umidade do solo para este mês')
         for l in res['lacunas']:
@@ -358,7 +376,7 @@ def atender(p):
             'mesma_familia_do_que_colheu': bool(fam and c['familia'] == fam),
             'risco': r, 'encaixe': _r(enc,2) if enc is not None else None,
             'confianca': _r(conf,2), '_pqs': pqs,
-            'porques': [M['porques'].get(k,'').format(colheu=cn, de_colheu=dcn, **pr) for k, pr in pqs],
+            'porques': [_fmt(M['porques'].get(k,''), colheu=cn, de_colheu=dcn, **pr) for k, pr in pqs],
             'avisos': avisos(r, M), 'nao_sei': ns,
             # o que o aviso ja falou nao volta no "e tem coisa que eu nao sei":
             # a pagina dizia a mesma ignorancia duas vezes na mesma frase

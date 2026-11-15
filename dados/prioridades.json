@@ -4,6 +4,7 @@
   "prioridades": {
     "solo": {
       "fala": "quero que a terra melhore",
+      "sinonimos": ["a terra melhorar", "terra melhor", "melhorar a terra", "terra mais forte", "mais forte", "fortalecer a terra", "recuperar a terra", "terra fraca", "solo"],
       "pesos": {
         "fixa_n": 3,
         "residuo_alto": 2,
@@ -14,6 +15,7 @@
     },
     "risco": {
       "fala": "quero arriscar pouco",
+      "sinonimos": ["arriscar pouco", "arriscar menos", "nao arriscar", "sem risco", "pouco risco", "seguro", "garantido", "ir no seguro", "perder pouco"],
       "pesos": {
         "tolera_seca": 3,
         "ciclo_curto": 3,
@@ -24,6 +26,7 @@
     },
     "comida": {
       "fala": "quero comida em casa",
+      "sinonimos": ["comida em casa", "comida pra casa", "comer em casa", "pra comer", "alimentar a familia", "sustento", "consumo"],
       "pesos": {
         "espera_no_campo": 3,
         "ciclo_curto": 1,
@@ -33,6 +36,7 @@
     },
     "pasto": {
       "fala": "quero pasto pro gado",
+      "sinonimos": ["pasto", "pasto pro gado", "pro gado", "gado", "capim", "forragem", "criacao"],
       "pesos": {
         "forrageira": 3,
         "residuo_alto": 1,
@@ -42,12 +46,14 @@
     },
     "renda": {
       "fala": "quero vender",
+      "sinonimos": ["renda", "dinheiro", "vender", "grana", "lucro", "preco", "mercado", "faturar"],
       "pesos": {},
       "servivel": false,
       "resposta_honesta": "Sobre preco e comprador eu nao tenho dado. Posso te dizer o que a terra e a chuva permitem, e a decisao de mercado fica com voce."
     },
     "mao-de-obra": {
       "fala": "tenho pouca gente pra trabalhar",
+      "sinonimos": ["pouca gente", "mao de obra", "sozinho", "nao tenho gente", "falta gente", "trabalhador"],
       "pesos": {},
       "servivel": false,
       "resposta_honesta": "Quanta gente cada cultura precisa eu nao sei: nao achei fonte boa. O resto eu te falo."

@@ -32,6 +32,12 @@ JARGAO = ['inverno', 'verão', 'nitrogênio', 'inmet', 'pousio',
 # achada na varredura dos moldes as 16h.
 JARGAO_ROraima = ['veranico']
 
+# 10. gramatica. O motor arredonda e a estiagem de junho, 1,2 dias, virava
+# "1 dias". Um teste de concordancia pega a classe toda de uma vez; antes
+# nenhum teste olhava a PALAVRA, so o numero e a honestidade.
+_SG = 'dia|milímetro|grau|mês|ano'
+PLURAL_ERRADO = re.compile(r'\b1\s+(?:[a-zà-ú]+(?:s|es)\b|(?:' + _SG + r')\s+[a-zà-ú]+s\b)', re.I)
+
 def numeros(t):
     return {n.replace(',', '.') for n in re.findall(r'\d+(?:[.,]\d+)?', t or '')}
 
@@ -111,6 +117,13 @@ def checa(r, caso):
         for palavra in proibidas:
             if palavra in baixo:
                 erros.append(f"jargao na fala: {palavra!r} em {f[:90]!r}")
+
+    # 10. concordancia: "1 dias" e "1 dia seguidos" nao saem da boca do bot
+    for t in falas + [r.get('aviso_do_ano') or ''] + [
+             x for o in (r.get('opcoes') or []) for x in (o.get('avisos') or [])]:
+        m = PLURAL_ERRADO.search(t or '')
+        if m:
+            erros.append(f"plural errado: {m.group(0)!r} em {t[:80]!r}")
 
     # 9. uma cultura que o motor NAO consegue avaliar so pode ser a resposta se
     # a confianca dela passar a porteira. Sem isso, encaixe alto tirado de um

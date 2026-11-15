@@ -41,7 +41,11 @@ const MOLDES_NEUTROS={
  aviso_ano_chuvoso:"O ano acumulou {pct}% da chuva normal até aqui, acima do costume.",
  chuva_qualitativa:{muita:"chuva alta",media:"chuva média",pouca:"chuva baixa"}};
 
-function fmt(t,kw){return String(t).replace(/\{(\w+)\}/g,(m,k)=>k in kw?kw[k]:m)}
+const PLURAL={'dias seguidos':'dia seguido','meses seguidos':'mês seguido',
+  'dias':'dia','milímetros':'milímetro','graus':'grau','meses':'mês','anos':'ano'};
+// concordancia num lugar so: ver o comentario do _conc no cerne.py
+function conc(t){for(const pl in PLURAL)t=t.split(' 1 '+pl).join(' 1 '+PLURAL[pl]);return t}
+function fmt(t,kw){return conc(String(t).replace(/\{(\w+)\}/g,(m,k)=>k in kw?kw[k]:m))}
 const lista=v=>Array.isArray(v)?v:[v];
 
 class Cerne{
