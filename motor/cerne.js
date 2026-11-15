@@ -20,15 +20,18 @@ const MOLDES_NEUTROS={
  hipotese_parente:"{cultura} é da mesma família {de_colheu}. Plantar em seguida multiplica as pragas de solo. Não recomendo.",
  hipotese_mesma:"Essa é a mesma cultura que acabou de ser colhida. Repetir multiplica as pragas de solo. Não recomendo.",
  hipotese_parente_sem_ciclo:"{cultura} é da mesma família {de_colheu}, então não recomendo. Do resto eu não sei: falta a duração do ciclo.",
- hipotese_sem_ciclo:"{cultura} não é da mesma família {de_colheu}, o que já ajuda. Mas falta a duração do ciclo, então não posso dizer mais.",
+ hipotese_sem_ciclo:"{cultura} não é da mesma família {de_colheu}, o que já ajuda, e {mes} costuma ter {chuva}. Falta a duração do ciclo.",
  sem_dado:"Das culturas da região eu sei a família de {n}, mas não sei a duração de nenhuma. Sem isso eu não indico.",
  estado_da_terra:"O solo está {estado}. {mes} costuma ter {chuva}.",
- nao_sei_prever:"Previsão de chuva eu não tenho. O que eu sei é que {mes} costuma ter {chuva} e o solo está {estado}. Para previsão, consulte a previsão do tempo.",
+ nao_sei_prever:"Previsão de chuva eu não tenho. {mes} costuma ter {chuva}, com estiagem máxima de {estiagem} dias, e o solo está {estado}.",
+ agua_sem_numero:"A exigência de água dela não está registrada. A janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
  porques:{familia:"é de outra família {de_colheu}, então as pragas de solo não se mantêm",
    agua:"a chuva do período atende o que ela precisa", solo:"melhora o solo para o que vem depois",
    risco:"é de ciclo curto, {dias} dias", risco_seca:"tolera estiagem melhor que as outras",
    comida:"pode permanecer no campo, serve de reserva", pasto:"serve de pasto"},
- estado_terra:{acima:"mais úmido que o normal",abaixo:"mais seco que o normal"},
+ estado_terra:{acima:"mais úmido que o normal",abaixo:"mais seco que o normal",media:"dentro do normal"},
+ aviso_ano_seco:"O ano acumulou {pct}% da chuva normal até aqui; considere menos água disponível.",
+ aviso_ano_chuvoso:"O ano acumulou {pct}% da chuva normal até aqui, acima do costume.",
  chuva_qualitativa:{muita:"chuva alta",media:"chuva média",pouca:"chuva baixa"}};
 
 function fmt(t,kw){return String(t).replace(/\{(\w+)\}/g,(m,k)=>k in kw?kw[k]:m)}
@@ -44,6 +47,7 @@ class Cerne{
     for(const b of corpos)for(const f of fs){
       let t=fmt(b,kw); if(/\{\w+\}/.test(t))continue;
       t=f?(t+' '+f).trim():t.trim();
+      if(t)t=t[0].toUpperCase()+t.slice(1);
       if(t&&!out.includes(t))out.push(t);
     }
     return out.slice(0,8);
@@ -65,8 +69,10 @@ class Cerne{
     const e={mes:MES[m0],chuva_normal_do_mes_mm:cl.chuva_mm[m0],
              chuva_qualitativa:this.qualificaChuva(place,m0),
              veranico_normal_do_mes_dias:cl.veranico[m0]};
-    if(an.solo_raiz[m0]!=null)e.solo_raiz={observado:an.solo_raiz[m0],normal:cl.solo_raiz[m0],
-      situacao:an.solo_raiz[m0]>cl.solo_raiz[m0]?'acima':'abaixo'};
+    if(an.solo_raiz[m0]!=null){const o=an.solo_raiz[m0],n=cl.solo_raiz[m0];
+      const dif=n?(o-n)/n:0;
+      e.solo_raiz={observado:o,normal:n,diferenca:Math.floor(dif*1000+0.5)/1000,
+        situacao:Math.abs(dif)<0.03?'media':(dif>0?'acima':'abaixo')};}
     if(f)e.fator_do_ano=Object.assign({razao:Math.round(f*100)/100},det);
     return e;
   }
@@ -82,7 +88,7 @@ class Cerne{
     if(ag&&ag[0]!=null){const razao=(ch*(f||1))/ag[0];
       r.agua={exige_mm:ag[0],razao:Math.round(razao*100)/100,
               nivel:razao>=1.2?'baixo':razao>=0.9?'médio':'alto'};
-    }else{r.agua={nivel:'sem dado'};nao_sei.push('quanta água essa cultura precisa')}
+    }else{r.agua={nivel:'sem dado'};nao_sei.push('quanta água essa cultura precisa');r.agua_indireta=true}
     const fc=c.fase_critica_dias,ini=fc?fc[0]:0,fim=fc?fc[1]:cmin,set=new Set();
     for(let d=ini;d<=fim;d+=10)set.add((m0+Math.floor(d/30))%12);
     const ms=[...set].sort((a,b)=>a-b);
@@ -125,8 +131,10 @@ class Cerne{
     for(const k in d)return [fmt(lista(M.porques[k]||'')[0],Object.assign({colheu:cn,de_colheu:dcn},d[k])),k];
     return ['',null];
   }
-  avisos(r){const out=[],v=r.veranico;
-    if(v&&v.dias>=10)out.push(`a estiagem normal ${v.base} é de ${v.dias.toFixed(0)} dias`);
+  avisos(r,M){const out=[],v=r.veranico;
+    if(r.agua_indireta&&v)out.push(fmt(lista(M.agua_sem_numero||'')[0],
+      {chuva_mm:r.chuva_ajustada_mm||r.chuva_normal_mm,estiagem:Math.floor(v.dias+0.5),base:v.base}));
+    else if(v&&v.dias>=10)out.push(`a estiagem normal ${v.base} é de ${Math.floor(v.dias+0.5)} dias`);
     if(r.agua&&r.agua.nivel==='alto')out.push('a chuva do período não cobre o que essa cultura pede');
     return out}
 
@@ -137,7 +145,7 @@ class Cerne{
     const de=n=>((this.CULT[n].artigo||'a')==='a'?'da ':'do ')+nc(n);
     const res={intencao,lugar:this.NASA[place].nome,mes_plantio:MES[m0],
       registro:loc.moldes?'local':'português neutro',estado_observado:est,
-      opcoes:[],sei_pouco:[],limites:[],fala:null,falas:[]};
+      opcoes:[],sei_pouco:[],limites:[],fala:null,falas:[],aviso_do_ano:null};
     const sr=est.solo_raiz;
     if(intencao==='estado-do-solo'){
       res.falas=this.renderAll(M,'estado_da_terra','fechos_terra',{mes:est.mes,
@@ -151,6 +159,7 @@ class Cerne{
       res.limites.push('não existe previsão de chuva nestes dados; a série é histórica');
       res.falas=this.renderAll(M,'nao_sei_prever',null,{mes:est.mes,
         chuva:M.chuva_qualitativa[est.chuva_qualitativa],
+        estiagem:Math.floor(est.veranico_normal_do_mes_dias+0.5),
         estado:sr?M.estado_terra[sr.situacao]:'sem leitura'});
       res.fala=res.falas[0];return res;
     }
@@ -168,7 +177,7 @@ class Cerne{
         encaixe:enc==null?null:Math.round(enc*100)/100,
         confianca:Math.round(conf*100)/100,_pqs:pqs,
         porques:pqs.map(([k,pr])=>fmt(lista(M.porques[k]||'')[0],Object.assign({colheu:cn,de_colheu:dcn},pr))),
-        avisos:this.avisos(r),nao_sei:ns,qualidade_do_dado:c.qualidade,
+        avisos:this.avisos(r,M),nao_sei:ns,qualidade_do_dado:c.qualidade,
         validar_com_tecnico:['a janela de plantio oficial do ZARC para o município']});
     }
     res.sei_pouco=res.opcoes.filter(o=>!o.risco.avaliavel)
@@ -176,13 +185,14 @@ class Cerne{
     res.opcoes=res.opcoes.filter(o=>o.risco.avaliavel)
       .sort((a,b)=>(a.encaixe==null)-(b.encaixe==null)||(b.encaixe||0)-(a.encaixe||0));
     if(intencao==='e-se'&&p.hipotese){
-      const h=p.hipotese,alvo=nc(h).charAt(0).toUpperCase()+nc(h).slice(1);
+      const h=p.hipotese,alvo=nc(h);
       const parente=this.CULT[h].familia===fam,av=res.opcoes.length>0;
       const kw={cultura:alvo,colheu:cn,de_colheu:dcn};
       if(h===colheu)res.falas=this.renderAll(M,'hipotese_mesma',null,kw);
       else if(parente&&!av)res.falas=this.renderAll(M,'hipotese_parente_sem_ciclo',null,kw);
       else if(parente)res.falas=this.renderAll(M,'hipotese_parente',null,kw);
-      else if(!av)res.falas=this.renderAll(M,'hipotese_sem_ciclo',null,kw);
+      else if(!av)res.falas=this.renderAll(M,'hipotese_sem_ciclo',null,
+        Object.assign({mes:est.mes,chuva:M.chuva_qualitativa[est.chuva_qualitativa]},kw));
       else if(res.opcoes[0].risco.agua&&res.opcoes[0].risco.agua.nivel==='alto')
         res.falas=this.renderAll(M,'hipotese_ruim','fechos_hipotese',kw);
       else res.falas=this.renderAll(M,'hipotese_boa','fechos_hipotese',kw);
@@ -198,6 +208,13 @@ class Cerne{
         res.falas=this.renderAll(M,'indicacao','fechos',{colheu:cn,de_colheu:dcn,
           cultura:nc(o.id),porque:pq?pq.charAt(0).toUpperCase()+pq.slice(1):''});
       }
+    }
+    const fa=est.fator_do_ano;
+    if(fa&&(intencao==='proximo-plantio'||intencao==='e-se')&&res.falas.length){
+      const rz=fa.razao;
+      if(rz<=0.9||rz>=1.1)
+        res.aviso_do_ano=this.renderAll(M,rz<=0.9?'aviso_ano_seco':'aviso_ano_chuvoso',
+          null,{pct:Math.floor(rz*100+0.5)})[0];
     }
     if(res.falas.length)res.fala=res.falas[0];
     res.opcoes.forEach(o=>{delete o._pqs});

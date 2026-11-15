@@ -151,9 +151,9 @@
       "Eu sei de quem {n} delas são parentes, mas o tempo de cada uma eu não tenho. Prefiro não chutar."
     ],
     "nao_sei_prever": [
-      "Prever chuva eu não sei, não tenho isso. O que eu sei é que {mes} costuma dar {chuva} e a terra está {estado}. Pra previsão, olha a previsão do tempo.",
-      "Essa eu não tenho: previsão não é comigo. Agora, {mes} normalmente dá {chuva}, e a terra está {estado}.",
-      "Adivinhar chuva eu não adivinho. Posso te dizer que {mes} costuma dar {chuva} e a terra está {estado}."
+      "Prever chuva eu não sei, não tenho isso. O que eu sei é que {mes} costuma dar {chuva}, a maior estiagem do mês costuma ser de {estiagem} dias, e a terra está {estado}.",
+      "Adivinhar chuva eu não adivinho. Agora, em 45 anos {mes} costuma dar {chuva} e passar no máximo {estiagem} dias seguidos sem chover. E a terra está {estado}.",
+      "Previsão não é comigo. Mas olha: {mes} costuma dar {chuva}, a estiagem mais longa do mês fica em {estiagem} dias, e a terra está {estado}."
     ],
     "porques": {
       "familia": "não é parente {de_colheu}, então a praga que ficou na terra não pega nela",
@@ -166,7 +166,8 @@
     },
     "estado_terra": {
       "acima": "mais molhada que o normal",
-      "abaixo": "mais seca que o normal"
+      "abaixo": "mais seca que o normal",
+      "media": "na média pra época"
     },
     "chuva_qualitativa": {
       "muita": "chuva boa",
@@ -182,8 +183,8 @@
       "Essa é da mesma parentada {de_colheu}, já não serve. E o tempo dela eu não sei."
     ],
     "hipotese_sem_ciclo": [
-      "{cultura} não é parente {de_colheu}, isso já ajuda. Mas eu não sei quanto tempo ela leva pra dar, então não arrisco dizer mais.",
-      "Parente {de_colheu} ela não é, o que já é bom. Só que o tempo dela eu não tenho."
+      "Parente {de_colheu} ela não é, isso já ajuda, e {mes} costuma dar {chuva}. O que me falta é quanto tempo ela leva pra dar.",
+      "{cultura} não é parente {de_colheu}, e a chuva de {mes} costuma ser {chuva}. Só o tempo dela eu não tenho."
     ],
     "fechos": [
       "Quer saber o que pode dar errado?",
@@ -211,6 +212,19 @@
       "Quer que eu diga o que plantar?",
       "",
       "Se quiser eu digo o que eu botaria."
+    ],
+    "aviso_ano_seco": [
+      "Só te aviso que o ano veio com {pct}% da chuva que costuma dar. Eu contaria com menos água.",
+      "Uma coisa pra você saber: até agora o ano deu {pct}% da chuva normal. Conte com menos.",
+      "E repara: o ano está em {pct}% da chuva de sempre. Isso aperta."
+    ],
+    "aviso_ano_chuvoso": [
+      "E te aviso que o ano veio com {pct}% da chuva normal, mais do que o costume.",
+      "Uma coisa boa: o ano está em {pct}% da chuva de sempre."
+    ],
+    "agua_sem_numero": [
+      "Quanta água ela pede eu não sei, mas a janela dá {chuva_mm} milímetros e a estiagem mais longa {base} costuma ser de {estiagem} dias.",
+      "O número de água dela me falta. O que eu tenho: {chuva_mm} milímetros na janela e até {estiagem} dias seguidos sem chuva {base}."
     ]
   }
 }

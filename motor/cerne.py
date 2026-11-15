@@ -40,11 +40,12 @@ MOLDES_NEUTROS = {
   'hipotese_parente': "{cultura} é da mesma família {de_colheu}. Plantar em seguida multiplica as pragas de solo. Não recomendo.",
   'hipotese_mesma': "Essa é a mesma cultura que acabou de ser colhida. Repetir multiplica as pragas de solo. Não recomendo.",
   'hipotese_parente_sem_ciclo': "{cultura} é da mesma família {de_colheu}, então não recomendo. Do resto eu não sei: falta a duração do ciclo.",
-  'hipotese_sem_ciclo': "{cultura} não é da mesma família {de_colheu}, o que já ajuda. Mas falta a duração do ciclo, então não posso dizer mais.",
+  'hipotese_sem_ciclo': "{cultura} não é da mesma família {de_colheu}, o que já ajuda, e {mes} costuma ter {chuva}. Falta a duração do ciclo.",
   'sem_dado': "Das culturas da região eu sei a família de {n}, mas não sei a duração de nenhuma. Sem isso eu não indico.",
   'estado_da_terra': "O solo está {estado}. {mes} costuma ter {chuva}.",
   'fechos_terra': "",
-  'nao_sei_prever': "Previsão de chuva eu não tenho. O que eu sei é que {mes} costuma ter {chuva} e o solo está {estado}. Para previsão, consulte a previsão do tempo.",
+  'nao_sei_prever': "Previsão de chuva eu não tenho. {mes} costuma ter {chuva}, com estiagem máxima de {estiagem} dias, e o solo está {estado}.",
+  'agua_sem_numero': "A exigência de água dela não está registrada. A janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
   'porques': {'familia': "é de outra família {de_colheu}, então as pragas de solo não se mantêm",
               'agua': "a chuva do período atende o que ela precisa",
               'solo': "melhora o solo para o que vem depois",
@@ -52,7 +53,10 @@ MOLDES_NEUTROS = {
               'risco_seca': "tolera estiagem melhor que as outras",
               'comida': "pode permanecer no campo, serve de reserva",
               'pasto': "serve de pasto"},
-  'estado_terra': {'acima': "mais úmido que o normal", 'abaixo': "mais seco que o normal"},
+  'estado_terra': {'acima': "mais úmido que o normal", 'abaixo': "mais seco que o normal",
+                   'media': "dentro do normal"},
+  'aviso_ano_seco': "O ano acumulou {pct}% da chuva normal até aqui; considere menos água disponível.",
+  'aviso_ano_chuvoso': "O ano acumulou {pct}% da chuva normal até aqui, acima do costume.",
   'chuva_qualitativa': {'muita': "chuva alta", 'media': "chuva média", 'pouca': "chuva baixa"},
 }
 
@@ -72,6 +76,7 @@ def render_all(M, chave, fechos=None, **kw):
             try: t = b.format(**kw)
             except KeyError: continue
             t = (t + ' ' + f).strip() if f else t.strip()
+            if t: t = t[0].upper() + t[1:]
             if t and t not in out: out.append(t)
     return out[:8]
 
@@ -103,8 +108,10 @@ def estado_observado(place, m0):
          'chuva_qualitativa': qualifica_chuva(place, m0),
          'veranico_normal_do_mes_dias': cl['veranico'][m0]}
     if an['solo_raiz'][m0] is not None:
-        e['solo_raiz'] = {'observado': an['solo_raiz'][m0], 'normal': cl['solo_raiz'][m0],
-                          'situacao': 'acima' if an['solo_raiz'][m0] > cl['solo_raiz'][m0] else 'abaixo'}
+        o, n = an['solo_raiz'][m0], cl['solo_raiz'][m0]
+        dif = (o - n)/n if n else 0.0
+        e['solo_raiz'] = {'observado': o, 'normal': n, 'diferenca': _r(dif, 3),
+            'situacao': 'media' if abs(dif) < 0.03 else ('acima' if dif > 0 else 'abaixo')}
     if f: e['fator_do_ano'] = {'razao': _r(f,2), **det}
     return e
 
@@ -127,6 +134,7 @@ def risco(c, place, m0):
     else:
         r['agua'] = {'nivel': 'sem dado'}
         nao_sei.append('quanta água essa cultura precisa')
+        r['agua_indireta'] = True   # sem o numero dela, ainda da pra cruzar o resto
     fc = c.get('fase_critica_dias'); ini, fim = fc if fc else (0, cmin)
     ms = sorted({(m0 + d//30) % 12 for d in range(ini, fim+1, 10)})
     r['veranico'] = {'dias': max(cl['veranico'][m] for m in ms),
@@ -185,8 +193,14 @@ def render_porque(pqs, prioridade, moldes, colheu_nome, de_colheu=''):
 def avisos(r, moldes):
     out = []
     v = r.get('veranico')
-    if v and v['dias'] >= 10:
-        out.append(f"a estiagem normal {v['base']} é de {v['dias']:.0f} dias")
+    if r.get('agua_indireta') and v:
+        # nao sei o numero dela, mas sei a chuva da janela e a estiagem na fase
+        # critica. isso e resposta, e antes eu calava.
+        out.append(_lista(moldes.get('agua_sem_numero', ''))[0].format(
+            chuva_mm=r.get('chuva_ajustada_mm') or r.get('chuva_normal_mm'),
+            estiagem=_r(v['dias']), base=v['base']))
+    elif v and v['dias'] >= 10:
+        out.append(f"a estiagem normal {v['base']} é de {_r(v['dias'])} dias")
     if r.get('agua', {}).get('nivel') == 'alto':
         out.append("a chuva do período não cobre o que essa cultura pede")
     return out
@@ -211,7 +225,7 @@ def atender(p):
     res = {'intencao': intencao, 'lugar': NASA[place]['nome'], 'mes_plantio': MES[m0],
            'registro': 'local' if loc.get('moldes') else 'português neutro',
            'estado_observado': est, 'opcoes': [], 'sei_pouco': [], 'limites': [],
-           'fala': None, 'falas': []}
+           'fala': None, 'falas': [], 'aviso_do_ano': None}
 
     if intencao == 'estado-do-solo':
         sr = est.get('solo_raiz')
@@ -226,6 +240,7 @@ def atender(p):
         s = est.get('solo_raiz')
         res['falas'] = render_all(M, 'nao_sei_prever',
             mes=est['mes'], chuva=M['chuva_qualitativa'][est['chuva_qualitativa']],
+            estiagem=_r(est['veranico_normal_do_mes_dias']),
             estado=M['estado_terra'][s['situacao']] if s else 'sem leitura')
         res['fala'] = res['falas'][0]
         return res
@@ -256,7 +271,7 @@ def atender(p):
     res['opcoes'].sort(key=lambda o: (o['encaixe'] is None, -(o['encaixe'] or 0)))
 
     if intencao == 'e-se' and p.get('hipotese'):
-        h = p['hipotese']; alvo = nome_curto(h).capitalize()
+        h = p['hipotese']; alvo = nome_curto(h)
         parente = CULT[h]['familia'] == fam
         avaliavel = bool(res['opcoes'])
         kw = dict(cultura=alvo, colheu=cn, de_colheu=dcn)
@@ -264,7 +279,8 @@ def atender(p):
         elif parente and not avaliavel:
                                  res['falas'] = render_all(M, 'hipotese_parente_sem_ciclo', **kw)
         elif parente:            res['falas'] = render_all(M, 'hipotese_parente', **kw)
-        elif not avaliavel:      res['falas'] = render_all(M, 'hipotese_sem_ciclo', **kw)
+        elif not avaliavel:      res['falas'] = render_all(M, 'hipotese_sem_ciclo',
+            mes=est['mes'], chuva=M['chuva_qualitativa'][est['chuva_qualitativa']], **kw)
         elif res['opcoes'][0]['risco'].get('agua', {}).get('nivel') == 'alto':
                                  res['falas'] = render_all(M, 'hipotese_ruim', 'fechos_hipotese', **kw)
         else:                    res['falas'] = render_all(M, 'hipotese_boa', 'fechos_hipotese', **kw)
@@ -281,6 +297,12 @@ def atender(p):
             res['falas'] = render_all(M, 'indicacao', 'fechos', colheu=cn, de_colheu=dcn,
                                       cultura=nome_curto(o['id']),
                                       porque=pq[0].upper()+pq[1:] if pq else '')
+    fa = est.get('fator_do_ano')
+    if fa and intencao in ('proximo-plantio', 'e-se') and res.get('falas'):
+        rz = fa['razao']
+        if rz <= 0.9 or rz >= 1.1:
+            chave = 'aviso_ano_seco' if rz <= 0.9 else 'aviso_ano_chuvoso'
+            res['aviso_do_ano'] = render_all(M, chave, pct=_r(rz*100))[0]
     if res.get('falas'): res['fala'] = res['falas'][0]
     for o in res['opcoes']: o.pop('_pqs', None)
     res['limites'].append('a janela de plantio oficial do ZARC não está carregada; confirme com técnico')
