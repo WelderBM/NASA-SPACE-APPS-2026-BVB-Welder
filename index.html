@@ -76,6 +76,8 @@ select{width:100%;background:#2a3942;color:#e9edef;border:1px solid #2a3942;bord
       <div class="lab">O que acabou de colher</div>
       <select id="colheu"></select>
       <p class="note" id="regnote" style="margin-top:9px"></p>
+      <div class="lab">Mês do plantio</div>
+      <select id="mes"></select>
       <div class="lab">Voz</div>
       <select id="voz"></select>
       <div class="lab">Velocidade <span id="rlab" style="color:#8bd5bd">0.98</span></div>
@@ -92,19 +94,27 @@ select{width:100%;background:#2a3942;color:#e9edef;border:1px solid #2a3942;bord
     </div>
   </div>
 </div>
+<script src="motor/cerne.js"></script>
 <script>
+
 const PRIOS={solo:'a terra melhorar',risco:'arriscar pouco',comida:'comida em casa',pasto:'pasto pro gado'};
 const INTENT=[
  ['estado-do-solo',['a terra ta','a terra esta','como ta a terra','como esta a terra','terra boa',
    'terra seca','ta seco','esta seco','molhad','umidade','como ta o solo','da pra mexer na terra','terra fraca']],
  ['vai-chover',['vai chover','previs','semana que vem','amanha','chove','vai dar chuva','quando chove','tem chuva']],
- ['e-se',['e se','sera que','posso plantar','posso botar','da pra plantar','da pra botar','que tal','e o ','vale a pena']],
+ ['e-se',['e se','sera que','posso plantar','posso botar','da pra plantar','da pra botar','que tal','vale a pena']],
  ['riscos',['pode dar errado','risco','perigo','errado','problema','atrapalh','o que pode']],
  ['proximo-plantio',['colhi','tirei','arranquei','acabei de','terminei','o que planto','o que plantar',
    'o que vem','depois d','que eu boto','que planta agora','me indica','o que voce faria','o que fazer']],
 ];
-let DB=null,st={lugar:null,colheu:null,prio:'risco',falar:true,ultima:null,voz:null,rate:0.98,ctx:'inicio'};
+// NADA e assumido: colheu e prioridade comecam vazios e o bot PERGUNTA.
+// Antes ele lia o seletor e respondia "da mandioca pra feijao-caupi" sem que
+// ninguem tivesse falado em mandioca. Isso nao e rigidez, e inventar contexto.
+let CERNE=null,DADOS=null,st={lugar:null,lid:null,mes:3,colheu:null,prio:null,
+  falar:true,ultima:null,voz:null,rate:0.98,ctx:'inicio',pendente:null};
 const $=i=>document.getElementById(i), msgs=$('msgs');
+const N=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+const nome=c=>((DADOS.culturas.culturas[c]||{}).nome||c).split(' (')[0].toLowerCase();
 
 function agora(){const d=new Date();return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')}
 function diz(t,quem='them',meta){
@@ -114,222 +124,211 @@ function diz(t,quem='them',meta){
        d.appendChild(h);msgs.appendChild(d);}
   msgs.scrollTop=msgs.scrollHeight;
 }
-function digitando(){
-  const d=document.createElement('div');d.className='b them dig';
-  d.innerHTML='<span></span><span></span><span></span>';
-  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d;
-}
-// o motor manda VARIAS redacoes da mesma resposta. aqui sorteia sem repetir a
-// ultima, pra ele nao ouvir a mesma frase duas vezes seguidas.
+function digitando(){const d=document.createElement('div');d.className='b them dig';
+  d.innerHTML='<span></span><span></span><span></span>';msgs.appendChild(d);
+  msgs.scrollTop=msgs.scrollHeight;return d}
 const _ult={};
 function escolhe(r,chave){
   const fs=(r&&r.falas&&r.falas.length)?r.falas:[r&&r.fala].filter(Boolean);
   if(!fs.length)return '';if(fs.length===1)return fs[0];
   const livres=fs.filter(x=>x!==_ult[chave]);
-  const e=livres[Math.floor(Math.random()*livres.length)]||fs[0];
-  _ult[chave]=e;return e;
+  const e=livres[Math.floor(Math.random()*livres.length)]||fs[0];_ult[chave]=e;return e;
 }
-function nota(v){
-  const n=(v.name||'').toLowerCase();let s=0;
+function nota(v){const n=(v.name||'').toLowerCase();let s=0;
   if(/pt[-_]br/i.test(v.lang))s+=100;else if(/^pt/i.test(v.lang))s+=50;else return -1;
-  if(n.includes('google'))s+=40;            // a melhor no Chrome
-  if(n.includes('natural'))s+=35;           // vozes neurais da Microsoft
-  if(n.includes('online'))s+=10;
-  if(v.localService===false)s+=15;          // voz de nuvem soa melhor que SAPI
-  if(/\b(maria|daniel)\b/.test(n))s-=8;     // SAPI5 antiga, a mais robotica
-  return s;
-}
+  if(n.includes('google'))s+=40;if(n.includes('natural'))s+=35;if(n.includes('online'))s+=10;
+  if(v.localService===false)s+=15;if(/\b(maria|daniel)\b/.test(n))s-=8;return s}
 const vozes=()=>('speechSynthesis'in window)
   ? speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang)).sort((a,b)=>nota(b)-nota(a)) : [];
 function fala(t){
   if(!st.falar||!('speechSynthesis'in window))return;
-  try{
-    speechSynthesis.cancel();
+  try{speechSynthesis.cancel();
     (t.match(/[^.!?]+[.!?]*/g)||[t]).map(p=>p.trim()).filter(Boolean).forEach((p,i)=>{
-      const u=new SpeechSynthesisUtterance(p);
-      const perg=/\?\s*$/.test(p);
-      u.lang='pt-BR';u.volume=1;
-      if(st.voz)u.voice=st.voz;
-      // a Web Speech nao tem SSML, entao a entonacao sai daqui: pergunta sobe no
-      // fim, afirmacao desce, e cada frase varia um fio. tudo no mesmo tom e
-      // metade do que faz soar de robo.
+      const u=new SpeechSynthesisUtterance(p),perg=/\?\s*$/.test(p);
+      u.lang='pt-BR';u.volume=1;if(st.voz)u.voice=st.voz;
       u.pitch=perg?1.14:(i===0?1.04:0.98);
       u.rate=st.rate*(perg?1.05:1)+(i%2?0.02:-0.02);
-      speechSynthesis.speak(u);
-    });
+      speechSynthesis.speak(u);});
   }catch(e){}
 }
 function responde(t,r,ctx){
   const d=digitando();
   setTimeout(()=>{d.remove();diz(t);fala(t);
-    if(r!==undefined)painel(r);
-    if(ctx)chips(ctx);},Math.min(1500,420+t.length*11));
+    if(r!==undefined)painel(r);if(ctx)chips(ctx);},Math.min(1500,420+t.length*11));
 }
-
-function classifica(s){
-  const n=s.toLowerCase();
-  for(const[id,ks]of INTENT) if(ks.some(k=>n.includes(k))) return id;
-  return null;
-}
-function achaCultura(s){
-  const n=s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
-  const L=DB.lugares[st.lugar];
-  for(const c of L.culturas){
-    const a=c.replace(/-/g,' '),b=(DB.nomes_culturas[c]||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').split(' (')[0];
-    if(n.includes(a)||n.includes(c)||(b&&n.includes(b)))return c;
-  }
-  return null;
-}
+const kv=(a,b)=>`<div class="kv"><span>${a}</span><span>${b}</span></div>`;
 function painel(r){
   const d=$('dados');
-  if(!r){d.innerHTML='<p class="note">Sem números para essa resposta.</p>';return;}
+  if(!r){d.innerHTML='<p class="note">Sem números para essa resposta.</p>';return}
   const e=r.estado_observado||{},o=(r.opcoes||[])[0];
   let h=`<div class="lab">Observado, ${e.mes||''}</div>`;
   h+=kv('Chuva normal do mês',(e.chuva_normal_do_mes_mm??'—')+' mm');
   if(e.solo_raiz)h+=kv('Umidade da raiz',e.solo_raiz.observado+' (normal '+e.solo_raiz.normal+')');
   if(e.fator_do_ano)h+=kv('O ano até aqui',Math.round(e.fator_do_ano.razao*100)+'% do normal');
   h+=kv('Estiagem normal do mês',(e.veranico_normal_do_mes_dias??'—')+' dias');
-  if(o){
-    h+=`<div class="lab">${o.cultura}</div>`;
+  if(o){h+=`<div class="lab">${o.cultura}</div>`;
     h+=kv('Encaixe com o que ele quer',o.encaixe??'—');
     h+=kv('Confiança no dado',Math.round(o.confianca*100)+'%');
     if(o.risco&&o.risco.agua&&o.risco.agua.razao!=null)
       h+=kv('Água',o.risco.agua.nivel+' ('+o.risco.agua.razao+'× de '+o.risco.agua.exige_mm+' mm)');
     if(o.risco&&o.risco.chuva_ajustada_mm!=null)
       h+=kv('Chuva da janela, ajustada',o.risco.chuva_ajustada_mm+' mm');
-    if(o.nao_sei&&o.nao_sei.length)h+=`<div class="lab">Não sabemos</div><p class="diag">${o.nao_sei.join('<br>')}</p>`;
-  }
+    if(o.nao_sei&&o.nao_sei.length)h+=`<div class="lab">Não sabemos</div><p class="diag">${o.nao_sei.join('<br>')}</p>`;}
   if(r.sei_pouco&&r.sei_pouco.length)
     h+=`<div class="lab">Sei a parentada, não o ciclo</div><p class="diag">${r.sei_pouco.map(s=>s.cultura).join(', ')}</p>`;
   if(r.limites&&r.limites.length)h+=`<div class="lab">Limites</div><p class="diag">${r.limites.join('<br>')}</p>`;
   d.innerHTML=h;
 }
-const kv=(a,b)=>`<div class="kv"><span>${a}</span><span>${b}</span></div>`;
+// AQUI MORA O %2: o motor calcula na hora, para qualquer combinacao, inclusive
+// mes que nenhuma tabela pre-cozinhada teria.
+function pergunta(extra){
+  return CERNE.atender(Object.assign({lugar:{id:st.lugar,config_local:st.lid},
+    momento:{mes_plantio:st.mes},prioridade:st.prio||'risco'},extra));
+}
+function classifica(s){const n=N(s);
+  for(const[id,ks]of INTENT)if(ks.some(k=>n.includes(N(k))))return id;return null}
+function achaCultura(s){const n=N(s);
+  for(const c of DADOS.locais[st.lid].culturas_disponiveis){
+    const a=c.replace(/-/g,' '),b=N(nome(c));
+    if(n.includes(a)||n.includes(c)||(b&&n.includes(b)))return c}
+  return null}
 
+function indica(){
+  if(!st.colheu){pedirColheita();return}
+  if(!st.prio){pedirPrioridade();return}
+  const r=pergunta({colheu:st.colheu,intencao:'proximo-plantio'});
+  st.ultima=r;responde(escolhe(r,'ind'+st.colheu+st.prio+st.mes),r,'indicacao');
+}
+function pedirColheita(){
+  st.pendente='indica';
+  responde('O que você acabou de colher?',undefined,'colheita');
+}
+function pedirPrioridade(){
+  st.pendente='indica';
+  responde('E o que te importa mais agora?',undefined,'prioridade');
+}
+function eSe(hip){
+  if(!st.colheu){st.pendente={ese:hip};
+    responde('Antes me diz: o que você acabou de colher?',undefined,'colheita');return}
+  const r=pergunta({colheu:st.colheu,intencao:'e-se',hipotese:hip});
+  st.ultima=r;responde(escolhe(r,'ese'+st.colheu+hip+st.mes),r,'hipotese');
+}
 function mostraRiscos(){
-  if(!st.ultima)st.ultima=DB.lugares[st.lugar].proximo_plantio[st.colheu][st.prio];
-  const r=st.ultima;
-  if(!r||!(r.opcoes||[]).length){
-    responde('Dessa eu não tenho número pra te dar. Me diz primeiro o que você colheu.',undefined,'inicio');return;}
-  const o=r.opcoes[0],p=[];
+  if(!st.ultima){indica();return}
+  const o=(st.ultima.opcoes||[])[0];
+  if(!o){responde('Dessa eu não tenho número pra te dar.',undefined,'inicio');return}
+  const p=[];
   if(o.avisos&&o.avisos.length)p.push(o.avisos.join('. '));
   if(o.nao_sei&&o.nao_sei.length)p.push('E tem coisa que eu não sei: '+o.nao_sei[0]);
-  responde(p.length?p.join('. ')+'.':'Nessa eu não vi problema com a chuva do período.',r,'risco');
+  responde(p.length?p.join('. ')+'.':'Nessa eu não vi problema com a chuva do período.',st.ultima,'risco');
 }
-function perguntaProximo(){
-  const r=DB.lugares[st.lugar].proximo_plantio[st.colheu][st.prio];
-  st.ultima=r;responde(escolhe(r,'ind-'+st.colheu+st.prio),r,'indicacao');
-}
-function perguntaESe(hip){
-  const r=(DB.lugares[st.lugar].e_se[st.colheu]||{})[hip];
-  if(!r){responde('Essa eu não conheço aqui nesse lugar.',undefined,'inicio');return;}
-  st.ultima=r;responde(escolhe(r,'ese-'+st.colheu+hip),r,'hipotese');
+function defineColheita(c,ecoar){
+  st.colheu=c;$('colheu').value=c;
+  if(ecoar)diz('colhi '+nome(c),'me');
+  const pend=st.pendente;st.pendente=null;
+  if(pend&&pend.ese){eSe(pend.ese);return}
+  if(!st.prio){pedirPrioridade();return}
+  indica();
 }
 function trata(s){
   diz(s,'me');
-  const id=classifica(s),cult=achaCultura(s),L=DB.lugares[st.lugar];
-  if(id==='estado-do-solo'){const r=L.estado_do_solo;st.ultima=st.ultima||r;
-    responde(escolhe(r,'terra'),r,'terra');return;}
-  if(id==='vai-chover'){const r=L.vai_chover;responde(escolhe(r,'chuva'),r,'chuva');return;}
-  if(id==='riscos'){mostraRiscos();return;}
+  const id=classifica(s),cult=achaCultura(s);
+  if(st.pendente&&cult&&id!=='e-se'){defineColheita(cult,false);return}
+  if(id==='estado-do-solo'){const r=pergunta({intencao:'estado-do-solo'});
+    responde(escolhe(r,'terra'+st.mes),r,'terra');return}
+  if(id==='vai-chover'){const r=pergunta({intencao:'vai-chover'});
+    responde(escolhe(r,'chuva'+st.mes),r,'chuva');return}
+  if(id==='riscos'){mostraRiscos();return}
   if(id==='e-se'){
-    if(cult){perguntaESe(cult);return;}
-    // texto de esclarecimento, nao de agronomia: isso a pagina pode escrever
-    responde('Plantar o quê? Me diz o nome que eu te falo.',undefined,'inicio');return;}
-  if(id==='proximo-plantio'||cult){
-    if(cult){st.colheu=cult;$('colheu').value=cult;}
-    perguntaProximo();return;}
-  responde('Não peguei. Me diz o que você acabou de colher, ou pergunta "e se eu plantar milho".',undefined,'inicio');
+    if(cult){eSe(cult);return}
+    responde('Plantar o quê? Me diz o nome que eu te falo.',undefined,st.ctx);return}
+  if(cult){defineColheita(cult,false);return}
+  if(id==='proximo-plantio'){indica();return}
+  responde('Não peguei. Me diz o que você acabou de colher, ou pergunta "e se eu plantar milho".',undefined,st.ctx);
 }
-
 function chips(ctx){
   st.ctx=ctx||st.ctx||'inicio';
   const c=$('chips');c.innerHTML='';
   const add=(t,f)=>{const b=document.createElement('button');b.className='chip';b.textContent=t;b.onclick=f;c.appendChild(b)};
-  const L=DB.lugares[st.lugar];
-  const outra=()=>{const v=L.culturas.filter(x=>x!==st.colheu);return v[Math.floor(Math.random()*v.length)]};
-  const set={
-    inicio:    [['colhi '+nome(st.colheu),()=>trata('colhi '+nome(st.colheu))],
-                ['a terra tá boa?',()=>trata('a terra tá boa?')]],
-    indicacao: [['o que pode dar errado?',()=>{diz('o que pode dar errado?','me');mostraRiscos()}],
-                ['e se eu plantar '+nome(outra()),null],
-                ['a terra tá boa?',()=>trata('a terra tá boa?')]],
-    risco:     [['e se eu plantar '+nome(outra()),null],
-                ['vai chover?',()=>trata('vai chover semana que vem?')]],
-    hipotese:  [['então o que você faria?',()=>trata('o que você faria?')],
+  const cs=DADOS.locais[st.lid].culturas_disponiveis;
+  const outra=()=>{const v=cs.filter(x=>x!==st.colheu);return v[Math.floor(Math.random()*v.length)]};
+  if(st.ctx==='colheita'){cs.slice(0,6).forEach(x=>add(nome(x),()=>{diz('colhi '+nome(x),'me');defineColheita(x,false)}));}
+  else if(st.ctx==='prioridade'){
+    Object.entries(PRIOS).forEach(([k,v])=>add(v,()=>{diz(v,'me');st.prio=k;prios();indica()}));}
+  else{
+    const set={
+      inicio:[['o que eu planto agora?',()=>trata('o que eu planto agora?')],
+              ['a terra tá boa?',()=>trata('a terra tá boa?')]],
+      indicacao:[['o que pode dar errado?',()=>{diz('o que pode dar errado?','me');mostraRiscos()}],
+                 ['e se eu plantar '+nome(outra()),null],['a terra tá boa?',null]],
+      risco:[['e se eu plantar '+nome(outra()),null],['vai chover?',null]],
+      hipotese:[['então o que você faria?',()=>{diz('então o que você faria?','me');indica()}],
                 ['o que pode dar errado?',()=>{diz('o que pode dar errado?','me');mostraRiscos()}]],
-    terra:     [['o que eu planto agora?',()=>trata('o que eu planto agora?')],
-                ['vai chover?',()=>trata('vai chover semana que vem?')]],
-    chuva:     [['o que eu planto agora?',()=>trata('o que eu planto agora?')],
-                ['a terra tá boa?',()=>trata('a terra tá boa?')]],
-  }[st.ctx]||[];
-  set.forEach(([t,f])=>add(t,f||(()=>trata(t))));
+      terra:[['o que eu planto agora?',null],['vai chover?',null]],
+      chuva:[['o que eu planto agora?',null],['a terra tá boa?',null]],
+    }[st.ctx]||[];
+    set.forEach(([t,f])=>add(t,f||(()=>trata(t))));
+  }
   add(st.falar?'🔊 voz':'🔇 sem voz',()=>{st.falar=!st.falar;if(!st.falar)speechSynthesis.cancel();chips()});
 }
-const nome=c=>(DB.nomes_culturas[c]||c).split(' (')[0].toLowerCase();
-
 function prios(){
   const p=$('prios');p.innerHTML='';
   for(const[k,v]of Object.entries(PRIOS)){
     const b=document.createElement('button');
     b.className='chip'+(k===st.prio?' on':'');b.textContent=v;
-    b.onclick=()=>{if(k===st.prio)return;st.prio=k;prios();
-      diz('agora é '+v,'me');perguntaProximo()};
-    p.appendChild(b);
-  }
+    b.onclick=()=>{if(k===st.prio)return;st.prio=k;prios();diz('agora é '+v,'me');
+      if(st.colheu)indica();else pedirColheita()};
+    p.appendChild(b);}
+}
+function montaMes(){
+  const sel=$('mes');sel.innerHTML='';
+  MES_CERNE.forEach((m,i)=>{const o=document.createElement('option');o.value=i;o.textContent=m;sel.appendChild(o)});
+  sel.value=st.mes;
 }
 function trocaLugar(){
-  const L=DB.lugares[st.lugar];st.colheu=L.culturas[0];
-  const s=$('colheu');s.innerHTML='';
-  L.culturas.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=nome(c);s.appendChild(o)});
-  $('sub').textContent=L.nome+' · plantio em '+L.estado.mes;
-  $('regnote').textContent=L.registro==='local'
+  const loc=DADOS.locais[st.lid],cs=loc.culturas_disponiveis;
+  st.colheu=null;st.prio=null;st.ultima=null;st.pendente=null;
+  const inicio={roraima:3,'centro-oeste':8}[st.lid];st.mes=inicio==null?3:inicio;
+  montaMes();
+  const sel=$('colheu');sel.innerHTML='<option value="">(ele ainda não disse)</option>';
+  cs.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=nome(c);sel.appendChild(o)});
+  $('sub').textContent=DADOS.nasa.lugares[st.lugar].nome+' · '+MES_CERNE[st.mes];
+  $('regnote').textContent=loc.moldes
     ? 'Fala no registro local, com as palavras dos produtores que responderam o formulário.'
     : 'Sem vocabulário levantado para este lugar: o motor cai em português neutro e declara isso.';
   msgs.innerHTML='';
-  diz(L.nome+' · mesmo motor, mesmo código',null,true);
-  responde('Bom dia. Me diz o que você acabou de colher que eu te digo o que eu plantaria agora.',undefined,'inicio');
+  diz(DADOS.nasa.lugares[st.lugar].nome+' · o motor calcula aqui no navegador',null,true);
+  responde('Bom dia. O que você acabou de colher?',undefined,'colheita');
   prios();
 }
-
-// microfone: so o ESCUTAR precisa de permissao. o FALAR funciona sempre.
 let rec=null,gravando=false;
 function micInit(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){$('mic').disabled=true;$('mic').title='este navegador não escuta';return;}
+  if(!SR){$('mic').disabled=true;$('mic').title='este navegador não escuta';return}
   rec=new SR();rec.lang='pt-BR';rec.interimResults=false;rec.maxAlternatives=1;
-  rec.onresult=e=>{const t=e.results[0][0].transcript;trata(t)};
-  rec.onerror=e=>{
-    const m={'not-allowed':'permissão do microfone negada','service-not-allowed':'serviço de fala bloqueado',
-             'no-speech':'não ouvi nada','audio-capture':'nenhum microfone encontrado',
-             'network':'o reconhecimento precisa de internet'}[e.error]||e.error;
+  rec.onresult=e=>trata(e.results[0][0].transcript);
+  rec.onerror=e=>{const m={'not-allowed':'permissão do microfone negada',
+    'service-not-allowed':'serviço de fala bloqueado','no-speech':'não ouvi nada',
+    'audio-capture':'nenhum microfone encontrado','network':'o reconhecimento precisa de internet'}[e.error]||e.error;
     diz('Microfone: '+m+'. Pode escrever.',null,true);
-    $('diag').insertAdjacentHTML('beforeend','<br><span class="no">erro do microfone: '+e.error+'</span>');
-  };
+    $('diag').insertAdjacentHTML('beforeend','<br><span class="no">erro: '+e.error+'</span>')};
   rec.onend=()=>{gravando=false;$('mic').classList.remove('rec')};
-  $('mic').onclick=()=>{
-    if(gravando){rec.stop();return}
+  $('mic').onclick=()=>{if(gravando){rec.stop();return}
     try{speechSynthesis.cancel();rec.start();gravando=true;$('mic').classList.add('rec')}
-    catch(e){diz('Não consegui abrir o microfone: '+e.message,null,true)}
-  };
+    catch(e){diz('Não consegui abrir o microfone: '+e.message,null,true)}};
 }
 function diag(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   const l=[['escutar (SpeechRecognition)',!!SR],['falar (speechSynthesis)','speechSynthesis'in window],
-           ['microfone (getUserMedia)',!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)],
-           ['contexto seguro (https)',window.isSecureContext],['fora de iframe',window.self===window.top]];
+    ['microfone (getUserMedia)',!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)],
+    ['contexto seguro (https)',window.isSecureContext],['fora de iframe',window.self===window.top]];
   $('diag').innerHTML=l.map(([k,v])=>`<span class="${v?'ok':'no'}">${v?'✓':'✗'}</span> ${k}`).join('<br>')
-    +'<br><span class="ok">vozes pt-BR: '+(('speechSynthesis'in window)?speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang)).length:0)+'</span>';
+    +'<br><span class="ok">vozes pt-BR: '+vozes().length+'</span>';
 }
-$('send').onclick=()=>{const v=$('txt').value.trim();if(v){$('txt').value='';trata(v)}};
-$('txt').onkeydown=e=>{if(e.key==='Enter')$('send').click()};
-$('lugar').onchange=e=>{st.lugar=e.target.value;trocaLugar()};
-$('colheu').onchange=e=>{st.colheu=e.target.value;perguntaProximo()};
 function montaVozes(){
   const sel=$('voz'),vs=vozes();
   if(!vs.length){sel.innerHTML='<option>nenhuma voz em português</option>';return}
-  const atual=st.voz&&st.voz.name;
-  sel.innerHTML='';
+  const atual=st.voz&&st.voz.name;sel.innerHTML='';
   vs.forEach((v,i)=>{const o=document.createElement('option');o.value=v.name;
     o.textContent=v.name+(i===0?'  ← melhor':'');sel.appendChild(o)});
   st.voz=vs.find(v=>v.name===atual)||vs[0];sel.value=st.voz.name;
@@ -338,13 +337,31 @@ $('voz').onchange=e=>{st.voz=vozes().find(v=>v.name===e.target.value)||null};
 $('rate').oninput=e=>{st.rate=parseFloat(e.target.value);$('rlab').textContent=st.rate.toFixed(2)};
 $('provar').onclick=()=>{const g=st.falar;st.falar=true;
   fala('Depois da mandioca, eu iria de feijão-caupi. Deixa a terra mais forte pro que vem depois. Quer saber o que pode dar errado?');st.falar=g};
+$('send').onclick=()=>{const v=$('txt').value.trim();if(v){$('txt').value='';trata(v)}};
+$('txt').onkeydown=e=>{if(e.key==='Enter')$('send').click()};
+$('lugar').onchange=e=>{st.lugar=e.target.value;st.lid=DADOS.lid_de[st.lugar];trocaLugar()};
+$('colheu').onchange=e=>{if(!e.target.value)return;diz('colhi '+nome(e.target.value),'me');defineColheita(e.target.value,false)};
+$('mes').onchange=e=>{st.mes=parseInt(e.target.value,10);
+  $('sub').textContent=DADOS.nasa.lugares[st.lugar].nome+' · '+MES_CERNE[st.mes];
+  diz('e se fosse em '+MES_CERNE[st.mes]+'?','me');
+  if(st.colheu&&st.prio)indica();else{st.ultima=null;const r=pergunta({intencao:'estado-do-solo'});
+    responde(escolhe(r,'terra'+st.mes),r,st.ctx)}};
 if('speechSynthesis'in window)speechSynthesis.onvoiceschanged=()=>{diag();montaVozes()};
 
-fetch('./dados/respostas.json').then(r=>r.json()).then(db=>{
-  DB=db;const s=$('lugar');
-  Object.entries(db.lugares).forEach(([k,v])=>{const o=document.createElement('option');o.value=k;o.textContent=v.nome;s.appendChild(o)});
-  st.lugar=Object.keys(db.lugares)[0];trocaLugar();micInit();diag();montaVozes();
-}).catch(e=>{$('sub').textContent='erro ao carregar';diz('Não consegui carregar as respostas do motor: '+e.message,null,true)});
+const D='dados/';
+Promise.all(['nasa-power.json','culturas.json','prioridades.json','local-roraima.json','local-centro-oeste.json']
+  .map(f=>fetch(D+f).then(r=>r.json())))
+.then(([nasa,culturas,prioridades,rr,co])=>{
+  DADOS={nasa,culturas,prioridades,locais:{roraima:rr,'centro-oeste':co},
+         lid_de:{'canta-rr':'roraima','rioverde-go':'centro-oeste'}};
+  CERNE=new Cerne(DADOS);
+  const sel=$('lugar');
+  Object.entries(nasa.lugares).forEach(([k,v])=>{const o=document.createElement('option');
+    o.value=k;o.textContent=v.nome;sel.appendChild(o)});
+  st.lugar=Object.keys(nasa.lugares)[0];st.lid=DADOS.lid_de[st.lugar];
+  trocaLugar();micInit();diag();montaVozes();
+}).catch(e=>{$('sub').textContent='erro ao carregar';
+  diz('Não consegui carregar os dados do motor: '+e.message,null,true)});
 </script>
 </body>
 </html>

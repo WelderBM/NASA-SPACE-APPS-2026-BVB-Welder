@@ -6,7 +6,17 @@ local. Trocar de lugar troca a lingua junto com o dado.
 Recebe pergunta estruturada, devolve resposta estruturada que ja contem a
 frase pronta. Toda frase sai de molde fixo preenchido com numero medido.
 Nenhum texto e redigido por IA: a IA so classifica a intencao na porta."""
-import json, unicodedata
+import json, unicodedata, math
+
+# Python arredonda 0.625 para 0.62 (bancario) e o JavaScript para 0.63
+# (meio-pra-cima). Com dois motores isso vira divergencia silenciosa, que e
+# pior que um motor so. floor(x+0.5) e exatamente o Math.round do JS, e como os
+# dois usam IEEE 754, o resultado bate bit a bit.
+def _r(x, n=0):
+    if x is None: return None
+    if n == 0: return int(math.floor(x + 0.5))
+    k = 10 ** n
+    return math.floor(x * k + 0.5) / k
 
 D = 'dados/'
 _j = lambda f: json.load(open(D+f, encoding='utf-8'))
@@ -77,7 +87,7 @@ def fator_do_ano(place, m0, n=3):
     ms = [(m0-k) % 12 for k in range(1, n+1)]
     if any(o[m] is None for m in ms): return None, None
     obs, nor = sum(o[m] for m in ms), sum(c[m] for m in ms)
-    return obs/nor, {'observado_mm': round(obs,1), 'normal_mm': nor,
+    return obs/nor, {'observado_mm': _r(obs,1), 'normal_mm': nor,
                      'meses': [MES[m] for m in reversed(ms)]}
 
 def qualifica_chuva(place, m):
@@ -95,7 +105,7 @@ def estado_observado(place, m0):
     if an['solo_raiz'][m0] is not None:
         e['solo_raiz'] = {'observado': an['solo_raiz'][m0], 'normal': cl['solo_raiz'][m0],
                           'situacao': 'acima' if an['solo_raiz'][m0] > cl['solo_raiz'][m0] else 'abaixo'}
-    if f: e['fator_do_ano'] = {'razao': round(f,2), **det}
+    if f: e['fator_do_ano'] = {'razao': _r(f,2), **det}
     return e
 
 # -------------------------------------------------------------------- risco
@@ -107,12 +117,12 @@ def risco(c, place, m0):
         nao_sei.append('quanto tempo essa cultura leva até a colheita')
         return {'avaliavel': False}, nao_sei
     ch = sum(cl['chuva_mm'][m]*fr for m, fr in _janela(m0, cmin))
-    r['chuva_normal_mm'] = round(ch)
-    r['chuva_ajustada_mm'] = round(ch*f) if f else None
+    r['chuva_normal_mm'] = _r(ch)
+    r['chuva_ajustada_mm'] = _r(ch*f) if f else None
     ag = c.get('agua_ciclo_mm')
     if ag and ag[0]:
         razao = (ch*(f or 1))/ag[0]
-        r['agua'] = {'exige_mm': ag[0], 'razao': round(razao,2),
+        r['agua'] = {'exige_mm': ag[0], 'razao': _r(razao,2),
                      'nivel': 'baixo' if razao >= 1.2 else 'médio' if razao >= 0.9 else 'alto'}
     else:
         r['agua'] = {'nivel': 'sem dado'}
@@ -234,8 +244,8 @@ def atender(p):
         res['opcoes'].append({
             'cultura': c['nome'], 'id': nome, 'familia': c['familia'],
             'mesma_familia_do_que_colheu': bool(fam and c['familia'] == fam),
-            'risco': r, 'encaixe': round(enc,2) if enc is not None else None,
-            'confianca': round(conf,2), '_pqs': pqs,
+            'risco': r, 'encaixe': _r(enc,2) if enc is not None else None,
+            'confianca': _r(conf,2), '_pqs': pqs,
             'porques': [M['porques'].get(k,'').format(colheu=cn, de_colheu=dcn, **pr) for k, pr in pqs],
             'avisos': avisos(r, M), 'nao_sei': ns, 'qualidade_do_dado': c['qualidade'],
             'validar_com_tecnico': ['a janela de plantio oficial do ZARC para o município'],
