@@ -312,7 +312,8 @@ class Cerne{
     if(res.falas.length)res.fala=res.falas[0];
     if(!res.destaque&&res.opcoes.length)res.destaque=res.opcoes[0].id;
     res.opcoes.forEach(o=>{delete o._pqs});
-    res.limites.push('a janela de plantio oficial do ZARC não está carregada; confirme com técnico');
+    res.limites.push('de onde vem a semente ou a muda e quanto ela custa não entra aqui; '+
+      'esta resposta diz o que plantar, não se dá para comprar');
     return res;
   }
 }

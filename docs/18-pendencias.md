@@ -99,6 +99,32 @@ Não são dívidas escondidas, estão ditas no produto e nos documentos.
   em abril para 0,87 em julho, e a confiança sobe de 0,55 para 0,82. Onde não há
   janela o peso fica **nulo e vira lacuna declarada**, nunca zero. Carregar as
   outras janelas agora é só dado, e acende sozinho
+- **Recurso para plantar: 0 de 14 campos, e agora a resposta diz isso.**
+  15/11, 15h40. O Welder perguntou se tínhamos o dado dos recursos necessários
+  para plantar. Não temos nenhum: busca por semente, muda, insumo, custo, adubo,
+  calagem, mão de obra, trator, irrigação e crédito não acha campo em arquivo
+  algum. Estava só declarado no `decisoes.json` (`comprar-semente` e
+  `vale-irrigar` como FORA), que é documento de desenho e o produtor não lê.
+  **O furo era de coerência:** o pitch abre com "muitos agricultores tiveram
+  medo de investir", e medo de investir é questão de recurso. Agora todo
+  `limites` carrega: *"de onde vem a semente ou a muda e quanto ela custa não
+  entra aqui; esta resposta diz o que plantar, não se dá para comprar."*
+  - **Próximo passo barato, para depois do prazo:** um campo
+    `material_de_plantio` — maniva, rama, túbera ou semente comprada. É fato de
+    propagação, tem fonte na Embrapa e **não precisa de preço nenhum**, então
+    escapa do motivo pelo qual custo ficou fora. E é a distinção que encosta no
+    medo de investir: o que ele replanta da própria roça não custa para plantar
+    de novo. Entra como **fato que o bot diz**, não como peso novo no ranking,
+    porque peso sem fonte foi o erro do `cobertura_meses`.
+  - Fica fora de propósito: preço, crédito, PRONAF, mão de obra e maquinário.
+    O desafio pede observação da Terra, solo, característica de cultura e
+    prioridade do produtor; recurso não está na lista.
+- **Uma frase falsa saiu dos limites no mesmo commit:** a linha fixa "a janela
+  de plantio oficial do ZARC não está carregada" era **incondicional**, então
+  mentia justamente para o caupi, a única cultura cuja janela está carregada —
+  e repetia a lacuna condicional que já dizia "não está carregado para 9 das
+  culturas daqui". Quem precisa confirmar com técnico já vai no
+  `validar_com_tecnico` da opção.
 - **SoilGrids**: API REST pausada pelo ISRIC. A camada de solo hoje é a umidade
   da NASA em três profundidades mais a temperatura do solo
 - **Lotes**: o motor modela uma área. Quem tem três roçados tem três respostas

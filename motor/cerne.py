@@ -442,7 +442,11 @@ def atender(p):
     for o in res['opcoes']: o.pop('_pqs', None)
     for l in res['lacunas']:
         res['limites'].append(f"{l['o_que']}: {l['por_que']}, então {l['efeito']}")
-    res['limites'].append('a janela de plantio oficial do ZARC não está carregada; confirme com técnico')
+    # a linha fixa do ZARC saiu daqui: era incondicional e por isso FALSA para o
+    # caupi, cuja janela esta carregada, e repetia a lacuna condicional de cima.
+    # Quem precisa confirmar com tecnico ja vai em validar_com_tecnico da opcao.
+    res['limites'].append('de onde vem a semente ou a muda e quanto ela custa não entra aqui; '
+                          'esta resposta diz o que plantar, não se dá para comprar')
     return res
 
 if __name__ == '__main__':
