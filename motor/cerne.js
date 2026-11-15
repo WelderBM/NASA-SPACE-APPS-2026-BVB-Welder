@@ -24,6 +24,7 @@ const MOLDES_NEUTROS={
  sem_dado:"Das culturas da região eu sei a família de {n}, mas não sei a duração de nenhuma. Sem isso eu não indico.",
  estado_da_terra:"O solo está {estado}. {mes} costuma ter {chuva}.",
  nao_sei_prever:"Previsão de chuva eu não tenho. {mes} costuma ter {chuva}, com estiagem máxima de {estiagem} dias, e o solo está {estado}.",
+ aviso_calor:"A máxima de {mes} chega a {pico} °C, acima do limite de {limite} °C dessa cultura.",
  agua_sem_numero:"A exigência de água dela não está registrada. A janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
  porques:{familia:"é de outra família {de_colheu}, então as pragas de solo não se mantêm",
    agua:"a chuva do período atende o que ela precisa", solo:"melhora o solo para o que vem depois",
@@ -95,6 +96,11 @@ class Cerne{
     r.veranico={dias:Math.max(...ms.map(m=>cl.veranico[m])),meses:ms.map(m=>MES[m]),
                 base:fc?'na fase crítica':'no ciclo'};
     if(!fc)nao_sei.push('qual é a fase crítica dessa cultura, então usei o ciclo inteiro');
+    const tl=c.tmax_sofre_c;
+    if(tl){let pico=-1e9,mp=m0;
+      for(const[m]of this.janela(m0,cmin))if(cl.tmax[m]>pico){pico=cl.tmax[m];mp=m}
+      if(pico>tl)r.calor={limite:tl,pico:Math.floor(pico+0.5),mes:MES[mp]};
+    }else nao_sei.push('a partir de que temperatura essa cultura sofre');
     r.avaliavel=true;return [r,nao_sei];
   }
   encaixe(c,prioridade){
@@ -136,6 +142,7 @@ class Cerne{
       {chuva_mm:r.chuva_ajustada_mm||r.chuva_normal_mm,estiagem:Math.floor(v.dias+0.5),base:v.base}));
     else if(v&&v.dias>=10)out.push(`a estiagem normal ${v.base} é de ${Math.floor(v.dias+0.5)} dias`);
     if(r.agua&&r.agua.nivel==='alto')out.push('a chuva do período não cobre o que essa cultura pede');
+    if(r.calor)out.push(fmt(lista(M.aviso_calor||'')[0],r.calor));
     return out}
 
   atender(p){

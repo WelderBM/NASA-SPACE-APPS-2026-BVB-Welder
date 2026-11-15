@@ -45,6 +45,7 @@ MOLDES_NEUTROS = {
   'estado_da_terra': "O solo está {estado}. {mes} costuma ter {chuva}.",
   'fechos_terra': "",
   'nao_sei_prever': "Previsão de chuva eu não tenho. {mes} costuma ter {chuva}, com estiagem máxima de {estiagem} dias, e o solo está {estado}.",
+  'aviso_calor': "A máxima de {mes} chega a {pico} °C, acima do limite de {limite} °C dessa cultura.",
   'agua_sem_numero': "A exigência de água dela não está registrada. A janela acumula {chuva_mm} mm e a estiagem máxima {base} é de {estiagem} dias.",
   'porques': {'familia': "é de outra família {de_colheu}, então as pragas de solo não se mantêm",
               'agua': "a chuva do período atende o que ela precisa",
@@ -141,6 +142,12 @@ def risco(c, place, m0):
                      'meses': [MES[m] for m in ms],
                      'base': 'na fase crítica' if fc else 'no ciclo'}
     if not fc: nao_sei.append('qual é a fase crítica dessa cultura, então usei o ciclo inteiro')
+    tl = c.get('tmax_sofre_c')
+    if tl:
+        pico, mp = max((cl['tmax'][m], m) for m, _ in _janela(m0, cmin))
+        if pico > tl: r['calor'] = {'limite': tl, 'pico': _r(pico), 'mes': MES[mp]}
+    else:
+        nao_sei.append('a partir de que temperatura essa cultura sofre')
     r['avaliavel'] = True
     return r, nao_sei
 
@@ -203,6 +210,9 @@ def avisos(r, moldes):
         out.append(f"a estiagem normal {v['base']} é de {_r(v['dias'])} dias")
     if r.get('agua', {}).get('nivel') == 'alto':
         out.append("a chuva do período não cobre o que essa cultura pede")
+    cal = r.get('calor')
+    if cal:
+        out.append(_lista(moldes.get('aviso_calor', ''))[0].format(**cal))
     return out
 
 # ----------------------------------------------------------------- atender

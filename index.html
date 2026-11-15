@@ -140,9 +140,9 @@ function nota(v){const n=(v.name||'').toLowerCase();let s=0;
   if(v.localService===false)s+=15;if(/\b(maria|daniel)\b/.test(n))s-=8;return s}
 const vozes=()=>('speechSynthesis'in window)
   ? speechSynthesis.getVoices().filter(v=>/^pt/i.test(v.lang)).sort((a,b)=>nota(b)-nota(a)) : [];
-function fala(t){
+function fala(t,continua){
   if(!st.falar||!('speechSynthesis'in window))return;
-  try{speechSynthesis.cancel();
+  try{if(!continua)speechSynthesis.cancel();
     (t.match(/[^.!?]+[.!?]*/g)||[t]).map(p=>p.trim()).filter(Boolean).forEach((p,i)=>{
       const u=new SpeechSynthesisUtterance(p),perg=/\?\s*$/.test(p);
       u.lang='pt-BR';u.volume=1;if(st.voz)u.voice=st.voz;
@@ -153,8 +153,18 @@ function fala(t){
 }
 function responde(t,r,ctx){
   const d=digitando();
-  setTimeout(()=>{d.remove();diz(t);fala(t);
-    if(r!==undefined)painel(r);if(ctx)chips(ctx);},Math.min(1500,420+t.length*11));
+  setTimeout(()=>{
+    d.remove();diz(t);fala(t);
+    if(r!==undefined)painel(r);
+    // o aviso do ano vem como SEGUNDO balao: a frase principal fica curta e o
+    // produtor ouve o que o ano fez, que e o dado que eu mais escondia
+    const extra=r&&r.aviso_do_ano;
+    if(extra){
+      const d2=digitando();
+      setTimeout(()=>{d2.remove();diz(extra);fala(extra,true);if(ctx)chips(ctx)},
+                 Math.min(1400,500+extra.length*9));
+    }else if(ctx)chips(ctx);
+  },Math.min(1500,420+t.length*11));
 }
 const kv=(a,b)=>`<div class="kv"><span>${a}</span><span>${b}</span></div>`;
 function painel(r){

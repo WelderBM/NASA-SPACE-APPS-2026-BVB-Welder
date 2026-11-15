@@ -225,6 +225,10 @@
     "agua_sem_numero": [
       "Quanta água ela pede eu não sei, mas a janela dá {chuva_mm} milímetros e a estiagem mais longa {base} costuma ser de {estiagem} dias.",
       "O número de água dela me falta. O que eu tenho: {chuva_mm} milímetros na janela e até {estiagem} dias seguidos sem chuva {base}."
+    ],
+    "aviso_calor": [
+      "E o calor: {mes} costuma bater {pico} graus aí, e ela sofre acima de {limite}.",
+      "Repara no calor também: a máxima de {mes} fica em {pico} graus, e o limite dela é {limite}."
     ]
   }
 }
