@@ -41,7 +41,7 @@ são a melhor fonte de registro que existe para esta persona:
 | **"terra fraca"** (2 de 8, como causa de perda) | é a palavra deles para saúde do solo. O desafio pede *strengthen soil health*: em roraimense, é **deixar a terra mais forte** |
 | **"estiagem"** | está no vocabulário deles. Melhor que "veranico" na fala |
 | **"fica parada até a próxima chuva"** | é pousio, nas palavras deles |
-| **"planta outra coisa em seguida"** (6 de 8) | é sucessão, nas palavras deles. E confirma que a decisão que a gente escolheu é a que eles realmente tomam |
+| **"planta outra coisa em seguida"** (5 de 8 respostas, 4 de 7 pessoas) | é sucessão, nas palavras deles. E confirma que a decisão que a gente escolheu é a que eles realmente tomam |
 | **"ambiente de lavrado"** | o produtor do Cantá pediu "cultivares adaptadas ao ambiente de lavrado". Lavrado é o ecossistema, e é a palavra local |
 | **"se a planta irá sobreviver e produzir"** | é a pergunta real, não "qual a melhor rotação" |
 | **"formigas caminhando em processo rápido de coleta de alimento"** | sinal de chuva por conhecimento tradicional. Não é folclore: é a interface que já existe |

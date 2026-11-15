@@ -70,8 +70,8 @@
         "Canta": 1
       },
       "como_decidem": "7 de 8 marcaram 'pela experiencia de quem planta'",
-      "depois_da_colheita": "6 de 8 plantam outra coisa em seguida; 2 deixam parada ate a proxima chuva",
-      "o_que_fez_perder": "seca em 5 de 8; praga em 3; TERRA FRACA em 2; fogo em 1; preco baixo em 2",
+      "depois_da_colheita": "5 de 8 respostas plantam outra coisa em seguida (4 de 7 pessoas); contagem conferida na planilha em 15/11/2026",
+      "o_que_fez_perder": "seca em 6 de 8 respostas (5 de 7 pessoas); praga em 3; TERRA FRACA em 2; fogo em 1; preco baixo em 2; contagem conferida na planilha em 15/11/2026",
       "canal_preferido": "mensagem escrita no WhatsApp em 4 de 8; ligacao ou visita de tecnico em 2; 'um aparelho que fala, la na propriedade' em 1; app ou site em 1",
       "confia_em_satelite": "4 de 8 sim; 3 'so se um tecnico confirmasse'; e por isso que existe o campo validar_com_tecnico",
       "sinal_de_chuva_que_usam": [
@@ -244,7 +244,7 @@
       "A que mais encaixa é {cultura}. Só que eu conheço pouco dela: medi {pct}% do que pesa na sua escolha. Fica o aviso."
     ],
     "solo_fundo": [
-      "Por cima a terra está {sup}, mas no fundo ela está {fundo}. O que segura a planta no veranico é o de baixo.",
+      "Por cima a terra está {sup}, mas no fundo ela está {fundo}. O que segura a planta na estiagem é o de baixo.",
       "Repara numa coisa: a camada de cima está {sup} e a de baixo {fundo}. É a de baixo que socorre na estiagem."
     ],
     "melhor_sem_ciclo": [

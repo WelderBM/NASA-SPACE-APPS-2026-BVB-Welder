@@ -63,7 +63,7 @@ A lista completa, com dono e estado, é [18. Pendências](docs/18-pendencias.md)
 1. **Os nove campos da submissão em inglês**, a declaração de uso de IA e as duas caixas. Rascunho em [15](docs/15-submissao.md), com colchetes a preencher. *Chat do dado.*
 2. **Confirmar a hora do prazo** com o líder local. Até confirmar, conta 22h59. **Welder.**
 3. **Testar todos os links em aba anônima:** nada pode pedir login. **Welder.**
-4. **Os 7 slides, em inglês**, com o subtítulo obrigatório `AgroDeal — What do I plant next?` e a **faixa** do El Niño, nunca a média. *Chat dos slides.*
+4. **Os 7 slides existem**, em inglês e em português, com o subtítulo obrigatório na capa, mais um vídeo-pitch de 29,9 s com legenda ([entregas/](entregas/)). Falta: o GIF do slide 4, o link do GitHub Pages no slide 7, **trocar "60 days" por "70 days" nos dois decks** (o caupi foi corrigido e o slide ficou atrás da demo) e exportar em PDF com link público. *Chat dos slides.*
 5. **Falar no microfone na demo ao vivo.** Os cinco diagnósticos dão verde; falar nunca foi testado. **Welder.**
 6. **Nenhuma entrevista em Roraima ainda.** A única é de Goiás, n=1. As três perguntas estão prontas em [19](docs/19-roteiro-das-ligacoes.md) e os contatos ficam na planilha privada, não aqui. **Welder.**
 7. **A hipótese do áudio não está validada.** ([3](docs/03-persona-e-pesquisa.md))
@@ -89,11 +89,11 @@ Medidos no NASA POWER em 14/11/2026, ponto do Cantá (lat 2,61, lon -60,60). Det
 
 | Achado | Número |
 | --- | --- |
-| Veranico na estação chuvosa de 2026 | **24 dias**, contra 9 de média em 45 anos |
+| Estiagem mais longa na estação chuvosa de 2026 | **24 dias**, contra 9 de média. Vem da série **diária**, que está no [4](docs/04-dados-nasa.md) e não no repositório: não dá para recalcular daqui |
 | Dias com chuva, abril a setembro de 2026 | 92, contra 142 de média |
-| Chuva de junho a setembro de 2026 | 330 mm contra 859 mm: **-62%, o pior da série de 45 anos** |
+| Chuva de junho a setembro de 2026 | **330 mm contra 812 mm da climatologia: −59%**, o pior desde 1981. Contra os 859 mm da média da série de anos de El Niño dá −62%; os dois números estão no `nasa-power.json`, então **cite qual** |
 | Umidade do solo no perfil, setembro de 2026 | 0,51 contra 0,76 do normal, nível que ali só aparece em janeiro |
-| Chuva de janeiro a outubro de 2026 | 858 mm contra 1.428 mm: -40% |
+| Chuva de janeiro a **setembro** de 2026 | **805 mm contra 1.358 mm: −41%.** Dizia "janeiro a outubro, 858 contra 1.428" até 15/11: outubro a dezembro não estão na série e nenhum dos dois números existia no repositório |
 
 E o que **não** se confirmou, igualmente importante:
 

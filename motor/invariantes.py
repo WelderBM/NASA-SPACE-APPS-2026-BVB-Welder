@@ -16,6 +16,13 @@ AFIRMA_AGUA = ['dá o que ela precisa', 'atende o que ela precisa', 'dá o que e
                'cobre o que ela pede', 'dá conta dela', 'a chuva desse tempo dá']
 AFIRMA_SOLO = ['mais seca', 'mais seco', 'mais molhada', 'mais úmido']
 
+# O doc 11 trocou palavra por palavra. A lista de la, virada teste:
+# 'inverno' e 'verao' nunca, porque no Norte significam o contrario;
+# o resto e jargao que o produtor nao usa.
+JARGAO = ['veranico', 'inverno', 'verão', 'nitrogênio', 'inmet', 'pousio',
+          'sucessão', 'euphorbiaceae', 'cucurbitaceae', 'poaceae', 'fabaceae',
+          'convolvulaceae', 'dioscoreaceae', 'solanaceae', 'musaceae']
+
 def numeros(t):
     return {n.replace(',', '.') for n in re.findall(r'\d+(?:[.,]\d+)?', t or '')}
 
@@ -81,6 +88,17 @@ def checa(r, caso):
     if o and (o.get('confianca') or 0) < CONF_MIN and r['intencao'] == 'proximo-plantio':
         if falas and not any('%' in f for f in falas):
             erros.append(f"confiança {o['confianca']} e a fala não avisa: {falas[0]!r}")
+
+    # 8. o vocabulario do doc 11 tambem e regra, e nao era testado.
+    # O molde do solo dizia "veranico" depois de o doc 11 decidir "estiagem",
+    # e passou dois dias porque nenhum teste olhava a PALAVRA, so o numero.
+    # 'inverno' e 'verao' sao o caso grave: no Norte inverno e a estacao
+    # CHUVOSA, entao a palavra inverte a resposta na boca do bot.
+    for f in falas:
+        baixo = f.lower()
+        for palavra in JARGAO:
+            if palavra in baixo:
+                erros.append(f"jargao na fala: {palavra!r} em {f[:90]!r}")
 
     # 7. o que a LINHA da cultura manda validar nao pode morrer no motor.
     # O dado do cara trazia "qual especie se planta aqui e suposicao" e a

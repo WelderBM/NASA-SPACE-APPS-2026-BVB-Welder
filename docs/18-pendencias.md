@@ -139,10 +139,10 @@ Conferido contra o `main` em `2bbd12b`. Só o que não estava acima.
 | Dois "normais" de junho a setembro: o slide usa **859 mm** (`media_serie_mm`), a climatologia que o motor usa soma **812 mm**. Com 812, 2026 dá −59%, não −62% | slides `problem-data`, README, doc 15 contra `nasa-power.json` `clim` | dizer no slide de que período é o 859, ou usar um só |
 | "Janeiro a outubro de 2026: 858 mm contra 1.428" não tem dado no repositório: a série de 2026 vai até **setembro** (outubro é nulo), e o próprio doc 04 diz na linha 131 que outubro a dezembro não estão na série | README, doc 04 linha 53 e tabela de outubro | tirar, ou gravar a leitura de outubro com data |
 | "O pior em 45 anos" com rodapé "1981 a 2026": a base é de 45 anos, e com 2026 a série tem 46 | slides EN e PT | "o pior desde 1981" |
-| Pesquisa: 5 de 8 plantam outra coisa em seguida, contagem conferida na planilha (`entregas/README.md`); ainda diz **6 de 8** | doc 11, `local-roraima.json` linha 70 | corrigir para 5 de 8 (4 de 7 pessoas). Doc 15 já corrigido |
-| "14 culturas, 4 com dado bom": o arquivo tem **3** marcadas como boa | doc 12, tabela comparativa | 3 boa, 4 parcial, 7 falta |
+| ~~Pesquisa: ainda diz 6 de 8~~ | — | **RESOLVIDO 15/11, 15h20.** E era pior: os dois números estavam **trocados entre si** no `local-roraima.json` — "planta outra coisa" com 6 de 8 (é 5) e "seca" com 5 de 8 (é 6). Os dois corrigidos, com a data da conferência na planilha dentro do campo. Doc 11 também |
+| ~~"14 culturas, 4 com dado bom": o arquivo tem 3~~ | — | **VERIFICADO 15/11, 15h20: são 4 mesmo**, e a distribuição mudou com o merge. Hoje: **4 boa, 8 parcial, 2 falta**. O doc 12 está certo; quem citar a distribuição, use esses |
 | **Slide 4 desatualizado pelo `2bbd12b`:** a bolha diz "out of the ground in **60 days**"; a demo agora diz **70 dias** (caupi corrigido para 70 a 75 pela Embrapa). O jurado que repetir a conversa vê outro número | `slides-en/solution.html`, `slides-pt/solution.html`, `texto-de-estudo-do-pitch.md` linha 27; também docs 11 e 12 como exemplo | trocar 60 por 70 nos dois decks e no texto de estudo |
-| Linha do milho no doc 05: o título diz "ciclo corrigido para 110–145", a coluna ainda diz **100 a 140** | `docs/05`, linha 102 | trocar a coluna |
+| ~~Linha do milho no doc 05 se contradizia~~ | — | **RESOLVIDO 15/11, 15h20:** coluna em 110 a 145, fonte trocada para a Embrapa Milho e Sorgo e qualidade para boa. A linha ainda dizia "fraca: fonte é jornal" no mesmo lugar onde o título dizia que o jornal tinha saído |
 
 **Promessa maior que a fonte**
 
@@ -150,14 +150,24 @@ Conferido contra o `main` em `2bbd12b`. Só o que não estava acima.
 | --- | --- | --- |
 | "Fill crop traits from FAO ECOCROP" e "o gargalo não é código, é preencher a tabela": o ECOCROP dá **ciclo** (e nem para a melancia, que vem 0/0). Não dá água do ciclo, não dá tolerância à seca (campo vazio até na mandioca), não dá fixa N nem resíduo | slides `next` EN e PT, `texto-de-estudo-do-pitch.md` | "crop cycles from FAO ECOCROP; water need per crop from Embrapa or FAO 56" |
 | `tmax_sofre_c` "o ECOCROP dá TMAX limpo": `TMAX` é a **máxima absoluta** de sobrevivência; a temperatura acima da qual a planta começa a sofrer é mais perto de `TOPMX`, a ótima máxima. É a quarta causa do doc 17 (semântica de campo externo) de novo | seção 3 acima | decidir qual dos dois é `tmax_sofre_c` antes de preencher, e escrever no `campos` do JSON |
-| A pendência no fim do `culturas.json` ainda manda preencher **água** pelo ECOCROP | `dados/culturas.json`, `pendencias[0]` | trocar pela conclusão da seção 3: só ciclo |
+| ~~A pendência do `culturas.json` manda preencher água pelo ECOCROP~~ | — | **RESOLVIDO no merge do PR #1:** a linha saiu e entraram três, dizendo que o ECOCROP não serve para água, que falta ciclo da melancia, e que o ciclo que entrou é faixa global |
 | `agua_ciclo_mm` "fechado como impossível": é impossível **com ECOCROP e Embrapa**; o Kc do FAO 56 continua sendo caminho | seção 3 acima | "fechado para hoje" |
 
-**Regra do doc 11 quebrada**
+**Regra do doc 11 quebrada — ~~RESOLVIDO 15/11, 15h20~~**
 
-- O molde falado de `local-roraima.json` linha 244 diz "**veranico**". O doc 11
-  decidiu "estiagem" na fala. O `invariantes.py` não cobre vocabulário, por isso
-  passou.
+- O molde falado dizia "**veranico**" depois de o doc 11 ter decidido
+  "estiagem". Trocado. E a causa ficou fechada: a lista palavra-por-palavra do
+  doc 11 virou o **invariante 8**, que reprova jargão em qualquer fala —
+  `veranico`, `nitrogênio`, `pousio`, `sucessão`, nome de família botânica, e
+  principalmente **`inverno` e `verão`**, que no Norte significam o contrário e
+  inverteriam a resposta na boca do bot.
+- **Achado de brinde:** esse molde **nunca é alcançado** em nenhum dos 2.748
+  casos, então o invariante 8 não o pegaria. Medindo o resto: **18 das 66
+  variantes de fala nunca rodam** nos casos de Roraima. Algumas por motivo
+  conhecido e declarado (o aviso de calor só existe para a soja, que não se
+  planta aqui; o aviso de ano chuvoso não dispara porque 2026 é seco), mas
+  texto que nunca rodou é texto que ninguém leu, e foi exatamente aí que o
+  "veranico" sobreviveu dois dias. Vale uma varredura depois do prazo.
 
 **Documento velho que contradiz o novo**
 
