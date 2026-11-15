@@ -14,6 +14,14 @@ Organizado na ordem do design thinking, do início ao fim do hackathon. Cada fas
 - Em aberto: bot que responde por áudio. A pesquisa mostra uso alto de áudio no Brasil, mas não há dado para Roraima (ver seção "Persona do WhatsApp").
 - Em aberto: definição das personas. Aguarda a conversa do time e as respostas do formulário.
 
+## Como o enunciado divide o produto
+
+O desafio pede uma ferramenta de apoio à decisão que use observações da Terra da NASA, juntamente com informações locais sobre o solo, características das culturas e prioridades dos agricultores, para explorar estratégias de rotação que fortaleçam a saúde do solo e adaptem a propriedade às mudanças climáticas.
+
+A palavra "juntamente" divide o trabalho em duas camadas. A observação da Terra vem da NASA: chuva, temperatura e umidade do solo. Solo, culturas e prioridades são a camada local, e não precisam ser dado da NASA; um perfil típico de Roraima pela Embrapa já atende "informações locais sobre o solo".
+
+O enunciado pede observação e adaptação, não previsão. Anos análogos de El Niño são observação: dado passado do mesmo lugar usado para decidir o próximo plantio. A previsão sazonal oficial entra como contexto no pitch, não como dado do motor, e não é dado da NASA: o CPC é da NOAA e o Painel El Niño é do INMET, INPE, CEMADEN, ANA, SGB, SEDEC e CENSIPAM. O GEOS-S2S, da NASA, alimenta o NMME que o CPC sintetiza, então só dá para chamar de previsão da NASA se puxarmos o GEOS-S2S direto.
+
 <details>
 <summary><b>1. Imersão: entender o problema</b></summary>
 
@@ -86,12 +94,38 @@ O NASA POWER já foi testado para o Cantá (lat 2,61, lon -60,60) e mostra que d
 
 A estação chuvosa começou perto do normal e acabou cedo: agosto e setembro somaram 34 mm, contra 268 mm da média. A máxima média de setembro foi 39,6 °C.
 
-- [ ] Usar o NASA POWER como dado central: não exige login, devolve JSON por coordenada e funciona no mundo todo ([site](https://power.larc.nasa.gov/))
+- [ ] Usar o NASA POWER como medida de adaptação, comparando a chuva de 2026 com a climatologia, e não como previsão: não exige login, devolve JSON por coordenada e funciona no mundo todo ([site](https://power.larc.nasa.gov/))
 - [ ] Mostrar que o teste do POWER (julho com 54% menos chuva) bate com o relato da Embrapa de corte das chuvas em julho; isso é validação
 - [ ] Mostrar o dado da NASA ao lado do sinal que o produtor já usa para prever a chuva
 - [ ] Usar e declarar pelo menos um dado da NASA
 
 Endereços usados no teste: clima médio em `https://power.larc.nasa.gov/api/temporal/climatology/point` e diário em `https://power.larc.nasa.gov/api/temporal/daily/point`, com `parameters=PRECTOTCORR,T2M_MAX&community=AG&longitude=-60.60&latitude=2.61&format=JSON`. O diário pede também `start` e `end` no formato AAAAMMDD.
+
+### Umidade do solo pelo POWER (confirmado em 14/11/2026)
+
+O POWER entrega umidade do solo pela mesma API, sem login, na comunidade AG: `GWETTOP` (superfície), `GWETROOT` (zona de raiz) e `GWETPROF` (perfil), em fração de 0 a 1. A fonte é o MERRA-2 e a climatologia disponível é de 25 anos, de janeiro de 2001 a dezembro de 2025. Isso resolve a parte de observação de solo que o enunciado pede.
+
+Valores para o Cantá (lat 2,61, lon -60,60):
+
+| Mês | Superfície | Zona de raiz | Perfil |
+| --- | --- | --- | --- |
+| Janeiro | 0,43 | 0,55 | 0,55 |
+| Fevereiro | 0,38 | 0,53 | 0,53 |
+| Março | 0,39 | 0,53 | 0,53 |
+| Abril | 0,54 | 0,58 | 0,57 |
+| Maio | 0,75 | 0,74 | 0,72 |
+| Junho | 0,85 | 0,85 | 0,82 |
+| Julho | 0,88 | 0,89 | 0,86 |
+| Agosto | 0,86 | 0,88 | 0,85 |
+| Setembro | 0,78 | 0,79 | 0,77 |
+| Outubro | 0,66 | 0,67 | 0,66 |
+| Novembro | 0,58 | 0,61 | 0,60 |
+| Dezembro | 0,51 | 0,57 | 0,57 |
+| Ano | 0,64 | 0,68 | 0,67 |
+
+Como ler: o solo mais seco é em fevereiro e março, e o mais úmido em julho. A safra começa em abril, quando a superfície está em 0,54 e subindo. Isso casa com a regra da mandioca: ela é sensível ao déficit de água nos três primeiros meses, e plantada em abril a fase crítica cai justamente nos meses mais úmidos.
+
+A conferir: a climatologia de umidade do solo é de 2001 a 2025, e a de chuva que usamos na tabela acima pode ter outro período-base. Registrar o período de cada consulta antes de comparar os dois.
 
 ### Medições de campo que confirmam o dado do NASA POWER
 
@@ -119,8 +153,11 @@ O ZARC, do Ministério da Agricultura, já diz por município, solo e cultura em
 | Milheto | a levantar | baixa | Cobertura do solo no plantio direto | [Embrapa Roraima](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/694835/1/052008milhetosmiderle.pdf) |
 | Braquiária | perene | baixa | Cobertura e pasto após o milho | [Embrapa Roraima](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1029660/1/CIT136N07.pdf) |
 | Feijão-guandu | a levantar | baixa | Cobertura e leguminosa | [Embrapa Roraima](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1029660/1/CIT136N07.pdf) |
+| Mandioca | 8 a 12 meses; 18 a 24 onde a seca é prolongada | tolerante à seca, crítica nos 3 primeiros meses | Segurança alimentar: a raiz pode esperar no campo | [Embrapa](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1152564/1/Fisiologia-da-mandioca.pdf) |
 
 Limiares para regras no código: caupi vai bem entre 18 °C e 34 °C e perde mais com falta de água na floração; soja sofre acima de 40 °C e consome 7 a 8 mm por dia na floração e no enchimento de grãos.
+
+Mandioca para as regras do código: resiste a períodos de seca, mas é muito sensível ao déficit de água no solo nos três primeiros meses depois do plantio ([Embrapa Cerrados, Circular técnica 51](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1133613/1/Recomendacao-tecnica-do-manejo-de-irrigacao-Circular-tecnica-51.pdf)), e os efeitos negativos seguem altos nos quatro meses seguintes, quando o crescimento vegetativo é mais intenso; em ciclo de 12 meses a fase crítica vai do dia 30 ao dia 150 ([Embrapa Mandioca e Fruticultura, Comunicado técnico 172](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1121941/1/ComunicadoTecnico172-Mauricio-Coelho-AINFO-2.pdf)). No trópico úmido as raízes podem ser colhidas entre 6 e 7 meses, e podem ficar no campo sem colher por muito tempo, o que faz da mandioca um cultivo de segurança contra a fome ([Embrapa, Fisiologia da mandioca](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1152564/1/Fisiologia-da-mandioca.pdf)). A literatura também registra o uso de cultivar precoce para fechar o ciclo antes de a seca se estabelecer.
 
 ### A conferir antes de usar
 
@@ -150,11 +187,11 @@ Nenhum destes pontos deve ir para slide ou código sem checagem na fonte origina
 <details>
 <summary><b>3. Ponto de vista: definir o problema</b></summary>
 
-- [ ] Fechar a frase do problema e não mudar mais: "Como ajudar uma família produtora de Roraima a escolher a próxima cultura da rotação antes da seca, com uma informação que chegue até ela?"
+- [ ] Fechar a frase do problema e não mudar mais: "Como ajudar uma família produtora de Roraima a escolher qual rotação protege o solo e aguenta a seca, segundo as prioridades da família, com uma informação que chegue até ela?"
 - [ ] Ligar a ferramenta à próxima decisão real: a seca vai até março e o plantio de 2027 começa em abril
 - [ ] Usar a frase de um produtor de soja: ninguém previu que a chuva ia cortar tão cedo ([Portal Amazônia](https://portalamazonia.com/economia/seca-queda-colheita-soja-rr/)). O dado do NASA POWER para o Cantá já mostrava junho 38% abaixo da média
 - [ ] Usar um caso real do interior de Roraima, como o Cantá, em vez de um campo genérico
-- [ ] Declarar os limites: o que é estimativa de satélite, o que falta validar em campo
+- [ ] Declarar os limites: o que é estimativa de satélite, o que falta validar em campo, incluindo a falta de levantamento de solo do Cantá
 
 Fontes de contexto para o problema:
 
@@ -171,12 +208,15 @@ O núcleo que cabe até domingo: comparar a rotação atual com duas alternativa
 
 - [ ] Tratar como rotação, e não como recomendação de uma cultura solta: partir do que a pessoa já planta e comparar pelo menos 3 estratégias, incluindo a atual
 - [ ] Para cada estratégia, mostrar: por que foi sugerida, a evidência, o benefício, o que falta de dado e o risco a revisar com técnico
+- [ ] Incluir solo como critério: cobertura, fixação de nitrogênio (soja e caupi), resíduo na superfície e exposição à erosão ou ao fogo. Sem dado local, usar um perfil típico de Roraima, marcado como "a validar com a Embrapa"
 - [ ] Posicionar como "ZARC atualizado com o clima deste ano": a janela oficial é fixa, o dado da NASA mostra como o ano atual está fugindo dela
 - [ ] Usar fogo e seca como critérios da comparação, não como produtos separados
 - [ ] Incluir a rotação milho com braquiária, que une lavoura e pasto e resolve a dúvida entre agricultor e pecuarista
 - [ ] Desenhar para o "intermediário digital da família": o filho ou neto que recebe o áudio e mostra para quem decide
 - [ ] Manter em todas as telas e áudios: apoia a decisão, não substitui o agricultor nem o técnico
+- [ ] Tratar El Niño como contexto que justifica a ferramenta, não como centro do produto; manter na abertura do pitch como urgência
 - [ ] Decidir hoje entre lavoura e pasto com as respostas do formulário; sem respostas, decidir pelo que a equipe conhece de perto
+- [ ] Usar o formulário para mostrar que as prioridades são reais (renda, pasto, risco, mão de obra); a família escolhe as prioridades dentro da ferramenta, e o formulário não as alimenta
 - [ ] Parar de gerar ideias novas
 
 Rotações reais de Roraima para as 3 estratégias:
@@ -188,6 +228,16 @@ Rotações reais de Roraima para as 3 estratégias:
 A safra começa em abril. Um estudo da UFRR na savana concluiu que plantio direto com rotação é alternativa viável para a região ([registro](https://oasisbr.ibict.br/vufind/Record/UFRR-6_4713f65ec21a05349571ac11adae8852)).
 
 Cortar do núcleo e deixar como próximos passos: o robô Buddy, os sensores como centro, o mercúrio do garimpo, a API oficial do WhatsApp, SMAP, ECOSTRESS e Landsat.
+
+### Saúde do solo como saída
+
+O enunciado pede fortalecer a saúde do solo, então a comparação precisa mostrar, por estratégia, o que acontece com o solo. Tudo qualitativo, a validar com a Embrapa Roraima:
+
+- Cobertura: quantos meses do ano o solo fica coberto naquela estratégia
+- Fixação de nitrogênio: soja, caupi e guandu fixam; milho e mandioca não
+- Resíduo na superfície: milheto e braquiária deixam palha; mandioca deixa pouco
+- Exposição à erosão e ao fogo: solo descoberto na seca é o pior caso
+- Ocupação da área: a mandioca fica 8 a 12 meses no campo, o que fecha as janelas para outra cultura no período
 
 </details>
 
@@ -285,6 +335,9 @@ Páginas abertas e lidas em 14/11/2026.
 - [Folha BV: Embrapa e o El Niño 2026/2027](https://www.folhabv.com.br/?p=676921)
 - [Folha BV: rotação depois da soja](https://www.folhabv.com.br/?p=450615)
 - [Folha BV: culturas com ZARC em Roraima](https://www.folhabv.com.br/?p=61194)
+- [Embrapa: Fisiologia da mandioca](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1152564/1/Fisiologia-da-mandioca.pdf)
+- [Embrapa Cerrados: manejo de irrigação da mandioca, Circular técnica 51](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1133613/1/Recomendacao-tecnica-do-manejo-de-irrigacao-Circular-tecnica-51.pdf)
+- [Embrapa Mandioca e Fruticultura: Comunicado técnico 172](https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/1121941/1/ComunicadoTecnico172-Mauricio-Coelho-AINFO-2.pdf)
 
 **El Niño e seca de 2026**
 - [NOAA Coral Reef Watch: status do ENSO](https://www.coralreefwatch.noaa.gov/satellite/analyses_guidance/enso_current_conditions.php)
