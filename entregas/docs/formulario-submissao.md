@@ -38,7 +38,7 @@ https://drive.google.com/file/d/1mXxqji7_W0kXJdyb5uGGjR-FCtwWLdYl/view?usp=drive
 https://welderbm.github.io/NASA-SPACE-APPS-2026-BVB-Welder/
 ```
 
-## Project Details (5431 caracteres)
+## Project Details (6023 caracteres)
 
 ```
 The problem
@@ -64,6 +64,8 @@ How it talks
 Words come from farmers in Roraima: "terra fraca" for weak soil, "estiagem" for dry spell. It never says winter or summer, because in the Amazon "winter" means the rainy season and the meaning would flip. The demo speaks Brazilian Portuguese on purpose, because that is the farmer's language; a line in English at the top tells judges which buttons to tap.
 
 What it does not do
+No WhatsApp connection, and that is a decision, not a gap. In our survey, 4 of 8 answers named a written WhatsApp message as how they want to be reached, so WhatsApp is the channel this is built for. The demo renders that same conversation in a page rather than calling the Meta API, which keeps the engine open to inspection and the idea channel independent: the engine returns a structure, and any channel can carry it. The page says this at the top.
+
 No rain forecast: Brazil's official ZARC Plantio Certo app has one, and we were built to sit next to it. No prices, no labor questions, and it says so. Of the 14 crops in the table, 4 have good data, 8 partial and 2 missing, and 5 still have no cycle length; for those, the bot says it does not know how long they take. Our field research is small: 8 survey answers and one farmer interview, in Goiás.
 
 Honesty is tested
@@ -73,7 +75,7 @@ Tools
 Plain HTML and JavaScript, the engine running in the browser with no server, the Web Speech API for listening and speaking in pt-BR, GitHub Pages for hosting, Python for data collection and tests. Code and data: https://github.com/WelderBM/NASA-SPACE-APPS-2026-BVB-Welder
 
 Next steps
-Load the remaining official ZARC planting windows, municipality by municipality. Crop water need from Embrapa or FAO 56, soil texture from SoilGrids. WhatsApp and Telegram adapters on the same engine. A field test with Roraima farmers and IATER extension agents.
+Load the remaining official ZARC planting windows, municipality by municipality. Crop water need from Embrapa or FAO 56, soil texture from SoilGrids. Connect the WhatsApp Business API, then a Telegram adapter, to the same engine, which needs no change to serve either. A field test with Roraima farmers and IATER extension agents.
 
 Use of AI
 We used Claude (Anthropic), an AI assistant, to write and review most of the code, research and check sources, draft the documentation, the slides text and this submission. A human, Welder Barroso, made the product decisions, checked the sources and reviewed the outputs. No AI model runs inside the demo: understanding what the user says is keyword matching, every number comes from the deterministic engine over named data, and answer sentences are fixed templates. The demo's voice is the browser's synthetic speech (Web Speech API). The supporting pitch videos were animated with code written by Claude and narrated with Kokoro TTS, an AI voice; both carry a visible AI-generated watermark and say so in their metadata. No NASA logos or design elements are used.
