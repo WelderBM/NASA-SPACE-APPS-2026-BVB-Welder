@@ -13,8 +13,8 @@ Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift:
 **A página do formulário diz 23h59 de Boa Vista, domingo 15/11** (lido na própria
 página em 15/11 às 16h40, registrado em `entregas/docs/formulario-submissao.md`).
 **Trabalhamos para 22h59**, uma hora de margem, até o líder local confirmar. O que
-vale é o último clique em "Submit for Judging": "Save Progress" deixa a página
-pública mas não envia.
+vale é o último clique em "Submit for Judging": "Save Progress" só salva, e o
+rascunho fica visível apenas para o time.
 
 ---
 

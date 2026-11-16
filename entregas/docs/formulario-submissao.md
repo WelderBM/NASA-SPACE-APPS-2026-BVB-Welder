@@ -72,7 +72,7 @@ What it does not do
 No WhatsApp connection yet: in our survey, 4 of 8 answers named a written WhatsApp message as how they want to be reached, so WhatsApp is the target channel. The demo renders the same conversation in a page, which keeps the engine open to inspection. No rain forecast: Brazil's official ZARC Plantio Certo app has one, and we were built to sit next to it. No prices or labor data, and it says so. Of the 14 crops, 4 have good data, 8 partial and 2 missing, and 5 still have no cycle length; for those, the bot says it does not know. Our field research is small: 8 survey answers and one farmer interview, in Goiás, by Giuliano.
 
 Honesty is tested
-2,748 automated cases check that every answer has a source and that no known gap is left unsaid. The engine exists in Python and JavaScript, and a conformance test requires both to answer the same in all cases.
+3,156 automated cases, across all six goals, check that every answer has a source and that no known gap is left unsaid. The engine exists in Python and JavaScript, and a conformance test requires both to answer the same in all cases.
 
 Tools
 Plain HTML and JavaScript, the engine running in the browser with no server; the Web Speech API for listening and speaking in pt-BR; GitHub Pages; Python for the reference engine and the tests. NASA POWER data is stored as JSON in the repository. Code and data (Apache-2.0): https://github.com/WelderBM/NASA-SPACE-APPS-2026-BVB-Welder

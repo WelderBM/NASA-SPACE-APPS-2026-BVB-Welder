@@ -9,7 +9,7 @@ for place,lid in [('canta-rr','roraima'),('rioverde-go','centro-oeste')]:
     cs=LOCAL[lid]['culturas_disponiveis']
     for mes in range(12):
         for colheu in cs:
-            for pr in ['solo','risco','comida','pasto']:
+            for pr in ['solo','risco','comida','pasto','renda','mao-de-obra']:
                 CASOS.append({'lugar':{'id':place,'config_local':lid},'momento':{'mes_plantio':mes},
                               'colheu':colheu,'prioridade':pr,'intencao':'proximo-plantio'})
             for hip in cs:

@@ -102,8 +102,8 @@ the tool gives them the regional picture.
 python -m http.server 8000      # then open http://localhost:8000
 
 # tests (Python 3 and Node.js)
-python motor/invariantes.py     # honesty invariants over 2,748 cases
-python motor/conformidade.py    # Python and JavaScript engines answer the same in all 2,748 cases
+python motor/invariantes.py     # honesty invariants over 3,156 cases (all six goals)
+python motor/conformidade.py    # Python and JavaScript engines answer the same in all 3,156 cases
 ```
 
 ## Repository map
