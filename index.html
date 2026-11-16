@@ -260,8 +260,10 @@ function compara(r){
      `and diseases are more likely to carry over.</td></tr></tbody></table>`;
   const n=(r.opcoes||[]).length,sp=(r.sei_pouco||[]).length;
   h+=`<p class="note" style="margin-top:6px">${n} options computed${sp?`, ${sp} more with unknown cycle`:''}. `+
-     `Order: goal fit first; options with less than 50% of the goal measurable go last. `+
-     `<b>The NASA water risk is shown beside each option but does not reorder them yet.</b></p>`;
+     `Order: goal fit; options with less than 50% of the goal measurable go last. `+
+     (st.prio==='risco'
+       ?`<b>Low-risk goal: options whose NASA water risk is high, or whose water need we cannot check, go below the others.</b>`
+       :`For this goal the NASA water risk is shown beside each option; it reorders only under the low-risk goal.`)+`</p>`;
   box.innerHTML=h;
 }
 function painel(r){
@@ -300,8 +302,11 @@ function painel(r){
   // e boa e a tela nao dizia por que, entao quem olhava achava que era erro.
   const pulou=(r.opcoes||[]).filter((o,i,a)=>i>0&&(o.encaixe||0)>(a[0].encaixe||0));
   if(pulou.length)h+=`<div class="lab">Why this order</div><p class="diag">`+
-    pulou.map(o=>`${EN[o.id]||o.cultura} fits more (${o.encaixe}) and ranks lower: only `+
-      `${Math.round((o.confianca||0)*100)}% of this goal's criteria could be measured for it.`).join('<br>')+`</p>`;
+    pulou.map(o=>(o.confianca||0)<0.5
+      ?`${EN[o.id]||o.cultura} fits more (${o.encaixe}) and ranks lower: only `+
+       `${Math.round((o.confianca||0)*100)}% of this goal's criteria could be measured for it.`
+      :`${EN[o.id]||o.cultura} fits more (${o.encaixe}) and ranks lower: its NASA water risk is `+
+       `${AGUA[(o.risco.agua||{}).nivel]||'unknown'}, and the goal is to take little risk.`).join('<br>')+`</p>`;
   if(r.limites&&r.limites.length)h+=`<div class="lab">Limits (engine text, pt-BR)</div><p class="diag">${r.limites.join('<br>')}</p>`;
   d.innerHTML=h;
 }

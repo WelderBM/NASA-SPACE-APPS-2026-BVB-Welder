@@ -1,5 +1,6 @@
 # Space Apps 2026: Field Shift em Roraima
-n> **English overview:** [README.md](README.md). This is the team's working README, in Portuguese.
+
+> **English overview:** [README.md](README.md). This is the team's working README, in Portuguese.
 
 Documento de trabalho do time para o NASA Space Apps 2026, desafio *Field Shift: Adapting Farms with NASA Data*.
 

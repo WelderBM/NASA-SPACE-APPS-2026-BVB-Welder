@@ -56,10 +56,11 @@ reference) takes the harvest, the goal, the place and the month, and returns
 - **Rotation rule:** the next crop is never from the same botanical family as the one
   just harvested, because a different family is less likely to carry the same soil
   pests and diseases. It is a simplification; the extension agent knows the exceptions.
-- **The ranking follows the farmer's goal.** The NASA water risk is shown beside every
-  option and spoken when the farmer asks "what could go wrong?", but in this version it
-  **does not reorder the list**. Making it a ranking criterion for the low-risk goal is
-  the first next step.
+- **The NASA water risk changes the ranking when the farmer wants to take little risk.**
+  Options whose water risk is high, or whose water need we cannot check, go below the
+  others. In a dry month when every option is in that situation, the bot says so first
+  when asked "what could go wrong?". Under the other goals the water risk is shown beside
+  each option and spoken on request, without reordering.
 - **Places are data, not code.** Each place (`dados/local-*.json`) carries its crop
   list, planting windows and wording. Same maize: April in Cantá gets 686 mm of adjusted
   rain against 500 mm needed (low risk); September in Rio Verde gets 386 mm (high risk).
@@ -82,7 +83,7 @@ the tool gives them the regional picture.
 | Limit | What the bot does today |
 | --- | --- |
 | One step ahead: the next crop, not a multi-season plan | Compares the next options; sequences are a next step |
-| NASA water risk does not reorder the options | Shows it beside each option and says it when asked |
+| NASA water risk reorders only under the low-risk goal | Shows it beside each option under the other goals |
 | "Soil" is soil moisture only; no texture, fertility or organic matter | Says so in the limits; soil texture from the farmer or SoilGrids is a next step |
 | Water need known for 3 of 14 crops; 5 crops without cycle length | Says "I don't know how much water it needs" and crosses the rest |
 | Official ZARC window loaded for cowpea only | Where loaded it changes the answer: cowpea low-risk fit goes from 0.53 in April to 0.87 in July |
@@ -114,7 +115,7 @@ python motor/conformidade.py    # Python and JavaScript engines answer the same 
 
 ## Next steps
 
-NASA water risk as a ranking criterion; two- and three-season rotation sequences; soil
+A water-risk weight for every goal, not only low risk; two- and three-season rotation sequences; soil
 texture from the farmer or SoilGrids; the remaining official ZARC windows; a WhatsApp
 adapter on the same engine; a field test with Roraima farmers and IATER extension agents.
 

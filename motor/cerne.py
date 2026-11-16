@@ -413,8 +413,15 @@ def atender(p):
                         for o in res['opcoes'] if not o['risco'].get('avaliavel')]
     res['sei_pouco'].sort(key=lambda x: (x['encaixe'] is None, -(x['encaixe'] or 0)))
     res['opcoes'] = [o for o in res['opcoes'] if o['risco'].get('avaliavel')]
+    # quem quer arriscar pouco nao recebe no topo uma cultura que o dado da NASA
+    # diz que vai faltar agua, nem uma cuja agua a gente nao sabe medir. Antes o
+    # risco aparecia ao lado e nao mudava a ordem: na seca do Canta o arroz
+    # (agua "sem dado") passava na frente do caupi.
+    def agua_ruim(o):
+        return 1 if p['prioridade'] == 'risco' and \
+            (o['risco'].get('agua') or {}).get('nivel') in ('alto', 'sem dado') else 0
     res['opcoes'].sort(key=lambda o: (o['encaixe'] is None,
-        0 if (o['confianca'] or 0) >= CONF_MIN else 1, -(o['encaixe'] or 0)))
+        0 if (o['confianca'] or 0) >= CONF_MIN else 1, agua_ruim(o), -(o['encaixe'] or 0)))
 
     if intencao == 'e-se' and p.get('hipotese'):
         h = p['hipotese']; alvo = nome_curto(h)
@@ -485,6 +492,11 @@ def atender(p):
             res['falas'] = render_all(M, 'indicacao', 'fechos', colheu=cn, de_colheu=dcn,
                                       cultura=nome_curto(o['id']),
                                       porque=pq[0].upper()+pq[1:] if pq else '')
+        # arriscar pouco num mes em que NENHUMA opcao tem agua garantida: a
+        # primeira coisa do "o que pode dar errado" e isso
+        if intencao != 'e-se' and res['opcoes'] and all(agua_ruim(x) for x in res['opcoes']):
+            res['opcoes'][0]['avisos'].insert(0, 'nesse mês todas as opções daqui têm risco alto '
+                'de faltar água, ou água que eu não sei medir')
     fal = [l for l in res['lacunas'] if l.get('falar')]
     if fal and not res.get('aviso_do_ano'):
         l = fal[0]

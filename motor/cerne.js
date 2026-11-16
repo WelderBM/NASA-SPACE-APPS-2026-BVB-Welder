@@ -278,8 +278,11 @@ class Cerne{
         confianca:o.confianca,_pqs:o._pqs||[],falta:o.nao_sei}))
       .sort((a,b)=>(a.encaixe==null)-(b.encaixe==null)||(b.encaixe||0)-(a.encaixe||0));
     const gate=o=>((o.confianca||0)>=CONF_MIN?0:1);
+    // ver o comentario no cerne.py: em "arriscar pouco", o risco de agua da NASA
+    // (alto ou sem dado) desce a cultura abaixo das de risco baixo ou medio
+    const aguaRuim=o=>(p.prioridade==='risco'&&['alto','sem dado'].includes((o.risco.agua||{}).nivel))?1:0;
     res.opcoes=res.opcoes.filter(o=>o.risco.avaliavel)
-      .sort((a,b)=>(a.encaixe==null)-(b.encaixe==null)||gate(a)-gate(b)||(b.encaixe||0)-(a.encaixe||0));
+      .sort((a,b)=>(a.encaixe==null)-(b.encaixe==null)||gate(a)-gate(b)||aguaRuim(a)-aguaRuim(b)||(b.encaixe||0)-(a.encaixe||0));
     if(intencao==='e-se'&&p.hipotese){
       const h=p.hipotese,alvo=nc(h);
       const parente=this.CULT[h].familia===fam,av=res.opcoes.length>0;
@@ -326,6 +329,10 @@ class Cerne{
         res.falas=this.renderAll(M,'indicacao','fechos',{colheu:cn,de_colheu:dcn,
           cultura:nc(o.id),porque:pq?pq.charAt(0).toUpperCase()+pq.slice(1):''});
       }
+      // ver o comentario no cerne.py
+      if(intencao!=='e-se'&&res.opcoes.every(aguaRuim))
+        res.opcoes[0].avisos.unshift('nesse mês todas as opções daqui têm risco alto '+
+          'de faltar água, ou água que eu não sei medir');
     }
     _fecha();
     const fa=est.fator_do_ano;
