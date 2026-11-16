@@ -49,7 +49,7 @@ The people
 
 What it does
 The farmer says, by voice or text, what was just harvested, and picks what matters most: better soil, low risk, food at home or pasture. The answer reorders, with the reason. Example, Cantá, July, after cassava: choose low risk and it suggests cowpea, "out of the ground in 70 days". Choose better soil: same crop, new reason, "it leaves the soil stronger". Ask about selling or labor: it says it has no price, buyer or labor data, and asks which goal it can measure.
-A Compare panel shows the top three options side by side with the existing practice, planting the same crop again: goal fit, share of data measured, NASA water risk, cycle length and what is unknown. The same crop again is never offered, and the panel says why. It compares, never gives orders, and lists what to check with an extension agent.
+A Compare panel shows the top three options side by side with the existing practice, planting the same crop again: goal fit, share of data measured, NASA water risk, cycle length and what is unknown. For each option it also shows a three-crop rotation sequence: the engine runs again in the month the previous crop leaves the ground, with that month's NASA data and the same goal. The same crop again is never offered, and the panel says why. It compares, never gives orders, and lists what to check with an extension agent.
 
 How it works
 A deterministic engine takes the harvest, the priority, the place and the month, and returns three numbers that are never mixed into one score.
@@ -78,7 +78,7 @@ Tools
 Plain HTML and JavaScript, the engine running in the browser with no server; the Web Speech API for listening and speaking in pt-BR; GitHub Pages; Python for the reference engine and the tests. NASA POWER data is stored as JSON in the repository. Code and data (Apache-2.0): https://github.com/WelderBM/NASA-SPACE-APPS-2026-BVB-Welder
 
 Next steps
-A water-risk weight for every goal, not only low risk; two- and three-season rotation sequences; soil texture from the farmer or SoilGrids; the remaining official ZARC windows; WhatsApp adapter on the same engine; a field test with Roraima farmers and IATER extension agents.
+A water-risk weight for every goal, not only low risk; optimizing whole sequences instead of chaining one-step choices; soil texture from the farmer or SoilGrids; the remaining official ZARC windows; WhatsApp adapter on the same engine; a field test with Roraima farmers and IATER extension agents.
 
 Use of AI
 Team AgroDeal, Welder Barroso and Giuliano França, made the product decisions, ran the survey and the interview, checked the sources and reviewed every output. We used Claude (Anthropic), an AI assistant, to write and review most of the code, research and check sources, and draft the documentation, slides text and this submission; most commits in the repository are authored by Claude for that reason. The project logo was generated with an AI image tool and is marked "AI-generated image". No AI model runs inside the demo: understanding the farmer is keyword matching, every number comes from the deterministic engine over named data, and the sentences are fixed templates. The demo's voice is the browser's synthetic speech. No NASA logos or design elements are used.

@@ -230,6 +230,22 @@ const enC=id=>`${EN[id]||id} <span class="note">(${nome(id)})</span>`;
 const pct=v=>Math.round((v||0)*100)+'%';
 function agua(o){const a=(o.risco||{}).agua||{};
   return (AGUA[a.nivel]||a.nivel||'—')+(a.razao!=null?` <span class="note">${a.razao}× need</span>`:'')}
+// estrategia de rotacao, nao so o proximo passo: depois de cada cultura, o
+// motor e chamado de novo no mes em que ela sai da terra, com o dado da NASA
+// daquele mes e a mesma prioridade. Cada passo e a mesma conta da conversa.
+function sequencia(o,passos=2){
+  const seq=[[o.id,st.mes]];let atual=o,mes=st.mes;
+  for(let k=0;k<passos;k++){
+    const c=(atual.ciclo_dias||[])[0];if(!c)break;
+    mes=(mes+Math.ceil(c/30))%12;
+    const r=CERNE.atender({lugar:{id:st.lugar,config_local:st.lid},momento:{mes_plantio:mes},
+      prioridade:st.prio||'risco',colheu:atual.id,intencao:'proximo-plantio'});
+    const nx=(r.opcoes||[])[0];if(!nx)break;
+    seq.push([nx.id,mes]);atual=nx;
+  }
+  return seq.map(([id,m])=>`${EN[id]||id} <span class="note">(${MES_EN[m].slice(0,3)})</span>`).join(' → ')+
+    (seq.length<passos+1?' <span class="note">· stops: next cycle unknown</span>':'');
+}
 function compara(r){
   const box=$('cmp');
   if(!r||r.intencao!=='proximo-plantio'||!st.colheu){return}
@@ -248,6 +264,7 @@ function compara(r){
     h+=`<tr class="gap"><td colspan="4">${(o.ciclo_dias||[])[0]||'?'} days · `+
        `${fal?fal+' thing'+(fal>1?'s':'')+' unknown':'no gaps'} · `+
        `source quality: ${o.qualidade_do_dado||'—'}</td></tr>`;
+    h+=`<tr class="gap"><td colspan="4">Sequence: ${sequencia(o)}</td></tr>`;
   });
   // a rotacao que ele ja tem: plantar a mesma de novo. O motor tira da lista
   // por familia; aqui ela aparece como a linha de comparacao.
@@ -259,7 +276,9 @@ function compara(r){
      `<tr class="gap blk"><td colspan="4">Not offered: same botanical family, so soil pests `+
      `and diseases are more likely to carry over.</td></tr></tbody></table>`;
   const n=(r.opcoes||[]).length,sp=(r.sei_pouco||[]).length;
-  h+=`<p class="note" style="margin-top:6px">${n} options computed${sp?`, ${sp} more with unknown cycle`:''}. `+
+  h+=`<p class="note" style="margin-top:6px">Each sequence re-runs the engine in the month the previous crop `+
+     `leaves the ground, with that month's NASA data and the same goal. `+
+     `${n} options computed${sp?`, ${sp} more with unknown cycle`:''}. `+
      `Order: goal fit; options with less than 50% of the goal measurable go last. `+
      (st.prio==='risco'
        ?`<b>Low-risk goal: options whose NASA water risk is high, or whose water need we cannot check, go below the others.</b>`

@@ -24,7 +24,8 @@ calendar, says why, and says what it could not measure.
 2. Tap **mandioca** (cassava), then **arriscar pouco** (take little risk).
 3. Read the **Compare** panel: the top three next crops, side by side with planting the
    same crop again, each with goal fit, how much of the goal could be measured, the NASA
-   water risk, cycle length and what is unknown.
+   water risk, cycle length and what is unknown, plus a three-crop **sequence** for
+   each: the engine re-runs in the month the previous crop leaves the ground.
 4. Change the goal (**que a terra melhore**, better soil) or the **Month**: the order
    and the reasons change. Tap **vender** (sell): it says it has no price or buyer data.
 5. Switch **Place** to Rio Verde, Goiás: same code, other data, a different answer.
@@ -85,7 +86,7 @@ the tool gives them the regional picture.
 
 | Limit | What the bot does today |
 | --- | --- |
-| One step ahead: the next crop, not a multi-season plan | Compares the next options; sequences are a next step |
+| Sequences are chained one-step choices, not optimized as a whole | Shows a three-crop sequence per option, each step recomputed with that month's NASA data |
 | NASA water risk reorders only under the low-risk goal | Shows it beside each option under the other goals |
 | "Soil" is soil moisture only; no texture, fertility or organic matter | Says so in the limits; soil texture from the farmer or SoilGrids is a next step |
 | Water need known for 3 of 14 crops; 5 crops without cycle length | Says "I don't know how much water it needs" and crosses the rest |
@@ -118,7 +119,7 @@ python motor/conformidade.py    # Python and JavaScript engines answer the same 
 
 ## Next steps
 
-A water-risk weight for every goal, not only low risk; two- and three-season rotation sequences; soil
+A water-risk weight for every goal, not only low risk; optimizing whole sequences instead of chaining one-step choices; soil
 texture from the farmer or SoilGrids; the remaining official ZARC windows; a WhatsApp
 adapter on the same engine; a field test with Roraima farmers and IATER extension agents.
 
