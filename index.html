@@ -51,6 +51,17 @@ body{background:#0b141a;color:#e9edef;font:15px/1.5 system-ui,-apple-system,sans
 .en{font-size:11.5px;color:#54656f;background:#fff6d8;border-bottom:1px solid #f0e3b8;padding:8px 12px;line-height:1.5}
 .ok{color:#8bd5bd}.no{color:#f09595}
 .note{font-size:12px;color:#8696a0;padding:0 2px}
+label.lab{display:block}
+.chip{min-height:32px}
+.cmp{width:100%;border-collapse:collapse;font-size:12.5px}
+.cmp th{font-weight:600;color:#8696a0;text-align:left;padding:3px 4px;border-bottom:1px solid #1f2c33;font-size:11px}
+.cmp td{padding:4px;border-bottom:1px solid #18242b;vertical-align:top}
+.cmp td+td{font-variant-numeric:tabular-nums;color:#8bd5bd}
+.cmp tr.gap td{color:#8696a0;font-size:11px;padding-top:0}
+.cmp tr.blk td{color:#f09595}
+:focus-visible{outline:2px solid #00a884;outline-offset:2px}
+.row input:focus-visible{outline:2px solid #00a884}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 select{width:100%;background:#2a3942;color:#e9edef;border:1px solid #2a3942;border-radius:7px;
        padding:7px 9px;font:inherit;margin-top:3px}
 </style>
@@ -66,39 +77,45 @@ select{width:100%;background:#2a3942;color:#e9edef;border:1px solid #2a3942;bord
       connect to WhatsApp and uses no Meta API: the same conversation is rendered
       here so the engine can be inspected. <b>The engine is real and runs in your
       browser</b>, on NASA POWER data. It speaks Portuguese because the farmer
-      does. Tap a crop chip, then a goal chip. Slides and pitch video are in English.</div>
-    <div class="msgs" id="msgs"></div>
+      does. Try it: tap <b>mandioca</b> (cassava), then <b>arriscar pouco</b> (low risk),
+      then change the goal or the month. The panel on the right is in English: it compares
+      the options and shows the NASA data behind each answer.</div>
+    <div class="msgs" id="msgs" role="log" aria-live="polite" aria-label="Conversation"></div>
     <div class="prow"><span>o que você quer:</span><span id="prios"></span></div>
     <div class="chips" id="chips"></div>
     <div class="row">
-      <button class="ic" id="mic" title="falar">🎤</button>
-      <input id="txt" placeholder="escreva ou aperte o microfone" autocomplete="off">
-      <button class="ic" id="send">↑</button>
+      <button class="ic" id="mic" title="falar" aria-label="Speak (microphone)">🎤</button>
+      <input id="txt" placeholder="escreva ou aperte o microfone" autocomplete="off" aria-label="Message">
+      <button class="ic" id="send" aria-label="Send">↑</button>
     </div>
   </div>
 
   <div class="side">
     <div class="card">
-      <h3>Configuração</h3>
-      <div class="lab">Lugar <span style="text-transform:none;letter-spacing:0">· ele mandou a localização uma vez</span></div>
+      <h3>Setup (for testing)</h3>
+      <label class="lab" for="lugar">Place <span style="text-transform:none;letter-spacing:0">· the farmer shares the location once</span></label>
       <select id="lugar"></select>
-      <div class="lab">O que acabou de colher <span style="text-transform:none;letter-spacing:0">· ele fala</span></div>
+      <label class="lab" for="colheu">Just harvested <span style="text-transform:none;letter-spacing:0">· the farmer says it</span></label>
       <select id="colheu"></select>
       <p class="note" id="regnote" style="margin-top:9px"></p>
-      <div class="lab">Mês <span style="text-transform:none;letter-spacing:0">· em produção é hoje; aqui dá pra testar</span></div>
+      <label class="lab" for="mes">Month <span style="text-transform:none;letter-spacing:0">· in production it is today; here you can test</span></label>
       <select id="mes"></select>
-      <div class="lab">Voz</div>
+      <label class="lab" for="voz">Voice</label>
       <select id="voz"></select>
-      <div class="lab">Velocidade <span id="rlab" style="color:#8bd5bd">0.98</span></div>
+      <label class="lab" for="rate">Speed <span id="rlab" style="color:#8bd5bd">0.98</span></label>
       <input type="range" id="rate" min="0.75" max="1.25" step="0.01" value="0.98" style="width:100%">
-      <button class="chip" id="provar" style="margin-top:7px">ouvir uma frase</button>
+      <button class="chip" id="provar" style="margin-top:7px">hear a sample sentence</button>
     </div>
     <div class="card">
-      <h3>O dado por trás</h3>
-      <div id="dados"><p class="note">Faça uma pergunta para ver os números.</p></div>
+      <h3>Compare · next crop of the rotation</h3>
+      <div id="cmp"><p class="note">Pick what was harvested and a goal to compare the options.</p></div>
     </div>
     <div class="card">
-      <h3>Este navegador</h3>
+      <h3>The data behind the answer</h3>
+      <div id="dados"><p class="note">Ask something to see the numbers.</p></div>
+    </div>
+    <div class="card">
+      <h3>This browser</h3>
       <div class="diag" id="diag">testando…</div>
     </div>
   </div>
@@ -199,44 +216,93 @@ function responde(t,r,ctx){
   },Math.min(1500,420+t.length*11));
 }
 const kv=(a,b)=>`<div class="kv"><span>${a}</span><span>${b}</span></div>`;
+// o painel e para a banca: rotulos em ingles, nome da cultura nos dois idiomas
+const EN={mandioca:'cassava','feijao-caupi':'cowpea',milho:'maize',soja:'soybean',
+  braquiaria:'brachiaria grass',milheto:'pearl millet','feijao-guandu':'pigeon pea',
+  melancia:'watermelon',melao:'melon',jerimum:'squash','batata-doce':'sweet potato',
+  cara:'yam',arroz:'rice',banana:'banana'};
+const AGUA={'baixo':'low','médio':'medium','alto':'high','sem dado':'no data'};
+const PRIO_EN={solo:'improve the soil',risco:'take little risk',comida:'food at home',
+  pasto:'pasture for cattle',renda:'sell (income)','mao-de-obra':'few hands to work'};
+const MES_EN=['January','February','March','April','May','June','July','August','September',
+  'October','November','December'];
+const enC=id=>`${EN[id]||id} <span class="note">(${nome(id)})</span>`;
+const pct=v=>Math.round((v||0)*100)+'%';
+function agua(o){const a=(o.risco||{}).agua||{};
+  return (AGUA[a.nivel]||a.nivel||'—')+(a.razao!=null?` <span class="note">${a.razao}× need</span>`:'')}
+function compara(r){
+  const box=$('cmp');
+  if(!r||r.intencao!=='proximo-plantio'||!st.colheu){return}
+  const ops=(r.opcoes||[]).slice(0,3),pr=DADOS.prioridades.prioridades[st.prio]||{};
+  let h=`<p class="note" style="margin:0 0 6px">After <b>${EN[st.colheu]||st.colheu}</b>, goal: `+
+        `<b>${PRIO_EN[st.prio]||st.prio}</b>, planting in ${MES_EN[st.mes]}.</p>`;
+  if(pr.servivel===false)
+    h+=`<p class="diag">No data for this goal (prices, buyers or labour), so the engine `+
+       `does not rank by it. The rows below are only agronomic.</p>`;
+  h+=`<table class="cmp"><thead><tr><th>Option</th><th>Goal fit</th><th>Data</th>`+
+     `<th>Water (NASA)</th></tr></thead><tbody>`;
+  ops.forEach((o,i)=>{
+    h+=`<tr><td>${i+1}. ${enC(o.id)}</td><td>${o.encaixe??'—'}</td>`+
+       `<td>${pct(o.confianca)}</td><td>${agua(o)}</td></tr>`;
+    const fal=(o.nao_sei||[]).length;
+    h+=`<tr class="gap"><td colspan="4">${(o.ciclo_dias||[])[0]||'?'} days · `+
+       `${fal?fal+' thing'+(fal>1?'s':'')+' unknown':'no gaps'} · `+
+       `source quality: ${o.qualidade_do_dado||'—'}</td></tr>`;
+  });
+  // a rotacao que ele ja tem: plantar a mesma de novo. O motor tira da lista
+  // por familia; aqui ela aparece como a linha de comparacao.
+  const same=pergunta({colheu:st.colheu,intencao:'e-se',hipotese:st.colheu});
+  const so=(same.opcoes||[])[0];
+  h+=`<tr class="blk"><td>Same crop again<br><span class="note">(${nome(st.colheu)})</span></td>`+
+     `<td>${so?so.encaixe??'—':'—'}</td><td>${so?pct(so.confianca):'—'}</td>`+
+     `<td>${so?agua(so):'—'}</td></tr>`+
+     `<tr class="gap blk"><td colspan="4">Not offered: same botanical family, so soil pests `+
+     `and diseases are more likely to carry over.</td></tr></tbody></table>`;
+  const n=(r.opcoes||[]).length,sp=(r.sei_pouco||[]).length;
+  h+=`<p class="note" style="margin-top:6px">${n} options computed${sp?`, ${sp} more with unknown cycle`:''}. `+
+     `Order: goal fit first; options with less than 50% of the goal measurable go last. `+
+     `<b>The NASA water risk is shown beside each option but does not reorder them yet.</b></p>`;
+  box.innerHTML=h;
+}
 function painel(r){
   const d=$('dados');
-  if(!r){d.innerHTML='<p class="note">Sem números para essa resposta.</p>';return}
+  compara(r);
+  if(!r){d.innerHTML='<p class="note">No numbers for this answer.</p>';return}
   const e=r.estado_observado||{},o=(r.opcoes||[])[0];
-  let h=`<div class="lab">Observado, ${e.mes||''}</div>`;
-  h+=kv('Chuva normal do mês',(e.chuva_normal_do_mes_mm??'—')+' mm');
-  const camadas=[['Umidade na superfície','solo_superficie'],['Umidade na raiz','solo_raiz'],
-                 ['Umidade no perfil','solo_profundo']];
+  let h=`<div class="lab">Observed (NASA POWER), ${e.mes||''}</div>`;
+  h+=kv('Normal rain this month',(e.chuva_normal_do_mes_mm??'—')+' mm');
+  const camadas=[['Surface soil moisture','solo_superficie'],['Root-zone moisture','solo_raiz'],
+                 ['Profile moisture','solo_profundo']];
   camadas.forEach(([rot,k])=>{const c=e[k];
     if(c)h+=kv(rot,c.observado+' (normal '+c.normal+')')});
-  if(e.tsolo_c!=null)h+=kv('Temperatura do solo',e.tsolo_c+' °C');
-  if(e.anos_de_serie)h+=kv('Série',e.anos_de_serie+' anos');
-  if(e.fator_do_ano)h+=kv('O ano até aqui',Math.round(e.fator_do_ano.razao*100)+'% do normal');
-  h+=kv('Estiagem normal do mês',(e.veranico_normal_do_mes_dias??'—')+' dias');
-  if(o){h+=`<div class="lab">${o.cultura}</div>`;
-    h+=kv('Encaixe com o que ele quer',o.encaixe??'—');
-    h+=kv('Confiança no dado',Math.round(o.confianca*100)+'%');
+  if(e.tsolo_c!=null)h+=kv('Soil temperature',e.tsolo_c+' °C');
+  if(e.anos_de_serie)h+=kv('Series',e.anos_de_serie+' years');
+  if(e.fator_do_ano)h+=kv('This year so far',Math.round(e.fator_do_ano.razao*100)+'% of normal');
+  h+=kv('Normal dry spell this month',(e.veranico_normal_do_mes_dias??'—')+' days');
+  if(o){h+=`<div class="lab">${EN[o.id]||o.cultura} (${o.cultura})</div>`;
+    h+=kv('Fit with the farmer goal',o.encaixe??'—');
+    h+=kv('Goal criteria measured',Math.round(o.confianca*100)+'%');
     // a confianca mede COBERTURA de critério, nao QUALIDADE de fonte: o cara
     // tinha 100% de confianca com a especie dele sendo suposicao nossa. Os dois
     // campos abaixo ja vinham na resposta e morriam aqui, sem chegar na tela.
-    if(o.qualidade_do_dado)h+=kv('Qualidade da fonte',o.qualidade_do_dado);
+    if(o.qualidade_do_dado)h+=kv('Source quality',o.qualidade_do_dado);
     if(o.validar_com_tecnico&&o.validar_com_tecnico.length)
-      h+=`<div class="lab">A validar com técnico</div><p class="diag">${o.validar_com_tecnico.join('<br>')}</p>`;
+      h+=`<div class="lab">To check with an extension agent</div><p class="diag">${o.validar_com_tecnico.join('<br>')}</p>`;
     if(o.risco&&o.risco.agua&&o.risco.agua.razao!=null)
-      h+=kv('Água',o.risco.agua.nivel+' ('+o.risco.agua.razao+'× de '+o.risco.agua.exige_mm+' mm)');
+      h+=kv('Water',(AGUA[o.risco.agua.nivel]||o.risco.agua.nivel)+' ('+o.risco.agua.razao+'× of '+o.risco.agua.exige_mm+' mm)');
     if(o.risco&&o.risco.chuva_ajustada_mm!=null)
-      h+=kv('Chuva da janela, ajustada',o.risco.chuva_ajustada_mm+' mm');
-    if(o.nao_sei&&o.nao_sei.length)h+=`<div class="lab">Não sabemos</div><p class="diag">${o.nao_sei.join('<br>')}</p>`;}
+      h+=kv('Window rain, adjusted by this year',o.risco.chuva_ajustada_mm+' mm');
+    if(o.nao_sei&&o.nao_sei.length)h+=`<div class="lab">We don't know (engine text, pt-BR)</div><p class="diag">${o.nao_sei.join('<br>')}</p>`;}
   if(r.sei_pouco&&r.sei_pouco.length)
-    h+=`<div class="lab">Sei a parentada, não o ciclo</div><p class="diag">${r.sei_pouco.map(s=>s.cultura).join(', ')}</p>`;
+    h+=`<div class="lab">Family known, cycle unknown</div><p class="diag">${r.sei_pouco.map(s=>EN[s.id]||s.cultura).join(', ')}</p>`;
   // defeito 9 do relatorio critico: as vezes uma cultura com encaixe MAIOR
   // aparece abaixo de outra, porque a confianca dela nao passa de 50%. A regra
   // e boa e a tela nao dizia por que, entao quem olhava achava que era erro.
   const pulou=(r.opcoes||[]).filter((o,i,a)=>i>0&&(o.encaixe||0)>(a[0].encaixe||0));
-  if(pulou.length)h+=`<div class="lab">Por que essa ordem</div><p class="diag">`+
-    pulou.map(o=>`${o.cultura} encaixa mais (${o.encaixe}) e ficou abaixo: só `+
-      `${Math.round((o.confianca||0)*100)}% dos critérios dessa prioridade puderam ser medidos nela.`).join('<br>')+`</p>`;
-  if(r.limites&&r.limites.length)h+=`<div class="lab">Limites</div><p class="diag">${r.limites.join('<br>')}</p>`;
+  if(pulou.length)h+=`<div class="lab">Why this order</div><p class="diag">`+
+    pulou.map(o=>`${EN[o.id]||o.cultura} fits more (${o.encaixe}) and ranks lower: only `+
+      `${Math.round((o.confianca||0)*100)}% of this goal's criteria could be measured for it.`).join('<br>')+`</p>`;
+  if(r.limites&&r.limites.length)h+=`<div class="lab">Limits (engine text, pt-BR)</div><p class="diag">${r.limites.join('<br>')}</p>`;
   d.innerHTML=h;
 }
 // AQUI MORA O %2: o motor calcula na hora, para qualquer combinacao, inclusive
@@ -247,18 +313,37 @@ function pergunta(extra){
 }
 function classifica(s){const n=N(s);
   for(const[id,ks]of INTENT)if(ks.some(k=>n.includes(N(k))))return id;return null}
-function achaCultura(s){const n=N(s);
-  for(const c of DADOS.locais[st.lid].culturas_disponiveis){
-    const a=c.replace(/-/g,' '),b=N(nome(c));
-    if(n.includes(a)||n.includes(c)||(b&&n.includes(b)))return c}
+// nomes do dia a dia em Roraima. O "(macaxeira)" e o "(abóbora)" ja estavam no
+// nome da cultura e o nome() cortava; "feijão de corda" e o caupi de lá.
+const APELIDOS={'feijao-caupi':['feijao de corda','feijao-de-corda','feijao verde','caupi'],
+  mandioca:['aipim'],braquiaria:['capim'],'batata-doce':['batata doce']};
+function achaCultura(s){const n=N(s),cs=DADOS.locais[st.lid].culturas_disponiveis;
+  for(const c of cs){
+    const a=c.replace(/-/g,' '),b=N(nome(c)),
+          alt=(((DADOS.culturas.culturas[c]||{}).nome||'').match(/\(([^)]+)\)/)||[])[1];
+    if(n.includes(a)||n.includes(c)||(b&&n.includes(b))||(alt&&n.includes(N(alt))))return c;
+    if((APELIDOS[c]||[]).some(x=>n.includes(N(x))))return c}
+  // "feijão" sozinho, quando o lugar só tem um feijão, é ele
+  if(/\bfeijao\b/.test(n)){const f=cs.filter(c=>c.startsWith('feijao'));if(f.length===1)return f[0]}
   return null}
 
 function indica(){
   if(!st.colheu){pedirColheita();return}
   if(!st.prio){pedirPrioridade();return}
   const r=pergunta({colheu:st.colheu,intencao:'proximo-plantio'});
+  // renda e mao de obra: o motor nao tem dado, e a fala de indicacao dizia
+  // "a que mais encaixa" com 0% medido. Aqui ele diz que nao sabe e devolve a
+  // escolha para um objetivo que ele consegue medir.
+  const pr=DADOS.prioridades.prioridades[st.prio]||{};
+  if(pr.servivel===false){
+    st.ultima=r;
+    responde(HONESTA[st.prio]||pr.resposta_honesta,r,'prioridade');return}
   st.ultima=r;responde(escolhe(r,'ind'+st.colheu+st.prio+st.mes),r,'indicacao');
 }
+const HONESTA={
+  renda:'Sobre preço e comprador eu não tenho dado, então não vou te dizer o que vende mais. '+
+        'Posso te dizer o que a terra e a chuva permitem, e a decisão de mercado fica com você. Pelo que eu olho?',
+  'mao-de-obra':'Quanta gente cada cultura precisa eu não sei: não achei fonte boa. Pelo que eu olho, então?'};
 function pedirColheita(){
   st.pendente='indica';
   responde('O que você acabou de colher?',undefined,'colheita');
