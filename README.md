@@ -4,7 +4,8 @@
 Team AgroDeal: Welder Barroso and Giuliano França · Boa Vista, Roraima, Brazil
 
 **Try it:** https://welderbm.github.io/NASA-SPACE-APPS-2026-BVB-Welder/
-**Pitch (7 slides, PDF):** https://drive.google.com/file/d/1mXxqji7_W0kXJdyb5uGGjR-FCtwWLdYl/view
+**Pitch (7 slides, PDF):** https://drive.google.com/file/d/17KZtyEZWJ_F39V8DNtLANtxIRdwTDpy9/view  
+**All demos (slides, 30 s video, 2 min 49 s video):** https://drive.google.com/drive/folders/13kT0oQAAJ-YJtrSfFM9bjqTW5FL2CbJc
 **License:** Apache-2.0
 
 A conversation for small farmers in Roraima, in the Brazilian Amazon, who must decide

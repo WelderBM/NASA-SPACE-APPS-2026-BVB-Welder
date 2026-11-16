@@ -27,7 +27,7 @@ Most crop rotation tools optimize profit for large farms. This one lets the smal
 ## Project Demonstration
 
 ```
-https://drive.google.com/file/d/1mXxqji7_W0kXJdyb5uGGjR-FCtwWLdYl/view?usp=drivesdk
+https://drive.google.com/file/d/17KZtyEZWJ_F39V8DNtLANtxIRdwTDpy9/view?usp=drivesdk
 ```
 
 Antes, suba `entregas\pdf\AgroDeal-pitch-7-slides-EN.pdf` (o novo, com AgroDeal e os dois nomes no slide 1 e links clicáveis no slide 7) como **nova versão** desse mesmo arquivo: no Drive, clique com o botão direito → *Gerenciar versões* (ou *Arquivo → Substituir*) → enviar. O link continua o mesmo.
@@ -80,8 +80,11 @@ Plain HTML and JavaScript, the engine running in the browser with no server; the
 Next steps
 A water-risk weight for every goal, not only low risk; optimizing whole sequences instead of chaining one-step choices; soil texture from the farmer or SoilGrids; the remaining official ZARC windows; WhatsApp adapter on the same engine; a field test with Roraima farmers and IATER extension agents.
 
+Other demos
+All our demos in one public folder: the 7 slides (the official demo above), a 30-second video pitch and a 2-minute-49 video pitch, both in English: https://drive.google.com/drive/folders/13kT0oQAAJ-YJtrSfFM9bjqTW5FL2CbJc
+
 Use of AI
-Team AgroDeal, Welder Barroso and Giuliano França, made the product decisions, ran the survey and the interview, checked the sources and reviewed every output. We used Claude (Anthropic), an AI assistant, to write and review most of the code, research and check sources, and draft the documentation, slides text and this submission; most commits in the repository are authored by Claude for that reason. The project logo was generated with an AI image tool and is marked "AI-generated image". No AI model runs inside the demo: understanding the farmer is keyword matching, every number comes from the deterministic engine over named data, and the sentences are fixed templates. The demo's voice is the browser's synthetic speech. No NASA logos or design elements are used.
+Team AgroDeal, Welder Barroso and Giuliano França, made the product decisions, ran the survey and the interview, checked the sources and reviewed every output. We used Claude (Anthropic), an AI assistant, to write and review most of the code, research and check sources, and draft the documentation, slides text and this submission; most commits in the repository are authored by Claude for that reason. The project logo was generated with an AI image tool and is marked "AI-generated image". No AI model runs inside the demo: understanding the farmer is keyword matching, every number comes from the deterministic engine over named data, and the sentences are fixed templates. The demo's voice is the browser's synthetic speech. The two pitch videos are animated with code and narrated by an AI voice (Kokoro TTS); both carry a visible AI-generated watermark and say so in their metadata. No NASA logos or design elements are used.
 ```
 
 ## Imagem do projeto
