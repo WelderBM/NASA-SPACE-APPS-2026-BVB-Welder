@@ -34,7 +34,7 @@ calendar, says why, and says what it could not measure.
 - In 2026 the El Niño hit Roraima. At our point in Cantá (lat 2.61, lon -60.60), NASA
   POWER shows 330 mm of rain from June to September, against a 1981–2026 mean of
   859 mm (−62%, the lowest since 1981). In September, root-zone soil moisture was 0.51
-  against a normal of 0.76.
+  against a 2001–2025 normal of 0.79.
 - 87% of Roraima's 16,850 farm establishments had no technical assistance (IBGE 2017,
   cited by the state extension agency IATER in 2024).
 - Most crop rotation tools optimize profit for large farms. This one lets the small
