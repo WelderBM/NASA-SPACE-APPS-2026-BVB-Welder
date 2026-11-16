@@ -20,7 +20,10 @@ for place,lid in [('canta-rr','roraima'),('rioverde-go','centro-oeste')]:
                           'prioridade':'risco','intencao':it})
 
 esperado=[atender(c) for c in CASOS]
-json.dump({'casos':CASOS,'esperado':esperado}, open('/tmp/conf.json','w'), ensure_ascii=False)
-r=subprocess.run(['node','motor/conformidade.js'],capture_output=True,text=True)
+import tempfile
+tmp=os.path.join(tempfile.gettempdir(),'agrodeal-conformidade.json')
+with open(tmp,'w',encoding='utf-8') as f:
+    json.dump({'casos':CASOS,'esperado':esperado}, f, ensure_ascii=False)
+r=subprocess.run(['node','motor/conformidade.js',tmp],capture_output=True,text=True,encoding='utf-8')
 print(r.stdout.strip() or r.stderr.strip())
 sys.exit(r.returncode)

@@ -63,7 +63,7 @@ A intuição do Welder é que essa persona usa mais áudio. Pesquisa feita em 14
 
 ## Formulário
 
-"Como a sua família decide o que plantar?", 13 perguntas, já publicado. [Link de edição](https://docs.google.com/forms/d/1g9mkbGMVdfErK_ww15vlBKYNFtulgBS2pxtbsYoKbNo/edit).
+"Como a sua família decide o que plantar?", 13 perguntas, já publicado. O link de edição não fica no repositório público: ele dá acesso às respostas.
 
 Planilha de respostas vinculada: 7 linhas, 1 duplicata, 7 pessoas (8 respostas, duas da mesma pessoa). **Contém números de WhatsApp: dado pessoal, fora do repositório, não publicar.**
 

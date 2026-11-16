@@ -1,5 +1,5 @@
 {
-  "comentario": "Camada LOCAL do Centro-Oeste. Existe para PROVAR que o motor e generico: mesma pergunta, outro lugar, resposta diferente, sem mexer no codigo. A lista de culturas aqui e a que o Claude usou errado para Roraima em 14/11: nao estava errada, estava no arquivo errado.",
+  "comentario": "Local layer for Brazil's Center-West (Rio Verde, Goias). It exists to show the engine is generic: same question, another place, a different answer, no code change.",
   "id": "centro-oeste",
   "nome": "Centro-Oeste",
   "gerado_em": "2026-11-15",

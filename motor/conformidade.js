@@ -3,7 +3,7 @@ const D='dados/';const j=f=>JSON.parse(fs.readFileSync(D+f,'utf8'));
 const cerne=new Cerne({nasa:j('nasa-power.json'),culturas:j('culturas.json'),
   prioridades:j('prioridades.json'),
   locais:{roraima:j('local-roraima.json'),'centro-oeste':j('local-centro-oeste.json')}});
-const {casos,esperado}=JSON.parse(fs.readFileSync('/tmp/conf.json','utf8'));
+const {casos,esperado}=JSON.parse(fs.readFileSync(process.argv[2]||'/tmp/conf.json','utf8'));
 // compara a resposta INTEIRA, com chaves ordenadas: falas e resumo das opcoes
 // deixavam de fora o veranico e o resto do risco
 const canon=v=>Array.isArray(v)?v.map(canon):(v&&typeof v==='object')?
