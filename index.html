@@ -310,7 +310,7 @@ function painel(r){
   if(r.limites&&r.limites.length)h+=`<div class="lab">Limits (engine text, pt-BR)</div><p class="diag">${r.limites.join('<br>')}</p>`;
   d.innerHTML=h;
 }
-// AQUI MORA O %2: o motor calcula na hora, para qualquer combinacao, inclusive
+// o motor calcula na hora, para qualquer combinacao, inclusive
 // mes que nenhuma tabela pre-cozinhada teria.
 function pergunta(extra){
   return CERNE.atender(Object.assign({lugar:{id:st.lugar,config_local:st.lid},

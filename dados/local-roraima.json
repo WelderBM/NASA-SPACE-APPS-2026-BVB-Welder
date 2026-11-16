@@ -166,7 +166,7 @@
       "Previsão não é comigo. Mas olha: {mes} costuma dar {chuva}, a estiagem mais longa do mês fica em {estiagem} dias, e a terra está {estado}."
     ],
     "porques": {
-      "familia": "não é parente {de_colheu}, então a praga que ficou na terra não pega nela",
+      "familia": "não é parente {de_colheu}, então a praga que ficou na terra tem menos chance de pegar nela",
       "agua": "a chuva desse tempo dá o que ela precisa",
       "solo": "deixa a terra mais forte pro que vem depois",
       "risco": "é rápida, sai da terra em {dias} dias",
@@ -245,8 +245,8 @@
       "Parente {de_colheu} ela não é. Agora, o quanto de água ela pede me falta: o que eu tenho é {chuva_mm} milímetros na janela e até {estiagem} dias sem chuva {base}."
     ],
     "indicacao_pouca_confianca": [
-      "Depois {de_colheu}, a que mais encaixa é {cultura}. Mas te aviso: dela eu só consegui medir {pct}% do que importa pro que você quer.",
-      "A que mais encaixa é {cultura}. Só que eu conheço pouco dela: medi {pct}% do que pesa na sua escolha. Fica o aviso."
+      "Depois {de_colheu}, eu olharia {cultura}. Mas te aviso: dela eu só consegui medir {pct}% do que importa pro que você quer.",
+      "Eu olharia {cultura}. Só que eu conheço pouco dela: medi {pct}% do que pesa na sua escolha. Fica o aviso."
     ],
     "solo_fundo": [
       "Por cima a terra está {sup}, mas no fundo ela está {fundo}. O que segura a planta na estiagem é o de baixo.",
