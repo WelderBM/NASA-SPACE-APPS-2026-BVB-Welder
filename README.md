@@ -130,7 +130,7 @@ Team AgroDeal (Welder Barroso and Giuliano França) made the product decisions, 
 survey and the interview, checked the sources and reviewed every output. We used Claude
 (Anthropic) to write and review most of the code, research and check sources, and draft
 the documentation, slides text and submission; most commits are authored by Claude for
-that reason. The project logo was generated with an AI image tool and is marked as such.
+that reason. The project logo was generated with Google Gemini and is marked as such.
 The pitch videos use an AI voice (Kokoro TTS) and carry a visible AI-generated watermark.
 
 ## Sources
