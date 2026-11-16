@@ -35,6 +35,8 @@ calendar, says why, and says what it could not measure.
   POWER shows 330 mm of rain from June to September, against a 1981–2026 mean of
   859 mm (−62%, the lowest since 1981). In September, root-zone soil moisture was 0.51
   against a 2001–2025 normal of 0.79.
+![NASA POWER, Cantá 2026: monthly rain and root-zone soil wetness against normal](docs/img/nasa-canta-2026.png)
+
 - 87% of Roraima's 16,850 farm establishments had no technical assistance (IBGE 2017,
   cited by the state extension agency IATER in 2024).
 - Most crop rotation tools optimize profit for large farms. This one lets the small
